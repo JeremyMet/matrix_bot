@@ -1,0 +1,9 @@
+{
+  "host" : "https://mandragot.org", 
+  "login" : "tersa_bot",
+  "password" : "jambontoto",
+  "room" : "#deuxsurdix-gaming:bobbyblues.com",
+  "dico_path" : "./dico_fr.txt",
+  "score_path" : "./score.txt",
+  "event_path" : "./event.json"
+}
