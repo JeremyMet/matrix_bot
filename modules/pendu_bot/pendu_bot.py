@@ -19,13 +19,14 @@ class pendu_bot:
 	# 		return self.pendu.propose(match[1])
 	# 	return None
 
-	def run(self, cmd):
+	def run(self, cmd, sender = None):
 		match = re.match('\!([a-zA-Z]+)', (unidecode.unidecode(cmd)))
 		if match:
 			return self.pendu.propose(match.group(0)[1])
-		if cmd.split(" ")[0] != "tbot":
+		args = cmd.split(" ") ;
+		if len(args) >= 1 and (args[0] != "tbot" or not(args[1] in self.keywords)):
 			return None ;
-		args = cmd.split(" ")[2:]
+		args = args[2:] # used for retro-compatibily
 		if len(args)<1:
 			return ; 
 		if args[0] == "propose":
@@ -42,7 +43,9 @@ class pendu_bot:
 		elif args[0] == "debug":
 			return "debug \n" ;
 		elif args[0] == "help":
-			return "bot pendu propose A pour proposer la lettre A \n bot pendu show" ;
+			return "tbot pendu propose A pour proposer la lettre A, \n \
+tbot pendu show montre l'état actuel du mot, \n \
+tbot pendu event montre l'event en cours (s'il y en a)";
 		elif args[0] == "event":
 			return self.pendu.show_event() ;
 		return None ; 
