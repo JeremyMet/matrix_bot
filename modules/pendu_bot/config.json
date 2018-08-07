@@ -1,0 +1,5 @@
+{
+  "dico_path" : "./modules/pendu_bot/dico_fr.txt",
+  "score_path" : "./modules/pendu_bot/score.txt",
+  "event_path" : "./modules/pendu_bot/event.json"
+}
