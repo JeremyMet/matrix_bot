@@ -73,7 +73,7 @@ class pendu(object):
         self.match = 0 ;
         self.mirror = False ;
         self.min_lg = 5 ;
-        self.max_lg = 30 ; 
+        self.max_lg = 30 ;
         self.str_event = "" ;
         self.event_management() ;
         self.generate();

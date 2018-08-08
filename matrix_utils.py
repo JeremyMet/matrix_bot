@@ -3,6 +3,7 @@ from matrix_client.api import MatrixRequestError
 import json ;
 import time ;
 import re ;
+import datetime
 import threading ;
 
 
@@ -54,7 +55,6 @@ class matrix_utils(object):
 
 
     def callback(self, room, event):
-        print(">>> "+str(room))
         if event["type"] == "m.timer":
             for service in self.rooms[room][1].values():
                 service.clock_update() ;
@@ -64,6 +64,7 @@ class matrix_utils(object):
         if event["type"] == "m.room.message":
             login = re.search("@[aA-zZ]+[0-9]*", event["sender"]).group(0) ;
             login = login[1:]
+            print(">>> " + str(room) + " at " + str(datetime.datetime.now())+ " by "+login);
             if login != self.login:
                 text = str(event["content"]["body"]) ;
                 if text == self.config["bot_down_cmd"]:
@@ -80,7 +81,7 @@ class matrix_utils(object):
         self.is_on = True ;
         print("Ready ...")
         while(self.is_on):
-            pass
+            time.sleep(0.5)
 
     def timer_callback(self, t):
         event = {};

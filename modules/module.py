@@ -14,6 +14,7 @@ class module(object):
 
     def run(self, cmd, sender = None):
         pass
+
     def run_on_clock(self):
         pass
 
