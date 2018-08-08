@@ -50,9 +50,9 @@ tbot pendu event montre l'event en cours (s'il y en a)";
 			return self.pendu.show_event() ;
 		return None ;
 
-
+	@module.clock_dec
 	def run_on_clock(self):
-		if self.timer > 28800:
+		if self.get_timer() > 2:
 			self.reset_clock() ;
 			return "Rappel ! \n "+str(self.pendu) ;
 
