@@ -33,7 +33,7 @@
   },
   "petit_mot": {
     "weight" : 3,
-    "message" : "Les petites choses sont tellement mignonnes (Mot de 6 lettres max, pdv -2) ! ",
+    "message" : "Les petites choses sont tellement mignonnes (Mot de 6 lettres max, pdv -3) ! ",
     "min_lg" : 4,
     "max_lg" : 6,
     "bonus_life" : -3,
