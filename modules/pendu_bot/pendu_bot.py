@@ -3,15 +3,15 @@ import random
 import re
 import unidecode
 from .pendu import pendu
+from modules.module import module ;
 
-#TODO MODULE NAME
+class pendu_bot(module):
 
-class pendu_bot:
+
 	def __init__(self):
+		super().__init__() ;
 		self.keywords = ["pendu"]
 		self.pendu = pendu() ;
-
-
 
 	# def process(self, cmd):
 	# 	match = re.match('\!([a-zA-Z]+)', (unidecode.unidecode(cmd)))
@@ -24,7 +24,7 @@ class pendu_bot:
 		if match:
 			return self.pendu.propose(match.group(0)[1])
 		args = cmd.split(" ") ;
-		if len(args) >= 1 and (args[0] != "tbot" or not(args[1] in self.keywords)):
+		if len(args) >= 1 and (args[0] != self.bot_cmd or not(args[1] in self.keywords)):
 			return None ;
 		args = args[2:] # used for retro-compatibily
 		if len(args)<1:
@@ -48,12 +48,19 @@ tbot pendu show montre l'état actuel du mot, \n \
 tbot pendu event montre l'event en cours (s'il y en a)";
 		elif args[0] == "event":
 			return self.pendu.show_event() ;
-		return None ; 
+		return None ;
+
+
+	def run_on_clock(self):
+		if self.timer > 600:
+			self.reset_clock() ;
+			return "Rappel ! \n "+str(self.pendu) ;
+
 
 
 	def exit(self):
 		self.pendu.save_score() ;
-		return "Service "+str(self)+"arrêté."
+		print("Service "+str(self)+"arrêté.") ;
 
 
 if __name__ == "__main__":

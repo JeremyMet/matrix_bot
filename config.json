@@ -2,5 +2,8 @@
   "host" : "https://mandragot.org", 
   "login" : "tersa_bot",
   "password" : "jambontoto",
-  "room" : "#deuxsurdix-gaming:bobbyblues.org"
+  "bot_cmd" : "tbot",
+  "bot_down_cmd" : "tbot down",
+  "bot_start_txt" : "TersaBot, à votre service \\o/",
+  "bot_stop_txt" : "TersaBot, au plaisir ;-)"
 }

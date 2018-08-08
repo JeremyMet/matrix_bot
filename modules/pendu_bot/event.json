@@ -3,28 +3,40 @@
     "weight" : 4,
     "message" : "Le bot noie sa tristesse par une consommation excessive d'un chouchen local aux relents douteux ... Son ivresse altère sa vision ! (Mot affiché à l'envers)",
     "min_lg" : 5,
+    "max_lg" : 30,
     "bonus_life" : 0, 
     "mirror" : "yes"
   }, 
   "extra_life": {
     "weight" : 2,
-    "message" : "Le soleil brille, l'air est vivifiant. Le bot est heureux et vous accorde 2 points de vie supplémentaires (pdv +2).",
+    "message" : "Le soleil brille, l'air est vivifiant. Le bot est heureux et vous accorde 1 point de vie supplémentaires (pdv +1).",
     "min_lg" : 5,
-    "bonus_life" : 2,
+    "max_lg" : 30,
+    "bonus_life" : 1,
     "mirror" : "no"
   },
  "mot_long": {
     "weight" : 4,
-    "message" : "Le bot aime voir la vie en grand ! (Mot de 15 lettres ou plus) !",
+    "message" : "Le bot aime voir la vie en grand ! (Mot de 15 lettres ou plus, pdv +2) !",
     "min_lg" : 15, 
-    "bonus_life" : 7,
+    "max_lg" : 30,
+    "bonus_life" : 2,
     "mirror" : "no"
   },
   "pas_content": {
     "weight" : 2,
     "message" : "La pleine lune affecte l'humeur du bot ... :-( Grrr, des poils lui poussent ! Il n'a pas l'air content ! (pdv -1)",
     "min_lg" : 5,
+    "max_lg" : 30,
     "bonus_life" : -1,
     "mirror": "no"
-  }   
+  },
+  "petit_mot": {
+    "weight" : 3,
+    "message" : "Les petites choses sont tellement mignonnes (Mot de 6 lettres max, pdv -2) ! ",
+    "min_lg" : 4,
+    "max_lg" : 6,
+    "bonus_life" : -3,
+    "mirror": "no"
+  }
 }

@@ -12,8 +12,9 @@ class matrix_utils(object):
     def __init__(self, config_path = "config.json"):
         self.rooms = {} ;
         self.rooms_name = {} ;
-        self.room_timer = {} ;
-        self.is_on = True ;
+        self.room_timer = set() ;
+        self.is_timer_on = False
+        self.is_on = False ;
         try:
             with open(config_path) as f:
                 self.config = json.loads(f.read());
@@ -41,7 +42,7 @@ class matrix_utils(object):
         self.rooms[new_room] = (room_name,  {});
         self.rooms_name[room_name] = new_room ;
         new_room.add_listener(self.callback) ;
-        new_room.send_text("TersaBot à votre service \o/ !") ;
+        new_room.send_text(self.config["bot_start_txt"]) ;
         return new_room ;
 
 
@@ -55,14 +56,18 @@ class matrix_utils(object):
     def callback(self, room, event):
         print(">>> "+str(room))
         if event["type"] == "m.timer":
-            room.send_text("Tick")
+            for service in self.rooms[room][1].values():
+                service.clock_update() ;
+                ret = service.run_on_clock() ;
+                if ret:
+                    room.send_text(ret) ;
         if event["type"] == "m.room.message":
             login = re.search("@[aA-zZ]+[0-9]*", event["sender"]).group(0) ;
             login = login[1:]
             if login != self.login:
                 text = str(event["content"]["body"]) ;
-                if text == "tbot down":
-                    room.send_text("TersaBot a été heureux d'avoir pu vous rendre service !");
+                if text == self.config["bot_down_cmd"]:
+                    room.send_text(self.config["bot_stop_txt"]);
                     self.exit() ;
                 if self.rooms:
                     for service in self.rooms[room][1].values():
@@ -72,38 +77,47 @@ class matrix_utils(object):
 
     def spawn(self):
         self.client.start_listener_thread()
+        self.is_on = True ;
         print("Ready ...")
         while(self.is_on):
-            pass 
+            pass
 
-    def timer_callback(self, room):
-        while(room in self.room_timer):
-            timer = self.room_timer[room] ;
-            time.sleep(timer)
-            event = {} ;
-            event["type"] = "m.timer"
-            self.callback(room, event) ;
+    def timer_callback(self, t):
+        event = {};
+        event["type"] = "m.timer"
+        while(self.is_timer_on):
+            if self.is_on:
+                for room in self.room_timer.copy():
+                    self.callback(room, event);
+            time.sleep(t)
 
+    def start_timer(self, t = 1):
+        if not(self.is_timer_on):
+            self.is_timer_on = True ;
+            t1 = threading.Thread(target=self.timer_callback, args=(t,))
+            t1.start();
 
-    def add_timer(self, room, timer = 10):
+    def stop_timer(self):
+        self.is_timer_on = False ;
+
+    def add_timer_to_room(self, room):
         if not(room in self.room_timer):
-            self.room_timer[room] = timer ;
-            t1 = threading.Thread(target=self.timer_callback, args=(room,))
-            t1.start() ;
+            self.room_timer.add(room) ;
         else:
             raise("Room {} does already have a timer.".format(str(room))) ;
 
-    def remove_timer(self, room):
+    def remove_timer_from_room(self, room):
         if room in self.room_timer:
-            print("Deleting Tick Channel")
-            del self.room_timer[room] ;
+            print("Deleting Tick Channel {}".format(str(room))) ;
+            self.room_timer.remove(room) ;
 
     def exit(self):
         for room_key, room in self.rooms.items():
             for service_name, service in room[1].copy().items():
                 service.exit();
                 self.remove_service_from_room(room_key, service_name) ;
-            self.remove_timer(room_key) ;
-            room_key.leave() ;
+            self.remove_timer_from_room(room_key) ;
+            # room_key.leave() ;
+        self.is_timer_on = False ;
         self.is_on = False ;
 

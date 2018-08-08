@@ -25,9 +25,10 @@ class pendu(object):
         self.lt = [] ;
         self.event_show = False ;
         self.mirror = False ;
-        self.proba_event = 30 ; # Probabilité de trigger un event en pourcent (only integer).
+        self.proba_event = 50 ; # Probabilité de trigger un event en pourcent (only integer).
         self.p = re.compile('[a-zA-Z]{1}') ; 
         self.min_lg = 5 ;
+        self.max_lg = 30 ;
         self.conf = json.load(open("./modules/pendu_bot/config.json",'r')) ;
         #self.conf = json.load(open("sample_config.txt", 'r'));
         self.dico = [] ; 
@@ -72,6 +73,7 @@ class pendu(object):
         self.match = 0 ;
         self.mirror = False ;
         self.min_lg = 5 ;
+        self.max_lg = 30 ; 
         self.str_event = "" ;
         self.event_management() ;
         self.generate();
@@ -153,7 +155,7 @@ class pendu(object):
 
     def generate(self):
         current_word = "" ;
-        while(len(current_word) < self.min_lg):
+        while(len(current_word) < self.min_lg or len(current_word) > self.max_lg):
             r = random.randint(0, self.lg-1) ;
             attempt_word = self.dico[r][:-1]
             if re.match("^[a-zA-Z]+$", attempt_word):
@@ -193,6 +195,7 @@ class pendu(object):
                 self.life = constant_life_max+event["bonus_life"] ;
                 self.mirror = True if event["mirror"] == "yes" else False ;
                 self.min_lg = event["min_lg"] ;
+                self.max_lg = event["max_lg"] ;
                 break ;
 
     def show_event(self):
