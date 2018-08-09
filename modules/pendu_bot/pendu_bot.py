@@ -10,7 +10,10 @@ class pendu_bot(module):
 
     def __init__(self):
         super().__init__() ;
-        self.keywords = ["pendu"]
+        self.keywords = ["pendu"] ;
+        self.help = "type tbot pendu help for further details.";
+        self.whatis = "Un simple jeu du pendu."
+        self.__version__ = "0.0.1"
         self.pendu = pendu() ;
 
     # def process(self, cmd):
@@ -62,7 +65,7 @@ tbot pendu event montre l'event en cours (s'il y en a)";
 
     def exit(self):
         self.pendu.save_score() ;
-        print("Service "+str(self)+"arrêté.") ;
+        print("Service "+str(self)+" was stopped.") ;
 
 
 if __name__ == "__main__":

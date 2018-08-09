@@ -2,13 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cc6e8399-6af4-47c8-823f-cd8fd16f23eb" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/modules/template/template.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/modules/quotes/quotes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matrix_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/matrix_utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/admin/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/admin/admin.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/greeting/greeting.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/greeting/greeting.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/module.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/module.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/pendu_bot/pendu_bot.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/pendu_bot/pendu_bot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/pendu_bot/score.txt" beforeDir="false" afterPath="$PROJECT_DIR$/modules/pendu_bot/score.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/template/template.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/template/template.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -29,22 +29,22 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="5036" />
+          <entry key="py" value="6722" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="5036" />
+          <entry key="Python" value="6722" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="py" value="4" />
+          <entry key="py" value="8" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Python" value="4" />
+          <entry key="Python" value="8" />
         </counts>
       </usages-collector>
     </session>
@@ -63,11 +63,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/server.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="404">
-              <caret line="34" column="46" selection-start-line="34" selection-start-column="46" selection-end-line="34" selection-end-column="46" />
+            <state relative-caret-position="269">
+              <caret line="36" column="37" selection-start-line="36" selection-start-column="37" selection-end-line="36" selection-end-column="37" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -78,8 +78,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/greeting/greeting.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="389">
-              <caret line="26" selection-start-line="26" selection-end-line="26" />
+            <state relative-caret-position="270">
+              <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -88,10 +88,23 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/quotes/quotes.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="9" column="32" selection-start-line="9" selection-start-column="32" selection-end-line="9" selection-end-column="32" />
+              <folding>
+                <element signature="e#0#35#0" expanded="true" />
+                <marker date="1533823396539" expanded="true" signature="1121:1130" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/pendu_bot/pendu_bot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="149">
-              <caret line="57" column="34" selection-start-line="57" selection-start-column="34" selection-end-line="57" selection-end-column="34" />
+            <state relative-caret-position="1005">
+              <caret line="67" column="48" selection-start-line="67" selection-start-column="48" selection-end-line="67" selection-end-column="48" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -102,23 +115,24 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/admin/admin.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="21" column="22" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="22" />
+            <state relative-caret-position="74">
+              <caret line="13" column="36" selection-start-line="13" selection-start-column="36" selection-end-line="13" selection-end-column="36" />
               <folding>
-                <marker date="1533814854933" expanded="true" signature="58:64" ph="..." />
-                <marker date="1533814854933" expanded="true" signature="1267:1275" ph="..." />
+                <marker date="1533823653244" expanded="true" signature="58:64" ph="..." />
+                <marker date="1533823653244" expanded="true" signature="176:322" ph="..." />
+                <marker date="1533823653244" expanded="true" signature="1464:1470" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/template/template.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="63" selection-start-line="6" selection-start-column="63" selection-end-line="6" selection-end-column="63" />
+            <state relative-caret-position="135">
+              <caret line="9" column="19" lean-forward="true" selection-end-line="23" selection-end-column="12" />
               <folding>
-                <marker date="1533820148623" expanded="true" signature="60:66" ph="..." />
+                <marker date="1533821244985" expanded="true" signature="60:66" ph="..." />
               </folding>
             </state>
           </provider>
@@ -127,13 +141,22 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/module.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-886">
-              <caret line="21" column="23" selection-start-line="21" selection-start-column="23" selection-end-line="21" selection-end-column="23" />
+            <state relative-caret-position="1485">
+              <caret line="99" column="8" selection-start-line="99" selection-start-column="8" selection-end-line="99" selection-end-column="8" />
               <folding>
-                <marker date="1533819117112" expanded="true" signature="904:1041" ph="..." />
-                <marker date="1533819117112" expanded="true" signature="1060:1069" ph="..." />
-                <marker date="1533819117112" expanded="true" signature="2118:2124" ph="..." />
+                <marker date="1533821716509" expanded="true" signature="929:1068" ph="..." />
+                <marker date="1533821716509" expanded="true" signature="1087:1096" ph="..." />
+                <marker date="1533821716509" expanded="true" signature="2296:2302" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file:///usr/lib/python3.5/json/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="148">
+              <caret line="318" selection-start-line="318" selection-end-line="318" />
             </state>
           </provider>
         </entry>
@@ -152,9 +175,11 @@
       <find>event_path</find>
       <find>rooms_name</find>
       <find>matrix_</find>
+      <find>is_module</find>
+      <find>bot_cmd</find>
       <find>set_clock_sensitivity_on</find>
       <find>Service {}</find>
-      <find>is_module</find>
+      <find>activ</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -167,13 +192,14 @@
         <option value="$PROJECT_DIR$/pendu_bot.py" />
         <option value="$PROJECT_DIR$/modules/pendu_bot/pendu.py" />
         <option value="$PROJECT_DIR$/modules/admin/greeting.py" />
-        <option value="$PROJECT_DIR$/modules/admin/admin.py" />
-        <option value="$PROJECT_DIR$/modules/module.py" />
-        <option value="$PROJECT_DIR$/modules/greeting/greeting.py" />
-        <option value="$PROJECT_DIR$/modules/pendu_bot/pendu_bot.py" />
         <option value="$PROJECT_DIR$/matrix_utils.py" />
-        <option value="$PROJECT_DIR$/server.py" />
         <option value="$PROJECT_DIR$/modules/template/template.py" />
+        <option value="$PROJECT_DIR$/modules/greeting/greeting.py" />
+        <option value="$PROJECT_DIR$/modules/module.py" />
+        <option value="$PROJECT_DIR$/modules/pendu_bot/pendu_bot.py" />
+        <option value="$PROJECT_DIR$/modules/quotes/quotes.py" />
+        <option value="$PROJECT_DIR$/modules/admin/admin.py" />
+        <option value="$PROJECT_DIR$/server.py" />
       </list>
     </option>
   </component>
@@ -212,6 +238,12 @@
               <item name="pendu_bot" type="462c0819:PsiDirectoryNode" />
               <item name="modules" type="462c0819:PsiDirectoryNode" />
               <item name="pendu_bot" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="pendu_bot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="pendu_bot" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="quotes" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -376,12 +408,12 @@
     <frame x="65" y="-4" width="1301" height="772" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24960877" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24960877" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.26863354" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.26863354" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -472,26 +504,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/pendu_bot/pendu_bot.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
-          <caret line="57" column="34" selection-start-line="57" selection-start-column="34" selection-end-line="57" selection-end-column="34" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="404">
-          <caret line="34" column="46" selection-start-line="34" selection-start-column="46" selection-end-line="34" selection-end-column="46" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/matrix_utils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-106">
@@ -502,45 +514,91 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/module.py">
+    <entry file="file://$PROJECT_DIR$/modules/template/template.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-886">
-          <caret line="21" column="23" selection-start-line="21" selection-start-column="23" selection-end-line="21" selection-end-column="23" />
+        <state relative-caret-position="135">
+          <caret line="9" column="19" lean-forward="true" selection-end-line="23" selection-end-column="12" />
           <folding>
-            <marker date="1533819117112" expanded="true" signature="904:1041" ph="..." />
-            <marker date="1533819117112" expanded="true" signature="1060:1069" ph="..." />
-            <marker date="1533819117112" expanded="true" signature="2118:2124" ph="..." />
+            <marker date="1533821244985" expanded="true" signature="60:66" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/admin/admin.py">
+    <entry file="file:///usr/lib/python3.5/json/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="21" column="22" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="22" />
-          <folding>
-            <marker date="1533814854933" expanded="true" signature="58:64" ph="..." />
-            <marker date="1533814854933" expanded="true" signature="1267:1275" ph="..." />
-          </folding>
+        <state relative-caret-position="148">
+          <caret line="318" selection-start-line="318" selection-end-line="318" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/greeting/greeting.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="26" selection-start-line="26" selection-end-line="26" />
+        <state relative-caret-position="270">
+          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/template/template.py">
+    <entry file="file:///usr/lib/python3.5/json/decoder.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="63" selection-start-line="6" selection-start-column="63" selection-end-line="6" selection-end-column="63" />
+        <state relative-caret-position="148">
+          <caret line="341" selection-start-line="341" selection-end-line="341" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/module.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1485">
+          <caret line="99" column="8" selection-start-line="99" selection-start-column="8" selection-end-line="99" selection-end-column="8" />
           <folding>
-            <marker date="1533820148623" expanded="true" signature="60:66" ph="..." />
+            <marker date="1533821716509" expanded="true" signature="929:1068" ph="..." />
+            <marker date="1533821716509" expanded="true" signature="1087:1096" ph="..." />
+            <marker date="1533821716509" expanded="true" signature="2296:2302" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/admin/admin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="74">
+          <caret line="13" column="36" selection-start-line="13" selection-start-column="36" selection-end-line="13" selection-end-column="36" />
+          <folding>
+            <marker date="1533823653244" expanded="true" signature="58:64" ph="..." />
+            <marker date="1533823653244" expanded="true" signature="176:322" ph="..." />
+            <marker date="1533823653244" expanded="true" signature="1464:1470" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/quotes/quotes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="32" selection-start-line="9" selection-start-column="32" selection-end-line="9" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+            <marker date="1533823396539" expanded="true" signature="1121:1130" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/pendu_bot/pendu_bot.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1005">
+          <caret line="67" column="48" selection-start-line="67" selection-start-column="48" selection-end-line="67" selection-end-column="48" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="269">
+          <caret line="36" column="37" selection-start-line="36" selection-start-column="37" selection-end-line="36" selection-end-column="37" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
           </folding>
         </state>
       </provider>

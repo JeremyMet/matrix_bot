@@ -13,6 +13,13 @@ class greeting(module):
      "Jpp ..." \
      ]
 
+    def __init__(self):
+        super().__init__() ;
+        self.keywords = ["template"] ; # <- Name of your module
+        self.help = "Say \"hello tbot\"." ; # <- will be printed out by the admin module
+        self.whatis = "A simple hello module. "
+        self.__version__ = "0.0.1"
+
     @module.module_on_dec
     def run(self, cmd, sender=None, room = None):
         cmd = cmd.lower() ;

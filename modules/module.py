@@ -5,6 +5,8 @@ import json ;
 
 class module(object):
 
+    bot_cmd = "" ;
+
     def clock_dec(function):
         def wrapper(*args, **kargs):
             if args[0].clock_sensitive:
@@ -26,7 +28,7 @@ class module(object):
         def wrapper(*args, **kargs):
             raw_cmd = args[1].split() ;
             s = args[0] ;
-            if len(raw_cmd) >= 2 and raw_cmd[0] == s.bot_cmd and raw_cmd[1] in s.keywords:
+            if len(raw_cmd) >= 2 and raw_cmd[0] == module.bot_cmd and raw_cmd[1] in s.keywords:
                 return function(*args, **kargs) ;
             else:
                 return None ;
@@ -34,7 +36,7 @@ class module(object):
 
     def check_command(self, cmd):
         raw_cmd = cmd.split() ;
-        return len(raw_cmd) >= 2 and raw_cmd[0] == self.bot_cmd and raw_cmd[1] in self.keywords ;
+        return len(raw_cmd) >= 2 and raw_cmd[0] == module.bot_cmd and raw_cmd[1] in self.keywords ;
 
 
     def __init__(self):
@@ -43,13 +45,17 @@ class module(object):
         self.is_module_on = True ;
         self.caller = None ;
         self.keywords = [] ;
-        try:
-            with open("./config.json", "r") as f:
-                config = json.loads(f.read()) ;
-            self.bot_cmd = config["bot_cmd"] ;
-        except IOError as e:
-            print("Could not load config.json "+str(e)) ;
-            self.bot_cmd = "tbot";
+        self.help = "" ;
+        self.whatis = "" ;
+        self.__version__ = "0.0.0"
+        if not(module.bot_cmd):
+            try:
+                with open("./config.json", "r") as f:
+                    config = json.loads(f.read()) ;
+                module.bot_cmd = config["bot_cmd"] ;
+            except IOError as e:
+                print("Could not load config.json "+str(e)) ;
+                module.bot_cmd = "tbot";
 
     @module_on_dec
     def run(self, cmd, sender = None, room = None):
@@ -91,6 +97,7 @@ class module(object):
 
     def admin(self, caller):
         self.caller = caller ;
+        
 
 
 if __name__ == "__main__":
