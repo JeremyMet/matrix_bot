@@ -10,7 +10,7 @@ class module(object):
             if args[0].clock_sensitive:
                 return function(*args, **kargs)
             else:
-                None
+                return None
         return wrapper ;
 
 
@@ -19,7 +19,7 @@ class module(object):
             if args[0].is_module_on:
                 return function(*args, **kargs)
             else:
-                None
+                return None
         return wrapper ;
 
     def check_command_dec(function):
@@ -71,10 +71,10 @@ class module(object):
     def reset_clock(self):
         self.timer = 0 ;
 
-    def set_clock_sensitive_on(self):
+    def set_clock_sensitivity_on(self):
         self.clock_sensitive = True ;
 
-    def set_clock_sensitive_off(self):
+    def set_clock_sensitivity_off(self):
         self.clock_sensitive = False ;
 
     def get_timer(self):

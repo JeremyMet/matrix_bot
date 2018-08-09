@@ -12,7 +12,6 @@ class matrix_utils(object):
 
     def __init__(self, config_path = "config.json"):
         self.rooms = {} ;
-        self.room_timer = set() ;
         self.is_timer_on = False
         self.is_on = False ;
         try:
@@ -65,12 +64,6 @@ class matrix_utils(object):
 
 
     def callback(self, room, event):
-        if event["type"] == "m.timer":
-            for service in self.rooms[room][1].values():
-                service.clock_update() ;
-                ret = service.run_on_clock() ;
-                if ret:
-                    room.send_text(ret) ;
         if event["type"] == "m.room.message":
             login = re.search("@[aA-zZ]+[0-9]*", event["sender"]).group(0) ;
             login = login[1:] ;
@@ -95,12 +88,14 @@ class matrix_utils(object):
             time.sleep(0.5)
 
     def timer_callback(self, t):
-        event = {};
-        event["type"] = "m.timer"
         while(self.is_timer_on):
             if self.is_on:
-                for room in self.room_timer.copy():
-                    self.callback(room, event);
+                for k_room, room in self.rooms.items():
+                    for service in room[1].copy().values():
+                        service.clock_update() ;
+                        ret = service.run_on_clock() ;
+                        if ret:
+                            k_room.send_text(ret) ;
             time.sleep(t)
 
     def start_timer(self, t = 1):
@@ -112,23 +107,11 @@ class matrix_utils(object):
     def stop_timer(self):
         self.is_timer_on = False ;
 
-    def add_timer_to_room(self, room):
-        if not(room in self.room_timer):
-            self.room_timer.add(room) ;
-        else:
-            raise("Room {} does already have a timer.".format(str(room))) ;
-
-    def remove_timer_from_room(self, room):
-        if room in self.room_timer:
-            print("Deleting Tick Channel {}".format(str(room))) ;
-            self.room_timer.remove(room) ;
-
     def exit(self):
+        self.is_timer_on = False ;
+        self.is_on = False ;
         for room_key, room in self.rooms.items():
             for service_name, service in room[1].copy().items():
                 service.exit();
                 self.remove_service_from_room(room_key, service_name) ;
-            self.remove_timer_from_room(room_key) ;
             # room_key.leave() ;
-        self.is_timer_on = False ;
-        self.is_on = False ;

@@ -24,9 +24,11 @@ class greeting(module):
     @module.module_on_dec
     @module.clock_dec
     def run_on_clock(self):
-        if self.timer > 1800:
+        if self.get_timer() > 5:
             self.reset_clock() ;
             return random.choice(greeting.tbot_random_sentences) ;
+        else:
+            return None ;
 
 
 
