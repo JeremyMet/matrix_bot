@@ -9,11 +9,14 @@ import sys
 
 class matrix_utils(object):
 
+    __MAX_SERVICE__ = 64 ;
+
 
     def __init__(self, config_path = "config.json"):
         self.rooms = {} ;
         self.is_timer_on = False
         self.is_on = False ;
+        self.nb_current_service = 0 ;
         try:
             with open(config_path) as f:
                 self.config = json.loads(f.read());
@@ -29,16 +32,22 @@ class matrix_utils(object):
             sys.exit() ;
 
     def add_service_to_room(self, room, service_name, service):
-        dic = self.rooms[room][1] ;
-        if not(service_name in dic):
-            dic[service_name] = service ;
+        if self.nb_current_service < matrix_utils.__MAX_SERVICE__:
+            dic = self.rooms[room][1] ;
+            service.keywords = [service_name] ;
+            if not(service_name in dic):
+                dic[service_name] = service ;
+                self.nb_current_service +=1 ;
+            else:
+                raise("Service already does already exist.")
         else:
-            raise("Service already does already exist.")
+            raise("Maximum number of services ({}) reached".format(str(matrix_utils.__MAX_SERVICE__))) ;
 
     def remove_service_from_room(self, room, service_name):
         dic = self.rooms[room][1];
         if service_name in dic:
             del dic[service_name] ;
+            self.nb_current_service -= 1;
         else:
             raise("Service {} does not exist.".format(service_name)) ;
 

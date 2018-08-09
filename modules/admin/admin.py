@@ -2,12 +2,17 @@
 from modules.module import module ;
 import urllib
 import importlib
+import os ;
+import shutil ;
+import re ;
 
 class admin(module):
 
     def __init__(self):
         super().__init__() ;
         self.keywords = ["admin"] ;
+        if not(os.path.isdir("./tmp_modules")):
+            os.makedirs("./tmp_modules") ;
 
 
     def list_rooms(self):
@@ -47,13 +52,25 @@ class admin(module):
             return "Service {} does not exist".format(service_name) ;
 
     def install_module(self, name, url, room):
-        fid = open("./tmp_modules/"+str(name)+".py", "w") ;
-        file = urllib.request.urlopen(url).read() ;
-        fid.write(file.decode("utf-8")) ;
-        fid.close() ;
-        new_module = importlib.import_module("tmp_modules."+name, package = None) ;
-        class_ = getattr(new_module, name)
-        self.caller.add_service_to_room(room, name, class_() ) ;
+        if name in self.caller.rooms[room][1]:
+            return "Module {} does already exist.".format(name) ;
+        try:
+            fid = open("./tmp_modules/"+str(name)+".py", "w") ;
+        except IOError as e:
+            print(e)
+        else:
+            try:
+                file = urllib.request.urlopen(url).read() ;
+            except Exception as e:
+                print(e)
+                return "url content is not a valid python script."
+            else:
+                fid.write(file.decode("utf-8")) ;
+                fid.close() ;
+                module_name = re.search("/[0-9aA-zZ]+.py", url).group(0)[1:-3] ;
+                new_module = importlib.import_module("tmp_modules."+module_name, package = None) ;
+                class_ = getattr(new_module, module_name)
+                self.caller.add_service_to_room(room, name, class_() ) ;
         return "Module {} installed.".format(name)
 
 
@@ -73,6 +90,10 @@ class admin(module):
                 if len(raw_args) >= 4: return self.deactivate_service(raw_args[3], room) ;
             elif r2 == "install":
                 if len(raw_args) >= 5: return self.install_module(raw_args[3], raw_args[4], room) ;
+
+    def exit(self):
+        if os.path.isdir("./tmp_modules"):
+            shutil.rmtree("./tmp_modules") ;
 
 
 
