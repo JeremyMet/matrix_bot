@@ -1,5 +1,7 @@
 
 from modules.module import module ;
+import urllib
+import importlib
 
 class admin(module):
 
@@ -44,6 +46,16 @@ class admin(module):
         else:
             return "Service {} does not exist".format(service_name) ;
 
+    def install_module(self, name, url, room):
+        fid = open("./tmp_modules/"+str(name)+".py", "w") ;
+        file = urllib.request.urlopen(url).read() ;
+        fid.write(file.decode("utf-8")) ;
+        fid.close() ;
+        new_module = importlib.import_module("tmp_modules."+name, package = None) ;
+        class_ = getattr(new_module, name)
+        self.caller.add_service_to_room(room, name, class_() ) ;
+        return "Module {} installed.".format(name)
+
 
     @module.module_on_dec
     @module.check_command_dec
@@ -59,4 +71,8 @@ class admin(module):
                 if len(raw_args) >= 4: return self.activate_service(raw_args[3], room) ;
             elif r2 == "service_off":
                 if len(raw_args) >= 4: return self.deactivate_service(raw_args[3], room) ;
+            elif r2 == "install":
+                if len(raw_args) >= 5: return self.install_module(raw_args[3], raw_args[4], room) ;
+
+
 

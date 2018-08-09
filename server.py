@@ -4,6 +4,9 @@ from modules.greeting.greeting import greeting ;
 from modules.admin.admin import admin ;
 from modules.quotes.quotes import quotes ;
 
+# It would have been more clever to distinguish passive services from active ones ;
+# It would have removed "heavy" loop" (use of dictionaries instead for service call).
+# But well ... ;-)
 
 
 
@@ -17,8 +20,8 @@ if __name__ == "__main__":
     my_quotes = quotes() ;
     # Then Create the matrix object, add rooms, services and timers.
     matrix_obj = matrix_utils() ;
-    # gaming_room = matrix_obj.add_room("#toto-gaming:mandragot.org")
-    gaming_room = matrix_obj.add_room("#deuxsurdix-gaming:bobbyblues.com")
+    gaming_room = matrix_obj.add_room("#toto-gaming:mandragot.org")
+    # gaming_room = matrix_obj.add_room("#deuxsurdix-gaming:bobbyblues.com")
     main_room = matrix_obj.add_room("#deuxsurdix:mandragot.org")
     # Add timer to services
     # Add services :)

@@ -74,7 +74,7 @@ class matrix_utils(object):
                     room.send_text(self.config["bot_stop_txt"]);
                     self.exit() ;
                 if self.rooms:
-                    for service in self.rooms[room][1].values():
+                    for service in self.rooms[room][1].copy().values():
                         service.admin(self) ;
                         ret = service.run(text, login, room) ;
                         if ret:

@@ -24,7 +24,7 @@ class quotes(module):
         # if self.check_command(cmd):
         #     return None ; Comment should be removed for passive functions
         # <- Your code goes here.
-        return "Today's Quote : \n \"" + self.current_quote["quote"] + "\" by " + self.current_quote["name"];
+        return "Today's Quote: \n \"" + self.current_quote["quote"] + "\" by " + self.current_quote["name"];
 
     @module.module_on_dec
     @module.clock_dec
@@ -33,4 +33,4 @@ class quotes(module):
         if current_time > self.last_day:
             self.current_quote = random.choice(self.quotes) ;
             self.last_day = current_time ;
-            return "Today's Quote : \n \""+self.current_quote["quote"]+"\" by "+self.current_quote["name"] ;
+            return "Today's Quote: \n \""+self.current_quote["quote"]+"\" by "+self.current_quote["name"] ;
