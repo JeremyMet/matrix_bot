@@ -9,7 +9,7 @@ import sys
 
 class matrix_utils(object):
 
-    __MAX_SERVICE__ = 64 ;
+    __MAX_SERVICE__ = 8 ;
 
 
     def __init__(self, config_path = "config.json"):
@@ -38,10 +38,12 @@ class matrix_utils(object):
             if not(service_name in dic):
                 dic[service_name] = service ;
                 self.nb_current_service +=1 ;
+                return True
             else:
-                raise("Service already does already exist.")
+                raise Exception("Service already does already exist.")
         else:
-            raise("Maximum number of services ({}) reached".format(str(matrix_utils.__MAX_SERVICE__))) ;
+            # raise Exception("Maximum number of services ({}) reached".format(str(matrix_utils.__MAX_SERVICE__))) ;
+            return False
 
     def remove_service_from_room(self, room, service_name):
         dic = self.rooms[room][1];
@@ -49,7 +51,7 @@ class matrix_utils(object):
             del dic[service_name] ;
             self.nb_current_service -= 1;
         else:
-            raise("Service {} does not exist.".format(service_name)) ;
+            raise Exception("Service {} does not exist.".format(service_name)) ;
 
 
     def add_room(self, room_name):
@@ -62,14 +64,14 @@ class matrix_utils(object):
 
     def remove_room(self, room):
         if room in self.room_timer and self.is_timer_on:
-            raise("Can not leave rooms while timer is on.") ;
+            raise Exception("Can not leave rooms while timer is on.") ;
         if room in self.rooms:
             uuid = self.rooms[room][2]
             self.client.remove_listener(uuid);
             del self.rooms[room] ;
             room.leave() ;
         else:
-            raise("Room {} does not exist.".format(str(room))) ;
+            raise Exception("Room {} does not exist.".format(str(room))) ;
 
 
     def callback(self, room, event):

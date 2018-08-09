@@ -70,8 +70,11 @@ class admin(module):
                 module_name = re.search("/[0-9aA-zZ]+.py", url).group(0)[1:-3] ;
                 new_module = importlib.import_module("tmp_modules."+module_name, package = None) ;
                 class_ = getattr(new_module, module_name)
-                self.caller.add_service_to_room(room, name, class_() ) ;
-        return "Module {} installed.".format(name)
+                is_ok = self.caller.add_service_to_room(room, name, class_() ) ;
+        if is_ok:
+            return "Module {} installed.".format(name)
+        else:
+            return "Too many services."
 
 
     @module.module_on_dec
