@@ -5,14 +5,13 @@ import time ;
 import re ;
 import datetime
 import threading ;
-
+import sys
 
 class matrix_utils(object):
 
 
     def __init__(self, config_path = "config.json"):
         self.rooms = {} ;
-        self.rooms_name = {} ;
         self.room_timer = set() ;
         self.is_timer_on = False
         self.is_on = False ;
@@ -28,30 +27,41 @@ class matrix_utils(object):
             self.client.login_with_password(self.login, self.password) ;
         except MatrixRequestError as e:
             print(e)
-        self.services = [] ;
-
+            sys.exit() ;
 
     def add_service_to_room(self, room, service_name, service):
-        tmp_tuple = self.rooms[room] ;
-        tmp_tuple[1][service_name] = service ;
+        dic = self.rooms[room][1] ;
+        if not(service_name in dic):
+            dic[service_name] = service ;
+        else:
+            raise("Service already does already exist.")
 
     def remove_service_from_room(self, room, service_name):
-        del self.rooms[room][1][service_name] ;
+        dic = self.rooms[room][1];
+        if service_name in dic:
+            del dic[service_name] ;
+        else:
+            raise("Service {} does not exist.".format(service_name)) ;
+
 
     def add_room(self, room_name):
         new_room = self.client.join_room(room_name) ;
-        self.rooms[new_room] = (room_name,  {});
-        self.rooms_name[room_name] = new_room ;
-        new_room.add_listener(self.callback) ;
+        listener = new_room.add_listener(self.callback) ;
+        self.rooms[new_room] = (room_name,  {}, listener);
         new_room.send_text(self.config["bot_start_txt"]) ;
         return new_room ;
 
 
-    def remove_room(self, room_name):
-        room = self.rooms_name[room_name] ;
-        del self.rooms[room] ;
-        del self.rooms_name[room_name] ;
-        room.leave() ;
+    def remove_room(self, room):
+        if room in self.room_timer and self.is_timer_on:
+            raise("Can not leave rooms while timer is on.") ;
+        if room in self.rooms:
+            uuid = self.rooms[room][2]
+            self.client.remove_listener(uuid);
+            del self.rooms[room] ;
+            room.leave() ;
+        else:
+            raise("Room {} does not exist.".format(str(room))) ;
 
 
     def callback(self, room, event):
@@ -63,7 +73,7 @@ class matrix_utils(object):
                     room.send_text(ret) ;
         if event["type"] == "m.room.message":
             login = re.search("@[aA-zZ]+[0-9]*", event["sender"]).group(0) ;
-            login = login[1:]
+            login = login[1:] ;
             print(">>> " + str(room) + " at " + str(datetime.datetime.now())+ " by "+login);
             if login != self.login:
                 text = str(event["content"]["body"]) ;
@@ -72,7 +82,8 @@ class matrix_utils(object):
                     self.exit() ;
                 if self.rooms:
                     for service in self.rooms[room][1].values():
-                        ret = service.run(text, login) ;
+                        service.admin(self) ;
+                        ret = service.run(text, login, room) ;
                         if ret:
                             room.send_text(ret) ;
 
@@ -121,4 +132,3 @@ class matrix_utils(object):
             # room_key.leave() ;
         self.is_timer_on = False ;
         self.is_on = False ;
-
