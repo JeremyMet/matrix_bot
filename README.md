@@ -39,3 +39,5 @@ First, one instantiates modules. The modules should follow a specific structure 
 
 Then, the matrix object is created. It will load login information (server/login/password) from *config.json* file.
 One can finally add rooms and services before running matrix_os bot (*matrix_obj.spawn()*).
+
+Note that each room "lives" independently in a sense that each room does have its service list. Services can be shared between room. All services are "clock sensitive" by default (meaning their *run_on_clock* subroutines will be called once per second). This sensitiviy removed however (*module.set_clock_sensitivity_off()*).
