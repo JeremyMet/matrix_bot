@@ -1,7 +1,7 @@
 # Matrix OS
 
 Matrix OS is a simple Python program that facilitates service deployment across Matrix Rooms.
-Services (or modules) are Python scripts which process room sent messages. For instance, a message can ask a given module *A* to print out the current weather. Module *A* will then interpret the order, will "understand" its meaning and return the desired information. Matrix OS is mainly a small framework to "chat bot".
+Services (or modules) are Python scripts which process room sent messages. For instance, a message can ask a given module *A* to print out the current weather. Module *A* will then interpret the order and return the desired information. Matrix OS is mainly a small framework for "chat bot".
 
 ## How does it work ?
 
@@ -54,6 +54,26 @@ This module is a powerful one. It should not be instantiated in sensitive rooms 
 To install a new module from url, type the following
 ```
 tbot admin install template https://gist.githubusercontent.com/JeremyMet/4016c881ae7b7e988fec542a4a04e470/raw/8faafe527e69cce48bbf1c9fc2e4b624b1bee5bc/template.py
+```
+
+To list all rooms:
+```
+tbot admin room_list
+```
+
+To list all services in a room:
+```
+tbot admin service_list
+```
+
+To activate a module:
+```
+tbot admin service_on __MODULE_NAME__
+```
+
+To deactivate a module:
+```
+tbot admin service_off __MODULE_NAME__
 ```
 
 ## Pendu module
