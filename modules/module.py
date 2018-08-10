@@ -7,6 +7,14 @@ class module(object):
 
     bot_cmd = "" ;
 
+    def login_check_dec(function):
+        def wrapper(*args, **kargs):
+            if args[2] != args[0].caller.login:
+                return function(*args, **kargs) ;
+            else:
+                return None ;
+        return wrapper ;
+
     def clock_dec(function):
         def wrapper(*args, **kargs):
             if args[0].clock_sensitive:
