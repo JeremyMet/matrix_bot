@@ -30,7 +30,7 @@ The following snippet gives a quick overview of Matrix_OS functionnalities:
     matrix_obj.add_service_to_room(gaming_room, "admin", my_admin) ;
     # Start timer
     matrix_obj.start_timer()
-    # Remove clock sensitivity for the my_greeting instantiation
+    # Remove clock sensitivity for the my_greeting instance
     my_greeting.set_clock_sensitivity_off() ;
     # And run
     matrix_obj.spawn() ;
