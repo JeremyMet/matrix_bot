@@ -5,7 +5,7 @@ Services (or modules) are Python scripts which process room sent messages. For i
 
 ## Who does it work ?
 
-The following snippet gives a quicj overview of Matrix_OS functionnalities:
+The following snippet gives a quick overview of Matrix_OS functionnalities:
 
 ```pyton
 
@@ -41,3 +41,6 @@ Then, the matrix object is created. It will load login information (server/login
 One can finally add rooms and services before running matrix_os bot (*matrix_obj.spawn()*).
 
 Note that each room "lives" independently in a sense that each room does have its service list. Services can be shared between room. All services are "clock sensitive" by default (meaning their *run_on_clock* subroutines will be called once per second). This sensitiviy removed however (*module.set_clock_sensitivity_off()*).
+
+In a matrix room in which module *A* has been installed, one simply has to write *tbot A* to call the *A* module.
+Of course, parameters can be added to the message as *tbot A parameter_0 paramater_1 ... parameter_n* but this input should be manually processed in the *run* method. 
