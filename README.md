@@ -47,7 +47,7 @@ Note that each room "lives" independently in a sense that each room does have it
 In a matrix room in which module *A* has been installed, one simply has to write *tbot A* to call the *A* module.
 Of course, parameters can be added to the message as *tbot A parameter_0 paramater_1 ... parameter_n* but this input should be manually processed in the *run* method. 
 
-Obviously, it may be sometimes required to process a message that does not begin with "tbot". This can be handle by removing the  @module.check_command_dec decorator from the *run* method.
+Obviously, it may sometimes be required to process a message that does not begin with "tbot". This can be handle by removing the  @module.check_command_dec decorator from the *run* method.
 
 ## Admin module
 
