@@ -53,27 +53,27 @@ Obviously, it may sometimes be required to process a message that does not begin
 
 This module is a powerful one. It should not be instantiated in sensitive rooms as this module allows to install/desinstall/activate/deactivate modules.  
 
-To install a new module from url, type the following
+1. To install a new module from url, type the following
 ```
 tbot admin install __MODULE_NAME__ https://gist.githubusercontent.com/JeremyMet/4016c881ae7b7e988fec542a4a04e470/raw/8faafe527e69cce48bbf1c9fc2e4b624b1bee5bc/template.py
 ```
 
-To list all rooms:
+2. To list all rooms:
 ```
 tbot admin room_list
 ```
 
-To list all services in a room:
+3. To list all services in a room:
 ```
 tbot admin service_list
 ```
 
-To activate a module:
+4. To activate a module:
 ```
 tbot admin service_on __MODULE_NAME__
 ```
 
-To deactivate a module:
+5. To deactivate a module:
 ```
 tbot admin service_off __MODULE_NAME__
 ```
