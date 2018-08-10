@@ -1,7 +1,7 @@
-# Matrix OS
+# Matrix_Bot
 
-Matrix OS is a simple Python program that facilitates service deployment across Matrix Rooms.
-Services (or modules) are Python scripts which process room sent messages. For instance, a message can ask a given module *A* to print out the current weather. Module *A* will then interpret the order and return the desired information. Matrix OS is mainly a small framework for "chat bot".
+Matrix_Bot is a simple Python program that facilitates service deployment across Matrix Rooms.
+Services (or modules) are Python scripts which process room sent messages. For instance, a message can ask a given module *A* to print out the current weather. Module *A* will then interpret the order and return the desired information. Matrix_Bot is mainly a small framework for "chat bot".
 
 ## How does it work ?
 
