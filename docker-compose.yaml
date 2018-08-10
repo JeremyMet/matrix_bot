@@ -1,0 +1,8 @@
+version: '2.0'
+
+
+services:
+  matrix_bot:
+    image: 441f56f707c4
+    command: >
+             sh -c "python serve-matrix.py"
