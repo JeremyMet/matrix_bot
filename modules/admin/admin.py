@@ -13,6 +13,7 @@ class admin(module):
         self.keywords = ["admin"] ;
         if not(os.path.isdir("./tmp_modules")):
             os.makedirs("./tmp_modules") ;
+        self.modules_to_be_installed = [] ;
 
 
     def list_rooms(self):
@@ -51,11 +52,18 @@ class admin(module):
         else:
             return "Service {} does not exist".format(service_name) ;
 
+
+    def install_from_list(self, url):
+        self.modules_to_be_installed = urllib.request.urlopen(url).read().decode("utf-8").split("\n") ;
+        return "/!\\ About to install ..."
+
+
     def install_module(self, name, url, room):
         if name in self.caller.rooms[room][1]:
             return "Module {} does already exist.".format(name) ;
         try:
-            fid = open("./tmp_modules/"+str(name)+".py", "w") ;
+            module_name = re.search("/[0-9aA-zZ]+.py", url).group(0)[1:-3];
+            fid = open("./tmp_modules/"+str(module_name)+".py", "w") ;
         except IOError as e:
             print(e)
         else:
@@ -67,7 +75,6 @@ class admin(module):
             else:
                 fid.write(file.decode("utf-8")) ;
                 fid.close() ;
-                module_name = re.search("/[0-9aA-zZ]+.py", url).group(0)[1:-3] ;
                 new_module = importlib.import_module("tmp_modules."+module_name, package = None) ;
                 class_ = getattr(new_module, module_name)
                 is_ok = self.caller.add_service_to_room(room, name, class_() ) ;
@@ -88,11 +95,25 @@ class admin(module):
             if r2 == "service_list":
                 return self.list_services(room)
             elif r2 == "service_on":
-                if len(raw_args) >= 4: return self.activate_service(raw_args[3], room) ;
+                if len(raw_args) == 4: return self.activate_service(raw_args[3], room) ;
             elif r2 == "service_off":
-                if len(raw_args) >= 4: return self.deactivate_service(raw_args[3], room) ;
+                if len(raw_args) == 4: return self.deactivate_service(raw_args[3], room) ;
             elif r2 == "install":
-                if len(raw_args) >= 5: return self.install_module(raw_args[3], raw_args[4], room) ;
+                if len(raw_args) == 5: return self.install_module(raw_args[3], raw_args[4], room) ;
+            elif r2 == "install_from_list":
+                if len(raw_args) == 4: return self.install_from_list(raw_args[3]) ;
+
+
+    @module.module_on_dec
+    @module.clock_dec
+    def run_on_clock(self):
+        if self.modules_to_be_installed:
+            current_module = self.modules_to_be_installed.pop().split("==") ;
+            current_module_name = current_module[0] ;
+            current_module_url = current_module[1] ;
+            print(current_module_name+" "+str(self.timer)) ;
+            return "tbot admin install {} {}".format(current_module_name, current_module_url) ;
+
 
     def exit(self):
         if os.path.isdir("./tmp_modules"):
