@@ -55,7 +55,7 @@ This module is a powerful one. It should not be instantiated in sensitive rooms 
 
 To install a new module from url, type the following
 ```
-tbot admin install template https://gist.githubusercontent.com/JeremyMet/4016c881ae7b7e988fec542a4a04e470/raw/8faafe527e69cce48bbf1c9fc2e4b624b1bee5bc/template.py
+tbot admin install __MODULE_NAME__ https://gist.githubusercontent.com/JeremyMet/4016c881ae7b7e988fec542a4a04e470/raw/8faafe527e69cce48bbf1c9fc2e4b624b1bee5bc/template.py
 ```
 
 To list all rooms:
