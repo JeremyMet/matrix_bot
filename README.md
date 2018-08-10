@@ -44,3 +44,18 @@ Note that each room "lives" independently in a sense that each room does have it
 
 In a matrix room in which module *A* has been installed, one simply has to write *tbot A* to call the *A* module.
 Of course, parameters can be added to the message as *tbot A parameter_0 paramater_1 ... parameter_n* but this input should be manually processed in the *run* method. 
+
+Of course, it may be sometimes required to process a message that does not begin with "tbot". This can be handle by removing the  @module.check_command_dec decorator from the *run* method.
+
+## Admin module
+
+This module is a powerful one. It should not be instantiated in sensitive rooms as this module allows to install/desinstall/activate/deactivate modules.  
+
+To install a new module from url, type the following
+```
+tbot admin install template https://gist.githubusercontent.com/JeremyMet/4016c881ae7b7e988fec542a4a04e470/raw/8faafe527e69cce48bbf1c9fc2e4b624b1bee5bc/template.py
+```
+
+## Pendu module
+
+
