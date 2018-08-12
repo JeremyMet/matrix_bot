@@ -22,10 +22,10 @@ class admin(module):
         return ret[:-1] ;
 
     def list_services(self, room):
-        room_item = self.caller.rooms[room] ;
+        room_item = self.caller.rooms[room][1] ;
         ret = ""
-        for k_service, service in room_item[1].items():
-            ret+="- "+k_service+" version "+service.__version__
+        for service in room_item:
+            ret+="- "+service.keywords[0]+" version "+service.__version__
             if service.is_module_activated():
                 ret+=" [x]"
             else:
@@ -110,7 +110,6 @@ class admin(module):
 
 
     @module.module_on_dec
-    @module.clock_dec
     def run_on_clock(self):
         if self.modules_to_be_installed:
             current_module = self.modules_to_be_installed.pop().split("==") ;

@@ -127,7 +127,7 @@ class matrix_utils(object):
                 for service in self.services_sensitive_on_clock.copy():
                     service.clock_update() ;
                     ret = service.run_on_clock() ;
-                    for room in self.services[service]:
+                    for room in self.services.copy()[service]:
                         if ret:
                             room.send_text(ret) ;
             time.sleep(t)

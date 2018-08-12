@@ -76,7 +76,6 @@ class module(object):
     def run(self, cmd, sender = None, room = None):
         pass
 
-    @clock_dec
     @module_on_dec
     def run_on_clock(self):
         pass
@@ -84,7 +83,6 @@ class module(object):
     def exit(self):
         pass
 
-    @clock_dec
     @module_on_dec
     def clock_update(self):
         self.timer += 1 ;
