@@ -8,9 +8,8 @@ from modules.module import module ;
 class pendu_bot(module):
 
 
-    def __init__(self):
-        super().__init__() ;
-        self.keywords = ["pendu"] ;
+    def __init__(self, keyword = "pendu"): # <- template ... Here goes your default module name
+        super().__init__(keyword) ;
         self.help = "type tbot pendu help for further details.";
         self.whatis = "Un simple jeu du pendu."
         self.__version__ = "0.0.1"
@@ -23,10 +22,12 @@ class pendu_bot(module):
     # 	return None
 
     @module.module_on_dec
+    @module.login_check_dec
     # @module.check_command_dec
     def run(self, cmd, sender = None, room = None):
         match = re.match('\!([a-zA-Z]+)', (unidecode.unidecode(cmd)))
         if match:
+            self.reset_clock();
             return self.pendu.propose(match.group(0)[1])
         args = cmd.split(" ") ;
         args = args[2:] # used for retro-compatibily
@@ -36,6 +37,7 @@ class pendu_bot(module):
             return ;
         if args[0] == "propose":
             if len(args)>1:
+                self.reset_clock() ;
                 return self.pendu.propose(unidecode.unidecode(args[1])) ;
             else:
                 return self.pendu.propose("") ;
@@ -56,11 +58,10 @@ tbot pendu event montre l'event en cours (s'il y en a)";
         return None ;
 
     @module.module_on_dec
-    @module.clock_dec
     def run_on_clock(self):
-        if self.get_timer() > 7200:
+        if self.get_timer() > 14400:
             self.reset_clock() ;
-            return "Rappel ! \n "+str(self.pendu) ;
+            return "/!\ Rappel ! \n \n "+self.pendu.show_lt()+"\n"+str(self.pendu) ;
 
 
     def exit(self):

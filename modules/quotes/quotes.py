@@ -3,15 +3,18 @@ import datetime ;
 import json ;
 import random ;
 
+
+
 class quotes(module):
 
-    def __init__(self):
-        super().__init__() ;
+    def __init__(self, keyword = "quotes"):
+        super().__init__(keyword) ;
         self.keywords = ["quotes"] ; # <- Name of your module
         self.help = "A quote module" ; # <- will be printed out by the admin module
         self.whatis = "A simple quote module !"
         self.__version__ = "0.0.1"
-        self.last_day = 0 ;
+        self.last_time = datetime.date(1961, 1, 1) ;
+        self.ret = "" ;
         try:
             with open("modules/quotes/quotes.json", "r") as f:
                 self.quotes = json.loads(f.read()) ;
@@ -20,17 +23,23 @@ class quotes(module):
 
     @module.module_on_dec
     @module.check_command_dec # can be commented for passive functions.
+    @module.login_check_dec
     def run(self, cmd, sender=None, room=None):
         # if self.check_command(cmd):
         #     return None ; Comment should be removed for passive functions
         # <- Your code goes here.
-        return "Today's Quote: \n \"" + self.current_quote["quote"] + "\" by " + self.current_quote["name"];
+        if not(self.ret):
+            self.run_on_clock() ;
+        return self.ret ;
 
     @module.module_on_dec
-    @module.clock_dec
     def run_on_clock(self):
-        current_time = datetime.datetime.now().day ;
-        if current_time > self.last_day:
-            self.current_quote = random.choice(self.quotes) ;
-            self.last_day = current_time ;
-            return "Today's Quote: \n \""+self.current_quote["quote"]+"\" by "+self.current_quote["name"] ;
+        current_time = datetime.datetime.now() ;
+        if current_time.day != self.last_time.day:
+            current_time_str = datetime.date(current_time.year, current_time.month, current_time.day).isoformat() ;
+            current_quote_index = (current_time.day+current_time.month+current_time.year)**2%len(self.quotes) ;
+            self.current_quote = self.quotes[current_quote_index] ;
+            self.last_time = current_time ;
+            self.ret = "~~~ Today's Quote (" +  current_time_str +") ~~~ \n" \
+                   +self.current_quote["quote"] +'\n'+'\t'*10+ "by "+self.current_quote["name"] ;
+            return self.ret ;

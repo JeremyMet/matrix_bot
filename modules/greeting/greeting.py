@@ -13,9 +13,8 @@ class greeting(module):
      "Jpp ..." \
      ]
 
-    def __init__(self):
-        super().__init__() ;
-        self.keywords = ["template"] ; # <- Name of your module
+    def __init__(self, keyword = "greeting"): # <- template ... Here goes your default module name
+        super().__init__(keyword) ;
         self.help = "Say \"hello tbot\"." ; # <- will be printed out by the admin module
         self.whatis = "A simple hello module. "
         self.__version__ = "0.0.1"
@@ -29,7 +28,7 @@ class greeting(module):
                 return random.choice(greeting.greeting_array).capitalize()+" "+sender.capitalize()+" \o/" ;
 
     @module.module_on_dec
-    @module.clock_dec
+    # @module.clock_dec
     def run_on_clock(self):
         if self.get_timer() > 5:
             self.reset_clock() ;

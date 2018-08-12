@@ -16,6 +16,10 @@ class module(object):
         return wrapper ;
 
     def clock_dec(function):
+        '''
+        Deprecated
+        :return:
+        '''
         def wrapper(*args, **kargs):
             if args[0].clock_sensitive:
                 return function(*args, **kargs)
@@ -47,14 +51,17 @@ class module(object):
         return len(raw_cmd) >= 2 and raw_cmd[0] == module.bot_cmd and raw_cmd[1] in self.keywords ;
 
 
-    def __init__(self):
+    def __init__(self, keyword = None):
         self.timer = 0 ;
         self.clock_sensitive = True ;
         self.is_module_on = True ;
         self.caller = None ;
-        self.keywords = [] ;
         self.help = "" ;
         self.whatis = "" ;
+        if keyword:
+            self.keywords = [keyword] ;
+        else:
+            self.keywords = ["Default_Module_Name"] ;
         self.__version__ = "0.0.0"
         if not(module.bot_cmd):
             try:

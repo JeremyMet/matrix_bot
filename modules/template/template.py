@@ -2,9 +2,8 @@ from modules.module import module ;
 
 class template(module):
 
-    def __init__(self):
-        super().__init__() ;
-        self.keywords = ["template"] ; # <- Name of your module
+    def __init__(self, keyword = "template"): # <- template ... Here goes your default module name
+        super().__init__(keyword) ;
         self.help = "Useless module" ; # <- will be printed out by the admin module
         self.whatis = "A simple template !"
         self.__version__ = "0.0.1"
@@ -18,7 +17,12 @@ class template(module):
         pass
 
     @module.module_on_dec
-    @module.clock_dec
     def run_on_clock(self):
         # <- Your code goes here.
+        pass
+
+    def exit(self):
+        # <- Your code goes here.
+        # This function is called when the bot is shut down,
+        # this can for instance be used to save temporary variables into files.
         pass
