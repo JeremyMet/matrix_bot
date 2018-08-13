@@ -8,12 +8,9 @@ import threading ;
 import sys
 
 
-# TODO Need to add/remove by service references (not name)
-# TODO It implies removing the structure as it is for now.
-
 class matrix_utils(object):
 
-    __MAX_SERVICE__ = 32 ;
+    __MAX_SERVICE__ = 32 ; # Number of services that can be simultaneously installed.
 
 
     def __init__(self, config_path = "config.json"):

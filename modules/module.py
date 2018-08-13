@@ -110,6 +110,7 @@ class module(object):
 
     def admin(self, caller):
         self.caller = caller ;
+
         
 
 

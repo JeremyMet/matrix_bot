@@ -13,6 +13,7 @@ class admin(module):
         if not(os.path.isdir("./tmp_modules")):
             os.makedirs("./tmp_modules") ;
         self.modules_to_be_installed = [] ;
+        self.instruction_stack = [] ;
 
 
     def list_rooms(self):
@@ -53,8 +54,12 @@ class admin(module):
 
 
     def install_from_list(self, url):
-        self.modules_to_be_installed = urllib.request.urlopen(url).read().decode("utf-8").split("\n") ;
-        return "/!\\ About to install ..."
+        modules_to_be_installed = urllib.request.urlopen(url).read().decode("utf-8").split("\n") ;
+        for module in modules_to_be_installed:
+            instruction = module.split("==") ;
+            self.instruction_stack.append("tbot admin install {} {} \ntbot admin pop".format(instruction[0], instruction[1])) ;
+            print(self.instruction_stack)
+        return "tbot admin pop" ;
 
 
     def install_module(self, name, url, room):
@@ -80,18 +85,44 @@ class admin(module):
         if is_ok:
             return "Module {} installed.".format(name)
         else:
-            return "Too many services."
+            return "Too many services ({} nb services Max).".format(self.caller.__MAX_SERVICE__);
 
 
     @module.module_on_dec
-    @module.check_command_dec
     def run(self, cmd, sender = None, room = None):
+        # can process several lines.
+        ret = "" ;
+        instruction_set = cmd.split("\n") ;
+        for instruction in instruction_set:
+            tmp = self.process_msg(instruction, sender, room) ;
+            if tmp:
+                ret += tmp+'\n' ;
+        return ret ;
+
+    @module.check_command_dec
+    def process_msg(self, cmd, sender = None, room = None):
         raw_args = cmd.split() ;
         if len(raw_args) >= 3:
             r2 = raw_args[2] ;
-            if r2 == "room_list":
+            if r2 == "push":
+                print(">>> {}".format(cmd))
+                tmp_re = re.findall('"(.*?)"', cmd) ;
+                print(tmp_re) ;
+                if tmp_re:
+                    instruction = tmp_re[0] ;
+                    self.instruction_stack.append(instruction) ;
+                    return "Instruction \"{}\" added to stack".format(instruction) ;
+                else:
+                    return "No valid string found."
+            if r2 == "pop":
+                if self.instruction_stack:
+                    instruction = self.instruction_stack.pop() ;
+                    return instruction ;
+                else:
+                    return "Stack is empty" ;
+            elif r2 == "room_list":
                 return self.list_rooms() ;
-            if r2 == "service_list":
+            elif r2 == "service_list":
                 return self.list_services(room)
             elif r2 == "service_on":
                 if len(raw_args) == 4: return self.activate_service(raw_args[3], room) ;
@@ -112,15 +143,8 @@ class admin(module):
     @module.module_on_dec
     def run_on_clock(self):
         if self.modules_to_be_installed:
-            current_module = self.modules_to_be_installed.pop().split("==") ;
-            current_module_name = current_module[0] ;
-            current_module_url = current_module[1] ;
-            return "tbot admin install {} {}".format(current_module_name, current_module_url) ;
-
+            pass
 
     def exit(self):
         if os.path.isdir("./tmp_modules"):
             shutil.rmtree("./tmp_modules") ;
-
-
-
