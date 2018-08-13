@@ -3,6 +3,7 @@ from modules.pendu_bot.pendu_bot import pendu_bot ;
 from modules.greeting.greeting import greeting ;
 from modules.admin.admin import admin ;
 from modules.quotes.quotes import quotes ;
+from modules.template.template import template ;
 # import logging
 
 # It would have been more clever to distinguish passive services from active ones ;
@@ -21,6 +22,7 @@ if __name__ == "__main__":
     my_admin_0 = admin("admin") ;
     my_admin_1 = admin("admin");
     my_quotes = quotes("quotes") ;
+    my_template = template()
     # Then Create the matrix object, add rooms, services and timers.
     matrix_obj = matrix_utils() ;
     gaming_room = matrix_obj.add_room("#toto-gaming:mandragot.org")
@@ -32,6 +34,7 @@ if __name__ == "__main__":
 
     matrix_obj.add_service_to_room(main_room, my_greeting)
     matrix_obj.add_service_to_room(main_room , my_quotes) ,
+    matrix_obj.add_service_to_room(main_room, my_template)
 
     matrix_obj.add_service_to_room(gaming_room, my_pendu) ;
     matrix_obj.add_service_to_room(gaming_room, my_greeting);

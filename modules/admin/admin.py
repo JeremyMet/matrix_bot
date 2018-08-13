@@ -6,6 +6,8 @@ import os ;
 import shutil ;
 import re ;
 
+# TODO When uninstalling a service, check if it is not used in another room and then delete it.(should we ?)
+
 class admin(module):
 
     def __init__(self, keyword = "admin"):
@@ -53,11 +55,14 @@ class admin(module):
             return "Service {} does not exist".format(service_name) ;
 
 
-    def install_from_list(self, url):
+    def install_from_list(self, url, room = None):
         modules_to_be_installed = urllib.request.urlopen(url).read().decode("utf-8").split("\n") ;
         for module in modules_to_be_installed:
             instruction = module.split("==") ;
-            self.instruction_stack.append("tbot admin install {} {} \ntbot admin pop".format(instruction[0], instruction[1])) ;
+            if room:
+                self.instruction_stack.append("tbot admin install {} {} {} \ntbot admin pop".format(instruction[0], instruction[1], room)) ;
+            else:
+                self.instruction_stack.append("tbot admin install {} {} \ntbot admin pop".format(instruction[0], instruction[1])) ;
             print(self.instruction_stack)
         return "tbot admin pop" ;
 
@@ -138,6 +143,8 @@ class admin(module):
                         return self.install_module(raw_args[3], raw_args[4], other_room) ;
             elif r2 == "install_from_list":
                 if len(raw_args) == 4: return self.install_from_list(raw_args[3]) ;
+                if len(raw_args) == 5: return self.install_from_list(raw_args[3], raw_args[4]) ;
+
 
 
     @module.module_on_dec

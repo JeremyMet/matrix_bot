@@ -25,12 +25,14 @@ class quotes(module):
     @module.check_command_dec # can be commented for passive functions.
     @module.login_check_dec
     def run(self, cmd, sender=None, room=None):
-        # if self.check_command(cmd):
-        #     return None ; Comment should be removed for passive functions
-        # <- Your code goes here.
-        if not(self.ret):
-            self.run_on_clock() ;
-        return self.ret ;
+        raw_args = cmd.split() ;
+        if len(raw_args) >= 3:
+            if raw_args[2] == "uninstall":
+             return self.remove(room) ;
+        else:
+            if not(self.ret):
+                self.run_on_clock() ;
+            return self.ret ;
 
     @module.module_on_dec
     def run_on_clock(self):

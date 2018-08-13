@@ -38,9 +38,13 @@ class module(object):
 
     def check_command_dec(function):
         def wrapper(*args, **kargs):
-            raw_cmd = args[1].split() ;
-            s = args[0] ;
-            if len(raw_cmd) >= 2 and raw_cmd[0] == module.bot_cmd and raw_cmd[1] in s.keywords:
+            s = args[0];
+            raw_args = args[1].split() ;
+            if len(raw_args) >= 2 and raw_args[0] == module.bot_cmd and raw_args[1] in s.keywords:
+                if len(raw_args) == 3:
+                    if raw_args[2] == "uninstall":
+                        room = args[3];
+                        return s.remove(room) ;
                 return function(*args, **kargs) ;
             else:
                 return None ;
@@ -58,6 +62,7 @@ class module(object):
         self.caller = None ;
         self.help = "" ;
         self.whatis = "" ;
+        self.raw_args = [] ;
         if keyword:
             self.keywords = [keyword] ;
         else:
@@ -111,7 +116,27 @@ class module(object):
     def admin(self, caller):
         self.caller = caller ;
 
-        
+    def remove(self, room):
+        try:
+            self.caller.remove_service_from_room(room, self) ;
+        except Exception as e:
+            return "Can not remove service {} from room".format(self.keywords[0]) ,
+        else:
+            return "Service {} removed.".format(self.keywords[0])
+
+
+
+    @module_on_dec
+    def run(self, cmd, sender=None, room=None):
+        instruction_set = cmd.split("\n") ;
+        ret = "" ;
+        for instruction in instruction_set:
+            tmp = self.process_msg_active(instruction, sender, room) ;
+            if not(tmp):
+                tmp = self.process_msg_passive(instruction, sender, room);
+            if tmp:
+                ret += tmp+'\n' ;
+        return ret ;
 
 
 if __name__ == "__main__":
