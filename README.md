@@ -1,7 +1,7 @@
 # Matrix_Bot
 
 Matrix_Bot is a simple Python program that **facilitates service deployment** across Matrix Rooms.
-Services (or modules) are Python scripts which process room sent messages. For instance, a message can ask a given module *A* to print out the current weather. Module *A* will then interpret the order and return the desired information. Matrix_Bot is mainly a **small framework for "chat bot"**.
+Services (or modules) are Python scripts which process room sent messages. For instance, a message can ask a given module *A* to print out the current weather. Matrix_Bot will then interpret the order and ask module *A* to return the desired information. Matrix_Bot is mainly a **small framework for "chat bot"**.
 
 ## How does it work ?
 
@@ -10,16 +10,16 @@ The following snippet gives a quick overview of Matrix_OS functionnalities:
 ```pyton
 
     # Instantiate modules (services)
-    my_pendu = pendu_bot() ;
-    my_greeting = greeting() ;
+    my_pendu = pendu_bot("pendu") ;
+    my_greeting = greeting("greeting") ;
     my_admin = admin() ;
     my_quotes = quotes() ;
-    
+
     # Then Create the matrix object, add rooms, services and timers.
     matrix_obj = matrix_utils() ;
     gaming_room = matrix_obj.add_room("#toto-gaming:pouet.org")
     main_room = matrix_obj.add_room("#toto:pouet.org")
-    
+
     # Add services :)
     matrix_obj.add_service_to_room(main_room, "greeting", my_greeting)
     matrix_obj.add_service_to_room(main_room, "admin", my_admin)
@@ -45,7 +45,7 @@ Internal clock (that ticks every second) should be set on in case you have modul
 Note that each room "lives" independently in a sense that each room does have its own service list. Services can be shared between room. All services are "clock sensitive" by default (meaning their *run_on_clock* subroutines will be called once per second). This sensitivity can be removed however (*module.set_clock_sensitivity_off()*). Plus, modules are activated when created, but it is possible to deactivate them (*module.set_module_off()*). It does not mean they are "desinstalled", it does mean that are in "sleep" mode and can be reactived any time soon (*module.set_module_on()*).
 
 In a matrix room in which module *A* has been installed, one simply has to write *tbot A* to call the *A* module.
-Of course, parameters can be added to the message as *tbot A parameter_0 paramater_1 ... parameter_n* but this input should be manually processed in the *run* method. 
+Of course, parameters can be added to the message as *tbot A parameter_0 paramater_1 ... parameter_n* but this input should be manually processed in the *run* method.
 
 Obviously, it may sometimes be required to process a message that does not begin with "tbot". This can be handle by removing the  @module.check_command_dec decorator from the *run* method.
 
@@ -58,26 +58,38 @@ This module is a powerful one. It should not be instantiated in sensitive rooms 
 tbot admin install __MODULE_NAME__ https://gist.githubusercontent.com/JeremyMet/4016c881ae7b7e988fec542a4a04e470/raw/8faafe527e69cce48bbf1c9fc2e4b624b1bee5bc/template.py
 ```
 
-2. To **list** all rooms:
+2. To **install** a set of modules from a specified list
+```
+tbot admin install_from_list __URL__
+```
+
+URL should target a text file that must conform to the following syntax:
+
+```
+module_0==https://mywebsite.org/module.py
+module_1==https://mywebsite.org/print_all.py
+```
+
+Names *module_0* and *module_1* are the service names respectively given to module.py instance/print_all.py instance. It will then be sufficient to type "tbot module_0" to call the service *module_0*.
+
+3. To **list** all rooms:
 ```
 tbot admin room_list
 ```
 
-3. To **list** all services in a room:
+4. To **list** all services in a room:
 ```
 tbot admin service_list
 ```
 
-4. To **activate** a module:
+5. To **activate** a module:
 ```
 tbot admin service_on __MODULE_NAME__
 ```
 
-5. To **deactivate** a module:
+6. To **deactivate** a module:
 ```
 tbot admin service_off __MODULE_NAME__
 ```
 
 ## Pendu module
-
-
