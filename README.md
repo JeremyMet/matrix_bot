@@ -41,7 +41,7 @@ The following snippet gives a quick overview of Matrix_OS functionnalities:
     matrix_obj.spawn() ; 
 ```
 First, one instantiates modules. 
-All modules inherit from the class *module*. When instantiating a module, one can specify a module name. This module name *$MODULE_NAME* is the one that will be used to call the corresponding service once installed in a chat room. Two modules with the same module name can not be installed in a same room (that would result to conflicting calls). An additive flag (namely *is_permanent*) allows a module to be permanent, meaning that no one can deactivate it or desinstall it (seee admin module, below).
+All modules inherit from the class *module*. When instantiating a module, one can specify a module name. This module name *$MODULE_NAME* is the one that will be used to call the corresponding service once installed in a chat room. Two modules with the same module name can not be installed in a same room (that would result to conflicting calls). An additive flag (namely *is_permanent*) allows a module to be permanent, meaning that no one can deactivate it or desinstall it (see admin module, below).
 
 The modules should follow a specific structure (that you may find in the modules/template folder). Each module is composed of (at least) four methods, two (*process_msg_active* and *process_msg_passive*) that will be in charged of "message processing", one (*run_on_clock*) that will be activated every second (that you may use to display weather every hour of the day) and one (*exit*) that will be called when the service is shut down (this can be useful to save temporary variables into files).
 
@@ -60,8 +60,6 @@ All services are "clock insensitive" by default (meaning their *run_on_clock* su
 
 In a matrix room in which module *A* has been installed, one simply has to write *tbot A* to call the *A* module.
 Of course, parameters can be added to the message as *tbot A parameter_0 parameter_1 ... parameter_n* but this input should be manually processed in the *run* method.
-
-Obviously, it may sometimes be required to process a message that does not begin with "tbot". This can be handle by removing the  @module.check_command_dec decorator from the *process_msg_active* method.
 
 ## Admin module
 
