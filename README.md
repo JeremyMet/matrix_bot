@@ -7,35 +7,40 @@ Services (or modules) are Python scripts which process room sent messages. For i
 
 The following snippet gives a quick overview of Matrix_OS functionnalities:
 
-```pyton
-
-    # Instantiate modules (services)
-    my_pendu = pendu_bot("pendu") ;
+```python
+    my_pendu = pendu_bot("pendu", is_permanent = True) ;
+    # my_pendu.set_clock_sensitivity_on() ;
     my_greeting = greeting("greeting") ;
-    my_admin = admin() ;
-    my_quotes = quotes() ;
-
+    my_admin_0 = admin("admin", is_permanent = True) ;
+    my_admin_1 = admin("admin", is_permanent = True);
+    my_quotes = quotes("quotes") ;
+    my_template = template()
+    my_regex = regex() ;
     # Then Create the matrix object, add rooms, services and timers.
     matrix_obj = matrix_utils() ;
-    gaming_room = matrix_obj.add_room("#toto-gaming:pouet.org")
-    main_room = matrix_obj.add_room("#toto:pouet.org")
+    gaming_room = matrix_obj.add_room("#toto-gaming:mandragot.org")
+    main_room = matrix_obj.add_room("#toto:mandragot.org")
 
+    # Add timer to services
     # Add services :)
-    matrix_obj.add_service_to_room(main_room, "greeting", my_greeting)
-    matrix_obj.add_service_to_room(main_room, "admin", my_admin)
-    matrix_obj.add_service_to_room(main_room, "quotes", my_quotes) ,
+    matrix_obj.add_service_to_room(main_room, my_regex)
 
-    matrix_obj.add_service_to_room(gaming_room, "pendu", my_pendu) ;
-    matrix_obj.add_service_to_room(gaming_room, "greeting", my_greeting) ;
-    matrix_obj.add_service_to_room(gaming_room, "admin", my_admin) ;
+    matrix_obj.add_service_to_room(gaming_room, my_pendu) ;
+    matrix_obj.add_service_to_room(gaming_room, my_greeting);
+
     # Start timer
+    matrix_obj.remove_service_from_room(gaming_room, my_pendu)
+    matrix_obj.add_timer_to_service(my_admin_1);
+    # matrix_obj.remove_service_from_room(main_room, my_admin_1)
     matrix_obj.start_timer()
-    # Remove clock sensitivity for the my_greeting instance
-    my_greeting.set_clock_sensitivity_off() ;
     # And run
-    matrix_obj.spawn() ;
- ```
-First, one instantiates modules. The modules should follow a specific structure (that you may find in the modules/template folder). Each module is composed of (at least) three methods, one (*run*) that will be in charged of "message processing", one (*run_on_clock*) that will be activated every second (that you may use to display weather every hour of the day) and one (*exit*) that will be called when the service is shut down (this can be useful to save temporary variables into files).
+    matrix_obj.spawn() ; 
+```
+First, one instantiates modules. 
+All modules inherit from the class *module*. When instantiating a module, one can specify a module name. This module name *$MODULE_NAME* is the one that will be used to call the corresponding service once installed in a chat room. Two modules with the same module name can not be installed in a given room (that would result to conflicting calls).
+The modules should follow a specific structure (that you may find in the modules/template folder). Each module is composed of (at least) four methods, two (*process_msg_active* and *process_msg_passive*) that will be in charged of "message processing", one (*run_on_clock*) that will be activated every second (that you may use to display weather every hour of the day) and one (*exit*) that will be called when the service is shut down (this can be useful to save temporary variables into files).
+
+There is a clear distinction between *process_msg_active* and *process_msg_passive* methods. The former is called through a *"tbot $MODULE_NAME"* instruction (entered in the room where the module is set up) while the latter processes other messages (what we name passive listening). 
 
 Then, the matrix object is created. It will load login information (server/login/password) from *config.json* file.
 One can finally add rooms and services before running matrix_os bot (*matrix_obj.spawn()*).
