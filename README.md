@@ -47,7 +47,7 @@ The modules should follow a specific structure (that you may find in the modules
 
 There is a clear distinction between *process_msg_active* and *process_msg_passive* methods. The former is called through a *"tbot $MODULE_NAME"* instruction (entered in the room where the module is set up) while the latter processes other messages (what we name passive listening). 
 
-Decorator @module.login_check_dec in front of *both process_msg_active* and *process_msg_passive* methods prevent them from processing bot own messages. Nonetheless, this decorator can be removed (it may be sometimes useful to listen to the bot's own words).
+Decorator @module.login_check_dec in front of *both process_msg_active* and *process_msg_passive* methods prevent them from processing bot's own messages. Nonetheless, this decorator can be removed (it may be sometimes useful to listen to the bot's own words).
 
 Then, the matrix object is created. It will load login information (server/login/password) from *config.json* file.
 One can finally add rooms and services before running matrix_os bot (*matrix_obj.spawn()*).
