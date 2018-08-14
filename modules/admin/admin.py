@@ -87,6 +87,7 @@ class admin(module):
                 fid.close() ;
                 new_module = importlib.import_module("tmp_modules."+module_name, package = None) ;
                 class_ = getattr(new_module, module_name)
+                class_.is_permanent = False ;
                 is_ok = self.caller.add_service_to_room(room, class_(name) ) ;
         if is_ok:
             return "Module {} installed.".format(name)

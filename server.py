@@ -16,7 +16,7 @@ if __name__ == "__main__":
 
 
     # Instantiate modules
-    my_pendu = pendu_bot("pendu") ;
+    my_pendu = pendu_bot("pendu", is_permanent = True) ;
     # my_pendu.set_clock_sensitivity_on() ;
     my_greeting = greeting("greeting") ;
     my_admin_0 = admin("admin", is_permanent = True) ;
