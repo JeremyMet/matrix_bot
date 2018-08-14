@@ -37,10 +37,10 @@ The following snippet gives a quick overview of Matrix_OS functionnalities:
     matrix_obj.spawn() ; 
 ```
 First, one instantiates modules. 
-All modules inherit from the class *module*. When instantiating a module, one can specify a module name. This module name *$MODULE_NAME* is the one that will be used to call the corresponding service once installed in a chat room. Two modules with the same module name can not be installed in a given room (that would result to conflicting calls).
+All modules inherit from the class *module*. When instantiating a module, one can specify a module name. This module name *$MODULE_NAME* is the one that will be used to call the corresponding service once installed in a chat room. Two modules with the same module name can not be installed in a same room (that would result to conflicting calls).
 The modules should follow a specific structure (that you may find in the modules/template folder). Each module is composed of (at least) four methods, two (*process_msg_active* and *process_msg_passive*) that will be in charged of "message processing", one (*run_on_clock*) that will be activated every second (that you may use to display weather every hour of the day) and one (*exit*) that will be called when the service is shut down (this can be useful to save temporary variables into files).
 
-There is a clear distinction between *process_msg_active* and *process_msg_passive* methods. The former is called through a *"tbot $MODULE_NAME"* instruction (entered in the room where the module is set up) while the latter processes other messages (what we name passive listening). 
+There is a clear distinction between *process_msg_active* and *process_msg_passive* methods. The former is called through a *"tbot $MODULE_NAME"* instruction (entered in the room where the module is set up) while the latter processes other messages (what we name passive listening). An additive flag (namely *is_permanent*) allows a module to be permanent, meaning that no one can deactivate it or desinstall it.
 
 Then, the matrix object is created. It will load login information (server/login/password) from *config.json* file.
 One can finally add rooms and services before running matrix_os bot (*matrix_obj.spawn()*).
