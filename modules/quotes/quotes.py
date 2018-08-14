@@ -3,12 +3,13 @@ import datetime ;
 import json ;
 import random ;
 
-
+# This module has been written in a old fashion way.
+# You should follow modules/template.py as a template for your own module :-)
 
 class quotes(module):
 
-    def __init__(self, keyword = "quotes"):
-        super().__init__(keyword) ;
+    def __init__(self, keyword = "quotes", is_permanent = False):
+        super().__init__(keyword, is_permanent) ;
         self.keywords = ["quotes"] ; # <- Name of your module
         self.help = "A quote module" ; # <- will be printed out by the admin module
         self.whatis = "A simple quote module !"

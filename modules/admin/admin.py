@@ -10,8 +10,8 @@ import re ;
 
 class admin(module):
 
-    def __init__(self, keyword = "admin"):
-        super().__init__(keyword) ;
+    def __init__(self, keyword = "admin", is_permanent = True):
+        super().__init__(keyword, is_permanent) ;
         if not(os.path.isdir("./tmp_modules")):
             os.makedirs("./tmp_modules") ;
         self.modules_to_be_installed = [] ;
@@ -36,23 +36,24 @@ class admin(module):
             ret+="\n" ;
         return ret[:-1] ;
 
-    def activate_service(self, service_name, room):
-        room_item = self.caller.rooms[room] ;
-        services = room_item[1] ;
-        if service_name in services:
-            services[service_name].set_module_on() ;
-            return "Service {} is activated.".format(service_name) ;
-        else:
-            return "Service {} does not exist.".format(service_name) ;
-
-    def deactivate_service(self, service_name, room):
-        room_item = self.caller.rooms[room] ;
-        services = room_item[1] ;
-        if service_name in services:
-            services[service_name].set_module_off() ;
-            return "Service {} is deactivated.".format(service_name) ;
-        else:
-            return "Service {} does not exist".format(service_name) ;
+    # def activate_service(self, service_name, room):
+    #     room_item = self.caller.rooms[room] ;
+    #     services = room_item[1] ;
+    #     if service_name in services:
+    #         services[service_name].set_module_on() ;
+    #         return "Service {} is activated.".format(service_name) ;
+    #     else:
+    #         return "Service {} does not exist.".format(service_name) ;
+    #
+    # def deactivate_service(self, service_name, room):
+    #     room_item = self.caller.rooms[room] ;
+    #     services = room_item[1] ;
+    #     if service_name in services:
+    #
+    #         services[service_name].set_module_off() ;
+    #         return "Service {} is deactivated.".format(service_name) ;
+    #     else:
+    #         return "Service {} does not exist".format(service_name) ;
 
 
     def install_from_list(self, url, room = None):
@@ -93,19 +94,8 @@ class admin(module):
             return "Too many services ({} nb services Max).".format(self.caller.__MAX_SERVICE__);
 
 
-    @module.module_on_dec
-    def run(self, cmd, sender = None, room = None):
-        # can process several lines.
-        ret = "" ;
-        instruction_set = cmd.split("\n") ;
-        for instruction in instruction_set:
-            tmp = self.process_msg(instruction, sender, room) ;
-            if tmp:
-                ret += tmp+'\n' ;
-        return ret ;
 
-    @module.check_command_dec
-    def process_msg(self, cmd, sender = None, room = None):
+    def process_msg_active(self, cmd, sender = None, room = None):
         raw_args = cmd.split() ;
         if len(raw_args) >= 3:
             r2 = raw_args[2] ;
@@ -129,12 +119,12 @@ class admin(module):
                 return self.list_rooms() ;
             elif r2 == "service_list":
                 return self.list_services(room)
-            elif r2 == "service_on":
-                if len(raw_args) == 4: return self.activate_service(raw_args[3], room) ;
-                else:
-                    return "Unknown Room."
-            elif r2 == "service_off":
-                if len(raw_args) == 4: return self.deactivate_service(raw_args[3], room) ;
+            # elif r2 == "service_on":
+            #     if len(raw_args) == 4: return self.activate_service(raw_args[3], room) ;
+            #     else:
+            #         return "Unknown Room."
+            # elif r2 == "service_off":
+            #     if len(raw_args) == 4: return self.deactivate_service(raw_args[3], room) ;
             elif r2 == "install":
                 if len(raw_args) == 5: return self.install_module(raw_args[3], raw_args[4], room) ;
                 if len(raw_args) == 6:
@@ -146,6 +136,9 @@ class admin(module):
                 if len(raw_args) == 5: return self.install_from_list(raw_args[3], raw_args[4]) ;
 
 
+    @module.login_check_dec
+    def process_msg_passive(self, cmd, sender, room):
+        pass
 
     @module.module_on_dec
     def run_on_clock(self):

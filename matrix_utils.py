@@ -101,9 +101,6 @@ class matrix_utils(object):
             tmp_log = "Event from " + str(self.rooms[room][0]) + " at " + str(datetime.datetime.now())+ " by "+login ;
             print(tmp_log)
             text = str(event["content"]["body"]) ;
-            if text == self.config["bot_down_cmd"]:
-                room.send_text(self.config["bot_stop_txt"]);
-                self.exit() ;
             if self.rooms:
                 for service in self.rooms[room][1].copy():
                     service.admin(self) ;
@@ -147,6 +144,7 @@ class matrix_utils(object):
                 service.exit();
                 # self.remove_service_from_room(room_key, service) ;
             # room_key.leave() ;
+        sys.exit() ;
 
     def add_timer_to_service(self, service):
         if not(service in self.services_sensitive_on_clock):

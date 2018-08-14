@@ -37,6 +37,10 @@ class module(object):
         return wrapper ;
 
     def check_command_dec(function):
+        '''
+        Deprecated
+        :return:
+        '''
         def wrapper(*args, **kargs):
             s = args[0];
             raw_args = args[1].split() ;
@@ -55,7 +59,7 @@ class module(object):
         return len(raw_cmd) >= 2 and raw_cmd[0] == module.bot_cmd and raw_cmd[1] in self.keywords ;
 
 
-    def __init__(self, keyword = None):
+    def __init__(self, keyword = None, is_permanent = False):
         self.timer = 0 ;
         self.clock_sensitive = True ;
         self.is_module_on = True ;
@@ -63,6 +67,7 @@ class module(object):
         self.help = "" ;
         self.whatis = "" ;
         self.raw_args = [] ;
+        self.is_permanent = is_permanent ;
         if keyword:
             self.keywords = [keyword] ;
         else:
@@ -126,14 +131,43 @@ class module(object):
 
 
 
-    @module_on_dec
     def run(self, cmd, sender=None, room=None):
         instruction_set = cmd.split("\n") ;
         ret = "" ;
         for instruction in instruction_set:
-            tmp = self.process_msg_active(instruction, sender, room) ;
-            if not(tmp):
-                tmp = self.process_msg_passive(instruction, sender, room);
+            if instruction == self.caller.config["bot_down_cmd"]:
+                room.send_text(self.caller.config["bot_stop_txt"]);
+                self.caller.exit();
+            raw_args = instruction.split() ;
+            tmp = "" ;
+            if len(raw_args) >= 2 and raw_args[0] == self.bot_cmd and raw_args[1] in self.keywords[0]:
+                if self.is_module_activated():
+                    tmp = self.process_msg_active(instruction, sender, room) ;
+                # Module Management.
+                if not(tmp):
+                    tmp = "" ;
+                    if len(raw_args) == 3 and raw_args[2] == "uninstall":
+                        if self.is_permanent:
+                            tmp += "Module {} can not be desinstalled.".format(self.keywords[0]) ;
+                        else:
+                            return self.remove(room)
+                    if len(raw_args) == 3 and raw_args[2] == "activate":
+                        if self.is_module_activated():
+                            tmp+= "Module {} is already activated.".format(self.keywords[0]) ;
+                        else:
+                            self.set_module_on() ;
+                            tmp += "Module {} is activated".format(self.keywords[0])
+                    if len(raw_args) == 3 and raw_args[2] == "deactivate":
+                        if not(self.is_module_activated()):
+                            tmp+= "Module {} is already deactivated.".format(self.keywords[0]) ;
+                        elif self.is_permanent:
+                            tmp+=  "Module {} can not be deactivated.".format(self.keywords[0]) ;
+                        else:
+                            self.set_module_off() ;
+                            tmp+= "Module {} is deactivated.".format(self.keywords[0]) ;
+            else:
+                if self.is_module_activated():
+                    tmp = self.process_msg_passive(instruction, sender, room);
             if tmp:
                 ret += tmp+'\n' ;
         return ret ;

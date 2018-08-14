@@ -19,8 +19,8 @@ if __name__ == "__main__":
     my_pendu = pendu_bot("pendu") ;
     # my_pendu.set_clock_sensitivity_on() ;
     my_greeting = greeting("greeting") ;
-    my_admin_0 = admin("admin") ;
-    my_admin_1 = admin("admin");
+    my_admin_0 = admin("admin", is_permanent = True) ;
+    my_admin_1 = admin("admin", is_permanent = True);
     my_quotes = quotes("quotes") ;
     my_template = template()
     # Then Create the matrix object, add rooms, services and timers.
