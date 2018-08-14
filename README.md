@@ -47,6 +47,8 @@ The modules should follow a specific structure (that you may find in the modules
 
 There is a clear distinction between *process_msg_active* and *process_msg_passive* methods. The former is called through a *"tbot $MODULE_NAME"* instruction (entered in the room where the module is set up) while the latter processes other messages (what we name passive listening). 
 
+Decorator @module.login_check_dec in front of *both process_msg_active* and *process_msg_passive* methods prevent them from processing bot own messages. Nonetheless, this decorator can be removed (it may be sometimes useful to listen to the bot's own words).
+
 Then, the matrix object is created. It will load login information (server/login/password) from *config.json* file.
 One can finally add rooms and services before running matrix_os bot (*matrix_obj.spawn()*).
 
@@ -57,7 +59,7 @@ Note that each room "lives" independently in a sense that each room does have it
 All services are "clock insensitive" by default (meaning their *run_on_clock* subroutines will **not** be called once per second). This sensitivity of modules can be switched on (*matrix_obj.add_timer_to_service(service)*) or switched off (*matrix_obj.remove_timer_to_service(service)*) separately.
 
 In a matrix room in which module *A* has been installed, one simply has to write *tbot A* to call the *A* module.
-Of course, parameters can be added to the message as *tbot A parameter_0 paramater_1 ... parameter_n* but this input should be manually processed in the *run* method.
+Of course, parameters can be added to the message as *tbot A parameter_0 parameter_1 ... parameter_n* but this input should be manually processed in the *run* method.
 
 Obviously, it may sometimes be required to process a message that does not begin with "tbot". This can be handle by removing the  @module.check_command_dec decorator from the *process_msg_active* method.
 
