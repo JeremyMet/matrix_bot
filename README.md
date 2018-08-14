@@ -67,12 +67,12 @@ This module is a powerful one. It should not be instantiated in sensitive rooms 
 
 1. To **install** a new module from url, type the following
 ```
-tbot admin install __MODULE_NAME__ https://gist.githubusercontent.com/JeremyMet/4016c881ae7b7e988fec542a4a04e470/raw/8faafe527e69cce48bbf1c9fc2e4b624b1bee5bc/template.py
+tbot admin install $MODULE_NAME https://gist.githubusercontent.com/JeremyMet/4016c881ae7b7e988fec542a4a04e470/raw/8faafe527e69cce48bbf1c9fc2e4b624b1bee5bc/template.py
 ```
 
 2. To **install** a set of modules from a specified list
 ```
-tbot admin install_from_list __URL__
+tbot admin install_from_list $URL
 ```
 
 URL should target a text file that must conform to the following syntax:
@@ -94,18 +94,14 @@ tbot admin room_list
 tbot admin service_list
 ```
 
-5. To **activate** a module:
-```
-tbot admin service_on __MODULE_NAME__
-```
-
-6. To **deactivate** a module:
-```
-tbot admin service_off __MODULE_NAME__
-```
-
 ## Regex Module
 
 Regex Module is a simple module which allows to save a regular expression and an excepted output along side.
-The *tbot regex "[hH]ello" "Hello friend"*  instruction would store the regex "[hH]ello". Since then, the bot would answer "Hello friend" every single time it reads "hello"/"Hello". 
+The *tbot regex "[hH]ello" "Hello friend"*  instruction would store the regex "[hH]ello". Since then, the bot would answer "Hello friend" every single time it reads "hello"/"Hello" from chat room. 
 Such a feature could be used to create aliases, i.e. making wordy instructions smaller. As an example, one could type "tbot regex "room_list" "tbot admin room_list". By typing "room_list", the regex module will answer back "tbot admin room_list". As the admin module listens to bot's own word, it will then execute the "tbot admin room_list" and display the excepted result.
+
+```
+tbot regex $REGEX $OUTPUT
+```
+
+## Any Module
