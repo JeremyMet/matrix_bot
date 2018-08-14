@@ -47,7 +47,9 @@ One can finally add rooms and services before running matrix_os bot (*matrix_obj
 
 Internal clock (that ticks every second) should be set on in case you have modules that may be clock sensitive. To do so, just type the *matrix_obj.start_timer()* instruction. The ticks can be stopped thanks to the *matrix_obj.stop_timer()* command.
 
-Note that each room "lives" independently in a sense that each room does have its own service list. Services can be shared between room. All services are "clock sensitive" by default (meaning their *run_on_clock* subroutines will be called once per second). This sensitivity can be removed however (*module.set_clock_sensitivity_off()*). Plus, modules are activated when created, but it is possible to deactivate them (*module.set_module_off()*). It does not mean they are "desinstalled", it does mean that are in "sleep" mode and can be reactived any time soon (*module.set_module_on()*).
+Note that each room "lives" independently in a sense that each room does have its own service list. Services can be shared between room. Please, understand that sharing service between rooms can lead to undesirable behaviour and should be thought with care beforehand. For many reasons (including security issues), it is **preferable** to dockerize the matrix_bot. As you will later see, one can install modules on-the-fly thanks to the admin module. These modules could be malicious, they could for instance erase all your system files ... That is why **docker** is very important here.
+
+All services are "clock insensitive" by default (meaning their *run_on_clock* subroutines will **not** be called once per second). This sensitivity of modules can be switched on (*matrix_obj.add_timer_to_service(service)*) or switched off (*matrix_obj.remove_timer_to_service(service)*) independently.
 
 In a matrix room in which module *A* has been installed, one simply has to write *tbot A* to call the *A* module.
 Of course, parameters can be added to the message as *tbot A parameter_0 paramater_1 ... parameter_n* but this input should be manually processed in the *run* method.
