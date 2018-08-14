@@ -105,3 +105,5 @@ tbot regex $REGEX $OUTPUT
 ```
 
 ## Any Module
+
+Every module that you will write will inherit from the class *module*. This class integrate in-built features, as *tbot $MODULE_NAME uninstall* to uninstall a module. The service object itself will not be deleted but it will not be executed anymore through message event callback functions. Module can also be deactivated *tbot $MODULE_NAME deactivate*. The module will be in "sleep mode" and can be reactivated any time soon thanks to the *bot $MODULE_NAME activate* function.
