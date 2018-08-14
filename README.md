@@ -3,6 +3,10 @@
 Matrix_Bot is a simple Python program that **facilitates service deployment** across Matrix Rooms.
 Services (or modules) are Python scripts which process room sent messages. For instance, a message can ask a given module *A* to print out the current weather. Matrix_Bot will then interpret the order and ask module *A* to return the desired information. Matrix_Bot is mainly a **small framework for "chat bot"**.
 
+## Security Note
+
+Poor understanding of the tool could lead to severe security issues (malicious codes that could erase one's hardware, display plain passwords etc). First, matrix_bot **must** be dockerized to limit attack vectors/ Plus, the *admin* module (see below) should be built-in in a trusted private room.
+
 ## How does it work ?
 
 The following snippet gives a quick overview of Matrix_OS functionnalities:
