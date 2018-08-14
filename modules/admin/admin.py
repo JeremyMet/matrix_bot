@@ -7,6 +7,7 @@ import shutil ;
 import re ;
 
 # TODO When uninstalling a service, check if it is not used in another room and then delete it.(should we ?)
+# Don't think so, it should be handled by the developper instead ... 
 
 class admin(module):
 

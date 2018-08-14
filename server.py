@@ -29,7 +29,7 @@ if __name__ == "__main__":
     matrix_obj = matrix_utils() ;
     gaming_room = matrix_obj.add_room("#toto-gaming:mandragot.org")
     # gaming_room = matrix_obj.add_room("#deuxsurdix-gaming:bobbyblues.com")
-    main_room = matrix_obj.add_room("#deuxsurdix:mandragot.org")
+    main_room = matrix_obj.add_room("#toto:mandragot.org")
 
     # admin_room = matrix_obj.add_room("#admin:mandragot.org")
     # Add timer to services
