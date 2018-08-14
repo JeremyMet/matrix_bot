@@ -7,11 +7,11 @@ import datetime
 import threading ;
 import sys
 
+## TODO When adding a timer, check it is instantiated somhere ... ;-)
 
 class matrix_utils(object):
 
     __MAX_SERVICE__ = 32 ; # Number of services that can be simultaneously installed.
-
 
     def __init__(self, config_path = "config.json"):
         self.rooms = {} ;
@@ -60,22 +60,25 @@ class matrix_utils(object):
     def remove_service_from_room(self, room, service):
         tmp_set_service = self.rooms[room][1];
         tmp_set_service_name = self.rooms[room][2];
+        tmp_services = self.services[service] ;
         if service in tmp_set_service:
             tmp_set_service.remove(service) ;
             tmp_set_service_name.remove(service.keywords[0]) ;
+            tmp_services.remove(room) ;
             self.nb_current_service -= 1;
+            # if service is not linked to any room, remove it from the ;
+            if not(tmp_services) and service in self.services_sensitive_on_clock:
+                self.services_sensitive_on_clock.remove(service) ;
         else:
             raise Exception("Service {} does not exist.".format(service)) ;
 
 
-    def add_room(self, room_name, message_on_start = None):
+    def add_room(self, room_name, message_on_start = False):
         new_room = self.client.join_room(room_name) ;
         listener = new_room.add_listener(self.callback) ;
         self.rooms[new_room] = (room_name, set(), set(),  listener);
         self.room_name_to_room[room_name] = new_room ;
         if message_on_start:
-            new_room.send_txt()
-        else:
             new_room.send_text(self.config["bot_start_txt"]) ;
         return new_room ;
 
@@ -147,6 +150,8 @@ class matrix_utils(object):
         sys.exit() ;
 
     def add_timer_to_service(self, service):
+        if not(service in self.services):
+            raise BaseException("Service {} should belong to (at least) one room.".format(service)) ;
         if not(service in self.services_sensitive_on_clock):
             self.services_sensitive_on_clock.add(service) ;
 

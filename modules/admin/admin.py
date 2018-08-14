@@ -58,14 +58,13 @@ class admin(module):
 
     def install_from_list(self, url, room = None):
         modules_to_be_installed = urllib.request.urlopen(url).read().decode("utf-8").split("\n") ;
-        for module in modules_to_be_installed:
-            instruction = module.split("==") ;
+        for mod in modules_to_be_installed:
+            instruction = mod.split("==") ;
             if room:
-                self.instruction_stack.append("tbot admin install {} {} {} \ntbot admin pop".format(instruction[0], instruction[1], room)) ;
+                self.instruction_stack.append("{} admin install {} {} {} \n{} admin pop".format(module.bot_cmd, instruction[0], instruction[1], room, module.bot_cmd)) ;
             else:
-                self.instruction_stack.append("tbot admin install {} {} \ntbot admin pop".format(instruction[0], instruction[1])) ;
-            print(self.instruction_stack)
-        return "tbot admin pop" ;
+                self.instruction_stack.append("{} admin install {} {} \n{} admin pop".format(module.bot_cmd, instruction[0], instruction[1], module.bot_cmd)) ;
+        return "{} admin pop".format(module.bot_cmd) ;
 
 
     def install_module(self, name, url, room):
@@ -87,8 +86,8 @@ class admin(module):
                 fid.close() ;
                 new_module = importlib.import_module("tmp_modules."+module_name, package = None) ;
                 class_ = getattr(new_module, module_name)
-                class_.is_permanent = False ;
-                is_ok = self.caller.add_service_to_room(room, class_(name) ) ;
+                service = class_(name, is_permanent = False) ;
+                is_ok = self.caller.add_service_to_room(room, service) ;
         if is_ok:
             return "Module {} installed.".format(name)
         else:
@@ -101,7 +100,6 @@ class admin(module):
         if len(raw_args) >= 3:
             r2 = raw_args[2] ;
             if r2 == "push":
-                print(">>> {}".format(cmd))
                 tmp_re = re.findall('"(.*?)"', cmd) ;
                 print(tmp_re) ;
                 if tmp_re:
