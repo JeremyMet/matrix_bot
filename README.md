@@ -1,6 +1,6 @@
 # Matrix_Bot
 
-Matrix_Bot is a simple Python program that **facilitates service deployment** across Matrix Rooms.
+Matrix_Bot is a simple Python library that **facilitates service deployment** across Matrix Rooms.
 Services (or modules) are Python scripts which process room sent messages. For instance, a message can ask a given module *A* to print out the current weather. Matrix_Bot will then interpret the order and ask module *A* to return the desired information. Matrix_Bot is mainly a **small framework for "chat bot"**.
 
 ## Security Note
