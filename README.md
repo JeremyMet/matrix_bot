@@ -104,4 +104,8 @@ tbot admin service_on __MODULE_NAME__
 tbot admin service_off __MODULE_NAME__
 ```
 
-## Pendu module
+## Regex Module
+
+Regex Module is a simple module which allows to save a regular expression and an excepted output along side.
+The *tbot regex "[hH]ello" "Hello friend"*  instruction would store the regex "[hH]ello". Since then, the bot would answer "Hello friend" every single time it reads "hello"/"Hello". 
+Such a feature could be used to create aliases, i.e. making wordy instructions smaller. As an example, one could type "tbot regex "room_list" "tbot admin room_list". By typing "room_list", the regex module will answer back "tbot admin room_list". As the admin module listens to bot's own word, it will then execute the "tbot admin room_list" and display the excepted result.
