@@ -5,7 +5,7 @@ Services (or modules) are Python scripts which process room sent messages. For i
 
 ## Security Note
 
-Poor understanding of the tool could lead to severe security issues (malicious codes that could erase one's hardware, display plain passwords etc). First, matrix_bot **must** be dockerized to limit attack vectors/ Plus, the *admin* module (see below) should be built-in in a trusted private room.
+Poor understanding of the tool could lead to severe security issues (malicious codes that could erase one's hard drive, display plain passwords etc). First, matrix_bot **must** be dockerized to limit attack vectors/ Plus, the *admin* module (see below) should be built-in in a trusted private room.
 
 ## How does it work ?
 
