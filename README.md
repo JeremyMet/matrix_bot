@@ -94,6 +94,24 @@ tbot admin room_list
 tbot admin service_list
 ```
 
+5. To push string to the admin's module stack:
+```
+tbot admin push "your string"
+```
+
+6. To pop string from the admin's module stack:
+```
+tbot admin pop
+```
+
+Commands 5. and 6. can be handy as you can store several instructions on the stack. For instance, you can write the following,
+```python
+tbot admin push "tbot admin service_list \n tbot admin pop"
+tbot admin push "tbot admin room_list \n tbot admin pop"
+```
+and then write *tbot admin pop*. The bot will then return both *tbot admin service_list* AND *tbot admin pop*. This last instruction asks the bot to pop another string, namely *tbot admin room_list* AND *tbot admin pop*. If the stack is empty, the latter would return "Stack is empty". This behaviour is powerful to create "chain reaction".
+
+
 ## Regex Module
 
 Regex Module is a simple module which allows to save a regular expression and an excepted output along side.
