@@ -40,7 +40,7 @@ class quotes(module):
         current_time = datetime.datetime.now() ;
         if current_time.day != self.last_time.day:
             current_time_str = datetime.date(current_time.year, current_time.month, current_time.day).isoformat() ;
-            current_quote_index = (current_time.day+current_time.month+current_time.year)**2%len(self.quotes) ;
+            current_quote_index = (pow(current_time.day+current_time.month+current_time.year, 3)+current_time.day)%len(self.quotes) ;
             self.current_quote = self.quotes[current_quote_index] ;
             self.last_time = current_time ;
             self.ret = "~~~ Today's Quote (" +  current_time_str +") ~~~ \n" \
