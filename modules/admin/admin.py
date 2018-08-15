@@ -6,8 +6,7 @@ import os ;
 import shutil ;
 import re ;
 
-# TODO When uninstalling a service, check if it is not used in another room and then delete it.(should we ?)
-# Don't think so, it should be handled by the developper instead ... 
+# TODO Add auto_restart timer in the parser
 
 class admin(module):
 
@@ -17,6 +16,7 @@ class admin(module):
             os.makedirs("./tmp_modules") ;
         self.modules_to_be_installed = [] ;
         self.instruction_stack = [] ;
+        self.auto_restart = False ;
 
 
     def list_rooms(self):
@@ -134,6 +134,15 @@ class admin(module):
             elif r2 == "install_from_list":
                 if len(raw_args) == 4: return self.install_from_list(raw_args[3]) ;
                 if len(raw_args) == 5: return self.install_from_list(raw_args[3], raw_args[4]) ;
+            elif r2 == "auto_restart":
+                if len(raw_args) == 4:
+                    if raw_args[3] == "on":
+                        self.auto_restart = True ;
+                        self.reset_clock() ;
+                        return "Auto_restart On." ;
+                    if raw_args[3] == "off":
+                        self.auto_restart = False ;
+                        return "Auto_restart Off." ;
 
 
     @module.login_check_dec
@@ -142,8 +151,10 @@ class admin(module):
 
     @module.module_on_dec
     def run_on_clock(self):
-        if self.modules_to_be_installed:
-            pass
+        ## For auto_restart
+        if self.auto_restart:
+            if self.get_timer() > 57600:  # 57600s => 16h
+                return "Restart ... \ntbot down";
 
     def exit(self):
         if os.path.isdir("./tmp_modules"):
