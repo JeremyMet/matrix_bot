@@ -111,7 +111,7 @@ tbot admin push "tbot admin room_list \n tbot admin pop"
 ```
 and then write *tbot admin pop*. The bot will then return both *tbot admin service_list* AND *tbot admin pop*. This last instruction asks the bot to pop another string, namely *tbot admin room_list* AND *tbot admin pop*. If the stack is empty, the latter would return "Stack is empty". This behaviour is powerful to create "chain reaction".
 
-The module also includes an "auto restart" option that allows to "reboot the bot" at a specific time. This can be configured thanks to the *config.json* file located in the admin folder.
+The module also includes an "auto restart" option that allows to "reboot the bot" once a day at a specific time. This can be configured thanks to the *config.json* file located in the admin folder.
 
 ## Regex Module
 
