@@ -17,7 +17,7 @@ class quotes(module):
         self.last_time = datetime.date(1961, 1, 1) ;
         self.ret = "" ;
         try:
-            with open("modules/quotes/quotes.json", "r") as f:
+            with open("modules/quotes/stupidstuff.json", "r") as f:
                 self.quotes = json.loads(f.read()) ;
         except IOError:
             raise("Could not load the quotes file \"quote.json\"") ;
@@ -40,9 +40,9 @@ class quotes(module):
         current_time = datetime.datetime.now() ;
         if current_time.day != self.last_time.day:
             current_time_str = datetime.date(current_time.year, current_time.month, current_time.day).isoformat() ;
-            current_quote_index = (pow(current_time.day+current_time.month+current_time.year, 3)+current_time.day)%len(self.quotes) ;
+            current_quote_index = (pow(current_time.day+current_time.month+current_time.year, 2)+current_time.day)%len(self.quotes) ;
             self.current_quote = self.quotes[current_quote_index] ;
             self.last_time = current_time ;
-            self.ret = "~~~ Today's Quote (" +  current_time_str +") ~~~ \n" \
-                   +self.current_quote["quote"] +'\n'+'\t'*10+ "by "+self.current_quote["name"] ;
+            self.ret = "~~~ Today's Joke (" +  current_time_str +") ~~~ \n" \
+                   +self.current_quote["body"] +'\n'+'\t'*10+ "Category "+self.current_quote["category"] ;
             return self.ret ;
