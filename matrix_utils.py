@@ -123,6 +123,7 @@ class matrix_utils(object):
             if self.is_on:
                 for service in self.services_sensitive_on_clock.copy():
                     service.clock_update() ;
+                    service.admin(self);
                     ret = service.run_on_clock() ;
                     for room in self.services.copy()[service]:
                         if ret:

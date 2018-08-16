@@ -5,6 +5,8 @@ import importlib
 import os ;
 import shutil ;
 import re ;
+import json ;
+import datetime ;
 
 # TODO Add auto_restart timer in the parser
 
@@ -12,11 +14,24 @@ class admin(module):
 
     def __init__(self, keyword = "admin", is_permanent = True):
         super().__init__(keyword, is_permanent) ;
+        self.auto_restart = False; # False by default.
         if not(os.path.isdir("./tmp_modules")):
             os.makedirs("./tmp_modules") ;
+        try:
+            with open("./modules/admin/config.json") as f:
+                config = json.loads(f.read()) ;
+        except:
+            self.reboot_timer = datetime.time(hour = 0, minute = 0) ;
+            self.last_reboot = datetime.date(year = 1961, month = 1, day = 1) ;
+        else:
+            if config["auto_restart"] == "yes":
+                self.auto_restart = True ;
+            reboot_timer = config["reboot_timer"].split(":") ;
+            self.reboot_timer = datetime.time(hour = int(reboot_timer[0]), minute= int(reboot_timer[1])) ;
+            last_reboot = config["last_reboot"].split("-") ;
+            self.last_reboot = datetime.date(year = int(last_reboot[0]), month = int(last_reboot[1]), day = int(last_reboot[2])) ;
         self.modules_to_be_installed = [] ;
         self.instruction_stack = [] ;
-        self.auto_restart = False ;
 
 
     def list_rooms(self):
@@ -139,7 +154,7 @@ class admin(module):
                     if raw_args[3] == "on":
                         self.auto_restart = True ;
                         self.reset_clock() ;
-                        return "Auto_restart On." ;
+                        return "Auto_restart On (at {}).".format(self.reboot_timer) ;
                     if raw_args[3] == "off":
                         self.auto_restart = False ;
                         return "Auto_restart Off." ;
@@ -153,8 +168,31 @@ class admin(module):
     def run_on_clock(self):
         ## For auto_restart
         if self.auto_restart:
-            if self.get_timer() > 57600:  # 57600s => 16h
-                return "Restart ... \ntbot down";
+            tmp_datetime = datetime.datetime.now() ;
+            today_date = datetime.date(tmp_datetime.year, tmp_datetime.month, tmp_datetime.day) ;
+            if today_date > self.last_reboot:
+                if tmp_datetime.hour == self.reboot_timer.hour:
+                    if tmp_datetime.minute == self.reboot_timer.minute:
+                        try:
+                            with open("./modules/admin/config.json", 'r') as f:
+                                config = json.loads(f.read()) ;
+                                config["last_reboot"] = str(today_date.year)+"-"+str(today_date.month)+"-"+str(today_date.day) ;
+                        except Exception as e:
+                            print("N??!")
+                            print(e) ;
+                        else:
+                            try:
+                                print("debug wrtf")
+                                print(config)
+                                with open("./modules/admin/config.json", "w") as f:
+                                    json.dump(config, f);
+                            except Exception as e:
+                                print(e) ;
+                        finally:
+                            self.last_reboot = today_date ;
+                            self.caller.exit() ;
+
+
 
     def exit(self):
         if os.path.isdir("./tmp_modules"):
