@@ -59,7 +59,7 @@ Note that each room "lives" independently in a sense that each room does have it
 All services are "clock insensitive" by default (meaning their *run_on_clock* subroutines will **not** be called once per second). This sensitivity of modules can be switched on (*matrix_obj.add_timer_to_service(service)*) or switched off (*matrix_obj.remove_timer_to_service(service)*) separately.
 
 In a matrix room in which module *A* has been installed, one simply has to write *tbot A* to call the *A* module.
-Of course, parameters can be added to the message as *tbot A parameter_0 parameter_1 ... parameter_n* but this input should be manually processed in the *run* method.
+Of course, parameters can be added to the message as *tbot A parameter_0 parameter_1 ... parameter_n* but this input should be manually parsed/processed in the *run* method.
 
 ## Admin module
 
@@ -111,6 +111,7 @@ tbot admin push "tbot admin room_list \n tbot admin pop"
 ```
 and then write *tbot admin pop*. The bot will then return both *tbot admin service_list* AND *tbot admin pop*. This last instruction asks the bot to pop another string, namely *tbot admin room_list* AND *tbot admin pop*. If the stack is empty, the latter would return "Stack is empty". This behaviour is powerful to create "chain reaction".
 
+The module also includes an "auto restart" option that allows to "reboot the bot" at a specific time. This can be configured thanks to the *config.json* file located in the admin folder.
 
 ## Regex Module
 
