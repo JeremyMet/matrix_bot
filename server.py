@@ -5,6 +5,8 @@ from modules.admin.admin import admin ;
 from modules.quotes.quotes import quotes ;
 from modules.template.template import template ;
 from modules.regex.regex import regex ;
+from modules.wiktionary.wiktionary import wiktionary ;
+
 # import logging
 
 # It would have been more clever to distinguish passive services from active ones ;
@@ -18,6 +20,7 @@ if __name__ == "__main__":
 
     # Instantiate modules
     my_pendu = pendu_bot("pendu", is_permanent = True) ;
+    my_wk = wiktionary("wk", is_permanent = True)
     # my_pendu.set_clock_sensitivity_on() ;
     my_greeting = greeting("greeting") ;
     my_admin = admin("admin", is_permanent = True) ;
@@ -38,6 +41,8 @@ if __name__ == "__main__":
     # matrix_obj.add_service_to_room(main_room, my_template)
     matrix_obj.add_service_to_room(main_room, my_regex)
     matrix_obj.add_service_to_room(main_room, my_admin)
+    matrix_obj.add_service_to_room(main_room, my_wk)
+
 
 
 
