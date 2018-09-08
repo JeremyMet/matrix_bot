@@ -5,7 +5,7 @@ from modules.admin.admin import admin ;
 from modules.quotes.quotes import quotes ;
 from modules.template.template import template ;
 from modules.regex.regex import regex ;
-from modules.wiktionary.wiktionary import wiktionary ;
+#from modules.wiktionary.wiktionary import wiktionary ;
 
 # import logging
 
