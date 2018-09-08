@@ -42,6 +42,9 @@ class quotes(module):
             current_time_str = datetime.date(current_time.year, current_time.month, current_time.day).isoformat() ;
             current_quote_index = (pow(current_time.day+current_time.month+current_time.year, 2)+current_time.day)%len(self.quotes) ;
             self.current_quote = self.quotes[current_quote_index] ;
+            while(not(self.current_quote)):
+                current_quote_index += 1 ;
+                self.current_quote = self.quotes[current_quote_index] ;
             self.last_time = current_time ;
             self.ret = "~~~ Today's Joke (" +  current_time_str +") ~~~ \n" \
                    +self.current_quote["body"] +'\n'+'\t'*10+ "Category "+self.current_quote["category"] ;

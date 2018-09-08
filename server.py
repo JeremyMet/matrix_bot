@@ -20,7 +20,7 @@ if __name__ == "__main__":
 
     # Instantiate modules
     my_pendu = pendu_bot("pendu", is_permanent = True) ;
-    my_wk = wiktionary("wk", is_permanent = True)
+    # my_wk = wiktionary("wk", is_permanent = True)
     # my_pendu.set_clock_sensitivity_on() ;
     my_greeting = greeting("greeting") ;
     my_admin = admin("admin", is_permanent = True) ;
@@ -36,18 +36,18 @@ if __name__ == "__main__":
     # Add timer to services
     # Add services :)
 
-    matrix_obj.add_service_to_room(main_room, my_greeting)
-    matrix_obj.add_service_to_room(main_room , my_quotes) ,
+    # matrix_obj.add_service_to_room(main_room, my_greeting)
+    # matrix_obj.add_service_to_room(main_room , my_quotes) ,
     # matrix_obj.add_service_to_room(main_room, my_template)
-    matrix_obj.add_service_to_room(main_room, my_regex)
-    matrix_obj.add_service_to_room(main_room, my_admin)
-    matrix_obj.add_service_to_room(main_room, my_wk)
-
-
-
+    # matrix_obj.add_service_to_room(main_room, my_regex)
+    # matrix_obj.add_service_to_room(main_room, my_admin)
+    # matrix_obj.add_service_to_room(main_room, my_wk)
 
     matrix_obj.add_service_to_room(gaming_room, my_pendu) ;
     matrix_obj.add_service_to_room(gaming_room, my_greeting);
+    matrix_obj.add_service_to_room(gaming_room, my_regex);
+    matrix_obj.add_service_to_room(gaming_room, my_quotes);
+
 
     # matrix_obj.add_service_to_room(admin_room, my_admin_0, "tbot admin install_from_list \
     #  https://gist.githubusercontent.com/JeremyMet/1581ec044d487302d2f2f60911e5f02a/raw/cbbc5d4149abafb7a653f2e1e88825a55f1ec90f/module_list.txt");
@@ -61,7 +61,7 @@ if __name__ == "__main__":
     # matrix_obj.add_timer_to_service(my_admin_0);
     matrix_obj.add_timer_to_service(my_pendu);
     matrix_obj.add_timer_to_service(my_quotes) ;
-    matrix_obj.add_timer_to_service(my_admin);
+    matrix_obj.add_timer_to_service(my_admin); # Important for restart option.
     # matrix_obj.remove_service_from_room(main_room, my_admin_1)
     matrix_obj.start_timer()
     # And run
