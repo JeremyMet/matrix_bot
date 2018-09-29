@@ -145,7 +145,9 @@ class matrix_utils(object):
         for room_key, room in self.rooms.items():
             for service in room[1].copy():
                 print(service) ;
-                service.exit();
+                tmp_msg = service.exit();
+                if tmp_msg:
+                    room[1].send_text(tmp_msg) ; 
                 # self.remove_service_from_room(room_key, service) ;
             # room_key.leave() ;
         sys.exit() ;
