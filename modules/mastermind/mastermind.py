@@ -1,35 +1,36 @@
 import random;
+from .mastermind_unicode import mastermind_unicode
 
 
 class mastermind(object):
 
-    def __init__(self, nb_colors=6, combination_length=4, max_tries=12):
-        self.nb_colors = nb_colors;
+    def __init__(self, combination_length=4, max_tries=12):
         self.combination_length = combination_length;
         self.max_tries = max_tries;
-        self.combination = [0 for _ in range(combination_length)];
+        self.combination = ['r' for _ in range(combination_length)];
         self.str_game_state = "";
         self.current_nb_tries = 0;
         self.rst();
 
 
     def rst(self):
-        self.str_game_state = "*Mastermind* \n Nombre d'Essais: {} ; Nombre de Couleurs: {}. \n".format(self.max_tries, self.nb_colors);
-        self.combination = [random.randint(0, self.combination_length-1)];
-        self.combination = [0,1,1,2]
+        self.str_game_state = "*Mastermind* \n Nombre d'Essais: {} ; \n".format(self.max_tries);
+        self.combination = [random.choice(list(mastermind_unicode.emoticon_dico.keys())) for _ in range(self.combination_length)];
+        print(self.combination)
         self.current_nb_tries = 0;
 
+    # if NOK, returns an empty array.
     def check_proposition_consistency(self, str_solution):
         array_proposition = [];
         ## Check Solution Consistency
+        str_solution = str_solution.replace(" ", "");
         if str_solution[0] == "(" and str_solution[-1] == ")":
             str_solution = str_solution[1:-1] # remove brackets
             array_proposition = str_solution.split(",");
             if len(array_proposition) == self.combination_length:
-                array_proposition = [int(i) for i in array_proposition]; # conversion to int array.
-                for i in array_proposition:
-                    if i >= self.nb_colors:
-                        array_proposition = [];
+                for elmt in array_proposition:
+                    if not(elmt in mastermind_unicode.emoticon_dico):
+                        array_proposition = [] ;
                         break;
             else:
                 array_proposition = [] ;
@@ -55,19 +56,21 @@ class mastermind(object):
 
     def propose(self, str_proposition):
         ret = "";
+        str_proposition = str_proposition.replace(" ", "");
         array_proposition = self.check_proposition_consistency(str_proposition);
         if array_proposition:
             (right_pos, right_col) = self.compare_proposition_with_solution(array_proposition);
-            self.str_game_state += str(self.current_nb_tries) +". " + str_proposition + " " +right_pos*'O'+right_col*'X' + (self.combination_length-right_col-right_pos)*'_'+'\n'
+            self.str_game_state += str(self.current_nb_tries) +". " + mastermind_unicode.str_to_str(str_proposition) + " ==> " +right_pos*'\u2705'+right_col*'\u2611\uFE0F' + (self.combination_length-right_col-right_pos)*'\u274C'+'\n'
             self.current_nb_tries += 1;
             if right_pos == self.combination_length:
-                self.str_game_state += "Bravo, Vous avez gagné !\n"
+                ret = "Bravo \U0001f973 ! Vous avez gagné, il s'agissait effectivement de la combinaison {} !\n".format(mastermind_unicode.str_to_str(str_proposition));
+                self.rst();
             else:
                 if self.current_nb_tries == self.max_tries:
-                    return "Oh non ! Vous avez manqué de perspicacité !\n"
+                    ret = "Oh non \U0001f625 ! Vous avez manqué de perspicacité ! ... La combinaison recherchée était {}.\n".format(mastermind_unicode.array_to_str(self.combination));
                     self.rst();
-            ret = self.str_game_state;
-
+                else:
+                    ret = self.str_game_state;
         return ret[:-1];
 
 

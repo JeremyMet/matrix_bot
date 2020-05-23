@@ -2,6 +2,7 @@ from modules.module import module ;
 from .mastermind import mastermind
 import re
 import unidecode
+from .mastermind_unicode import mastermind_unicode;
 
 
 class mastermind_bot(module):
@@ -12,19 +13,26 @@ class mastermind_bot(module):
         self.whatis = "A simple Mastermind Game."
         self.__version__ = "0.0.1"
         self.mastermind_inst = mastermind()
+        self.help = "" ;
+        for key, value in mastermind_unicode.emoticon_dico.items():
+            self.help += (key+"=="+value+", ");
+        self.help = self.help[:-2]; #remove comma
+        self.help += "\n"
 
 
     @module.login_check_dec # ignore when messages come from the bot itself.
                             # it can be useful to listen to what the bot says in some cases
     def process_msg_active(self, cmd, sender, room):
-        return ""
+        raw_cmd = cmd.split(" ");
+        if len(raw_cmd) == 3 and raw_cmd[2] == "help":
+            return self.help;
 
     #@module.login_check_dec
     def process_msg_passive(self, cmd, sender, room):
         #match = re.findall('\§([a-zA-Z]+)', (unidecode.unidecode(cmd)))
-        if cmd[0] == '§' and self.mastermind_inst.check_proposition_consistency(cmd[1:]):
+        if self.mastermind_inst.check_proposition_consistency(cmd):
             self.reset_clock();
-            return self.mastermind_inst.propose(cmd[1:]) ;
+            return self.mastermind_inst.propose(cmd) ;
 
 
     @module.module_on_dec
