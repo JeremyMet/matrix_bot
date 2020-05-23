@@ -10,6 +10,7 @@ class pendu_bot(module):
 
     def __init__(self, keyword = "pendu", is_permanent = False): # <- template ... Here goes your default module name
         super().__init__(keyword, is_permanent) ;
+        self.module_name = "pendu_bot"
         self.help = "type tbot pendu help for further details.";
         self.whatis = "Un simple jeu du pendu."
         self.__version__ = "0.0.1"
@@ -51,7 +52,7 @@ tbot pendu show montre l'état actuel du mot, \n \
 tbot pendu event montre l'event en cours (s'il y en a)";
         elif args[0] == "event":
             return self.pendu.show_event() ;
-        return None ;
+        return "" ;
 
 
     def process_msg_passive(self, cmd, sender, room):
@@ -63,14 +64,13 @@ tbot pendu event montre l'event en cours (s'il y en a)";
 
     @module.module_on_dec
     def run_on_clock(self):
-        if self.get_timer() > 14400:
+        if self.get_timer() > 3600:
             self.reset_clock() ;
             return "/!\ Rappel ! \n \n "+self.pendu.show_lt()+"\n"+str(self.pendu) ;
 
 
     def exit(self):
         self.pendu.save_score() ;
-        print("Service "+str(self)+" was stopped.") ;
 
 
 if __name__ == "__main__":

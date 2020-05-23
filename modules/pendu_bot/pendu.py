@@ -4,7 +4,7 @@
 import random ;
 import re ;
 import json ;
-import unidecode ; 
+import unidecode ;
 import os ;
 
 constant_life_max = 7 ;
@@ -26,12 +26,12 @@ class pendu(object):
         self.event_show = False ;
         self.mirror = False ;
         self.proba_event = 50 ; # Probabilité de trigger un event en pourcent (only integer).
-        self.p = re.compile('[a-zA-Z]{1}') ; 
+        self.p = re.compile('[a-zA-Z]{1}') ;
         self.min_lg = 5 ;
         self.max_lg = 30 ;
         self.conf = json.load(open("./modules/pendu_bot/config.json",'r')) ;
         #self.conf = json.load(open("sample_config.txt", 'r'));
-        self.dico = [] ; 
+        self.dico = [] ;
         with open(self.conf["dico_path"], 'r') as f:
             self.dico = f.readlines() ;
         if os.path.isfile(self.conf["score_path"]):
@@ -59,7 +59,7 @@ class pendu(object):
             t = c+" " if c in self.lt else "_ " ;
             x+=t ;
         life_str = "\nVie : "+"~"*(self.life_max-self.life)+"/)"+"~"*(self.life) + "\\o/~~\n";
-        x+=life_str ; 
+        x+=life_str ;
         return x ;
 
 
@@ -83,36 +83,36 @@ class pendu(object):
 
     def check(self):
         n = False ;
-        x = "" ; 
+        x = "" ;
         if self.life < 0:
-            self.score["bot"]+= len(self.current_word) ; 
-            x = "/!\ Vous avez perdu ... Le Main est super mauvais :-( \n" ;
-            x+= "Le mot recherché était \""+self.current_word+"\".\n" ;  
-            n = True ; 
+            self.score["bot"]+= len(self.current_word) ;
+            x = "/!\ Vous avez *perdu* ... Le Main est super mauvais :-( \n" ;
+            x+= "Le mot recherché était \""+self.current_word+"\".\n" ;
+            n = True ;
         if (self.match == len(self.current_word)):
             self.score["main"]+= len(self.current_word); # no overflow, python <3
             self.score["main"]+= self.life ;
             self.score["main"]+= len(set(self.current_word))-len(set(self.current_word).intersection(self.lt)) ;
-            x = "/!\  Vous avez gagné ! Vous êtes vraiment trop bons :-) \n" ;
+            x = "/!\  Vous avez *gagné* ! Vous êtes vraiment trop bons :-) \n" ;
             n = True ;
         if n:
             x += "  - Score du main : "+str(self.score["main"])+"\n" ;
-            x += "  - Score du bot : "+str(self.score["bot"])+"\n" ; 
-            x += "Une nouvelle partie débute !! \n \n" ;
+            x += "  - Score du bot : "+str(self.score["bot"])+"\n" ;
+            x += "Une nouvelle partie débute !! \n" ;
             self.rst() ;
         x+=str(self) ;
-        return x ; 
-            
+        return x ;
+
 
     def propose(self, lt):
         x = "" ;
         lt = lt.lower() ;
-        lt = unidecode.unidecode(lt) ; 
+        lt = unidecode.unidecode(lt) ;
         if not(self.p.match(lt)):
-            return "Une lettre ou un mot sont demandés (en minuscules ou majuscules non accentuées) ! \n" ; 
+            return "Une lettre ou un mot sont demandés (en minuscules ou majuscules non accentuées) ! \n" ;
         if len(lt)>1:
             if len(lt) != len(self.current_word):
-                return "/!\ La taille du mot proposé n'est pas égale à celle du mot recherché !" ; 
+                return "/!\ La taille du mot proposé n'est pas égale à celle du mot recherché !" ;
             if lt == self.current_word:
                 self.match = len(self.current_word)
                 x = self.check()
@@ -130,7 +130,7 @@ class pendu(object):
             else:
                 self.life-=1 ;
             x = self.check() ;
-        return x ; 
+        return x ;
 
     def show_lt(self):
         x = "Les lettres proposées ... \n" ;
@@ -147,11 +147,11 @@ class pendu(object):
         return x ;
 
     def show_score(self):
-            x = "" ; 
+            x = "" ;
             x += "  - Score du main : "+str(self.score["main"])+"\n" ;
             x += "  - Score du bot : "+str(self.score["bot"])+"\n" ;
-            return x ; 
-        
+            return x ;
+
 
     def generate(self):
         current_word = "" ;
@@ -200,12 +200,9 @@ class pendu(object):
 
     def show_event(self):
         if (self.str_event == ""):
-            return "/!\ Aucun événement à afficher ... \n" ;
+            return "/!\ Aucun événement à afficher ... " ;
         else:
             return self.str_event ;
-
-
-
 
 if __name__ == "__main__":
     P = pendu() ;
@@ -213,5 +210,4 @@ if __name__ == "__main__":
     while(True):
         A = input() ;
         print(P.propose(A)) ;
-        print(P.show_lt()) ; 
-        
+        print(P.show_lt()) ;

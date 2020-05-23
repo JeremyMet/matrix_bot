@@ -4,9 +4,9 @@
     "message" : "Le bot noie sa tristesse par une consommation excessive d'un chouchen local aux relents douteux ... Son ivresse altère sa vision ! (Mot affiché à l'envers)",
     "min_lg" : 5,
     "max_lg" : 30,
-    "bonus_life" : 0, 
+    "bonus_life" : 0,
     "mirror" : "yes"
-  }, 
+  },
   "extra_life": {
     "weight" : 2,
     "message" : "Le soleil brille, l'air est vivifiant. Le bot est heureux et vous accorde 1 point de vie supplémentaires (pdv +1).",
@@ -18,7 +18,7 @@
  "mot_long": {
     "weight" : 4,
     "message" : "Le bot aime voir la vie en grand ! (Mot de 15 lettres ou plus, pdv +2) !",
-    "min_lg" : 15, 
+    "min_lg" : 15,
     "max_lg" : 30,
     "bonus_life" : 2,
     "mirror" : "no"
@@ -37,6 +37,14 @@
     "min_lg" : 4,
     "max_lg" : 6,
     "bonus_life" : -3,
+    "mirror": "no"
+  },
+  "one_shot": {
+    "weight" : 1,
+    "message" : "Le bot est *furieux* ! Qu'avez-vous fait ?! Pas le droit à l'erreur cette fois ci ... (pdv -5) !",
+    "min_lg" : 6,
+    "max_lg" : 8,
+    "bonus_life" : -5,
     "mirror": "no"
   }
 }
