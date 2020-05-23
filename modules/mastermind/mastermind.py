@@ -63,11 +63,11 @@ class mastermind(object):
             self.str_game_state += str(self.current_nb_tries) +". " + mastermind_unicode.str_to_str(str_proposition) + " ==> " +right_pos*'\u2705'+right_col*'\u2611\uFE0F' + (self.combination_length-right_col-right_pos)*'\u274C'+'\n'
             self.current_nb_tries += 1;
             if right_pos == self.combination_length:
-                ret = "Bravo \U0001f973 ! Vous avez gagné, il s'agissait effectivement de la combinaison {} !\n".format(mastermind_unicode.str_to_str(str_proposition));
+                ret = "Bravo \U0001f973 ! Vous avez gagné, il s'agissait effectivement de la combinaison {} !".format(mastermind_unicode.str_to_str(str_proposition));
                 self.rst();
             else:
                 if self.current_nb_tries == self.max_tries:
-                    ret = "Oh non \U0001f625 ! Vous avez manqué de perspicacité ! ... La combinaison recherchée était {}.\n".format(mastermind_unicode.array_to_str(self.combination));
+                    ret = "Oh non \U0001f625 ! Vous avez manqué de perspicacité ! ... La combinaison recherchée était {}.".format(mastermind_unicode.array_to_str(self.combination));
                     self.rst();
                 else:
                     ret = self.str_game_state;
