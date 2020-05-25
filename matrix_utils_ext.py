@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from matrix_client.client import MatrixClient ;
 from matrix_client.api import MatrixRequestError ;
 import json ;
@@ -106,7 +108,7 @@ class matrix_utils_ext(object):
                         room.send_text(ret) ;
 
     def spawn(self):
-        self.client.start_listener_thread()
+        self.client.start_listener_thread(exception_handler=self.error_handle);
         self.is_on = True ;
         print(bcolors.OKGREEN+
         "\n---------------------------------------------------\n"+
@@ -149,3 +151,7 @@ class matrix_utils_ext(object):
         for room in self.room_dic:
             room.send_text(self.config["bot_stop_txt"]);
         sys.exit() ;
+
+    def error_handle(self):
+        print("Server is not {} responding {}. Restarting ...".format(bcolors.FAIL, bcolors.ENDC));
+        self.exit();

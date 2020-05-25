@@ -23,32 +23,21 @@ if __name__ == "__main__":
     # Instantiate modules
     my_pendu = pendu_bot("pendu", is_permanent = True) ;
     my_mastermind = mastermind_bot("mastermind", is_permanent = True)
-    # my_wk = wiktionary("wk", is_permanent = True)
-    # my_pendu.set_clock_sensitivity_on() ;
     my_greeting = greeting("greeting") ;
     my_admin = admin("admin", is_permanent = True) ;
     my_quotes = quotes("quotes") ;
-    my_template = template()
-    my_regex = regex() ;
+    # my_template = template()
+    # my_regex = regex() ;
     # Then Create the matrix object, add rooms, services and timers.
     matrix_obj = matrix_utils_ext() ;
-    # gaming_room = matrix_obj.add_room("#toto-gaming:mandragot.org")
-    # gaming_room = matrix_obj.add_room("#deuxsurdix-gaming:bobbyblues.com")
-    #main_room = matrix_obj.add_room("#toto:mandragot.org")
-    admin_room = matrix_obj.add_room("#botgaming:mandragot.org")
-    # Add timer to services
-    # Add services :)
+    gaming_room = matrix_obj.add_room("#toto-gaming:mandragot.org")
 
-    # matrix_obj.add_service_to_room(main_room, my_greeting)
-    # matrix_obj.add_service_to_room(main_room , my_quotes) ,
-    # matrix_obj.add_service_to_room(main_room, my_template)
-    # matrix_obj.add_service_to_room(main_room, my_regex)
-    # matrix_obj.add_service_to_room(main_room, my_admin)
-    # matrix_obj.add_service_to_room(main_room, my_wk)
 
     my_pendu.set_clock_sensitivity_on();
-    matrix_obj.add_service_to_room(admin_room, my_pendu) ;
-    matrix_obj.add_service_to_room(admin_room, my_mastermind) ;
+    matrix_obj.add_service_to_room(gaming_room, my_greeting) ;
+    matrix_obj.add_service_to_room(gaming_room, my_quotes) ;
+    matrix_obj.add_service_to_room(gaming_room, my_pendu) ;
+    matrix_obj.add_service_to_room(gaming_room, my_mastermind) ;
 
 
     # matrix_obj.add_service_to_room(gaming_room, my_greeting);

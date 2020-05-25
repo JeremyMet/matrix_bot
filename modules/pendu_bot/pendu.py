@@ -86,14 +86,14 @@ class pendu(object):
         x = "" ;
         if self.life < 0:
             self.score["bot"]+= len(self.current_word) ;
-            x = "/!\ Vous avez *perdu* ... Le Main est super mauvais :-( \n" ;
+            x = "/!\ Vous avez *perdu* \U0001f625 ... Le Main est super mauvais :-( \n" ;
             x+= "Le mot recherché était \""+self.current_word+"\".\n" ;
             n = True ;
         if (self.match == len(self.current_word)):
             self.score["main"]+= len(self.current_word); # no overflow, python <3
             self.score["main"]+= self.life ;
             self.score["main"]+= len(set(self.current_word))-len(set(self.current_word).intersection(self.lt)) ;
-            x = "/!\  Vous avez *gagné* ! Vous êtes vraiment trop bons :-) \n" ;
+            x = "/!\  Vous avez *gagné* \U0001f973 ! Vous êtes vraiment trop bons :-) \n" ;
             n = True ;
         if n:
             x += "  - Score du main : "+str(self.score["main"])+"\n" ;

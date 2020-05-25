@@ -4,13 +4,15 @@ from modules.module import module ;
 class greeting(module):
 
     greeting_array = ["salut", "coucou", "hello", "hola", "demat", "pouet", "pwet"] ;
-    tbot_array = ["tbot", "tersabot", "tersa_bot"] ;
+    tbot_array = ["tbot", "tersabot", "tersa_bot", "bot"] ;
     tbot_random_sentences = \
     ["Pfff je m'ennuie", \
      "Ça va sinon ?", \
      "Il fait beau chez vous ?", \
      "Quelle puce m'a piqué ?", \
      "Jpp ..." \
+     "Et un mouton, un ... !" \
+     "Un jour, j'ai reçu une flèche dans le genou ... !" \
      ]
 
     def __init__(self, keyword = "greeting"): # <- template ... Here goes your default module name
@@ -30,7 +32,7 @@ class greeting(module):
     @module.module_on_dec
     # @module.clock_dec
     def run_on_clock(self):
-        if self.get_timer() > 5:
+        if self.get_timer() > 36000:
             self.reset_clock() ;
             return random.choice(greeting.tbot_random_sentences) ;
         else:
@@ -43,4 +45,3 @@ if __name__ == "__main__":
 
     greet = greeting() ;
     print(greet.run("salut tbot", "Tersaken")) ;
-

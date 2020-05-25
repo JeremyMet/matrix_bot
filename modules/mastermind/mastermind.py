@@ -15,8 +15,7 @@ class mastermind(object):
 
     def rst(self):
         self.str_game_state = "*Mastermind* \n Nombre d'Essais: {} ; \n".format(self.max_tries);
-        self.combination = [random.choice(list(mastermind_unicode.emoticon_dico.keys())) for _ in range(self.combination_length)];
-        print(self.combination)
+        self.combination = [random.choice(list(mastermind_unicode.emoticon_dico.keys())) for _ in range(self.combination_length)];        
         self.current_nb_tries = 0;
 
     # if NOK, returns an empty array.
@@ -70,8 +69,8 @@ class mastermind(object):
                     ret = "Oh non \U0001f625 ! Vous avez manqué de perspicacité ! ... La combinaison recherchée était {}.".format(mastermind_unicode.array_to_str(self.combination));
                     self.rst();
                 else:
-                    ret = self.str_game_state;
-        return ret[:-1];
+                    ret = self.str_game_state[:-1];
+        return ret;
 
 
 
