@@ -27,7 +27,7 @@ class mastermind_bot(module):
         if len(raw_cmd) == 3 and raw_cmd[2] == "help":
             return self.help;
         if len(raw_cmd) == 3 and raw_cmd[2] == "state":
-            return self.str_game_state;
+            return self.mastermind_inst.str_game_state;
 
     #@module.login_check_dec
     def process_msg_passive(self, cmd, sender, room):
