@@ -4,7 +4,7 @@ from .mastermind_unicode import mastermind_unicode
 
 class mastermind(object):
 
-    def __init__(self, combination_length=4, max_tries=12):
+    def __init__(self, combination_length=4, max_tries=6):
         self.combination_length = combination_length;
         self.max_tries = max_tries;
         self.combination = ['r' for _ in range(combination_length)];
@@ -15,7 +15,7 @@ class mastermind(object):
 
     def rst(self):
         self.str_game_state = "*Mastermind* \n Nombre d'Essais: {} ; \n".format(self.max_tries);
-        self.combination = [random.choice(list(mastermind_unicode.emoticon_dico.keys())) for _ in range(self.combination_length)];        
+        self.combination = [random.choice(list(mastermind_unicode.emoticon_dico.keys())) for _ in range(self.combination_length)];
         self.current_nb_tries = 0;
 
     # if NOK, returns an empty array.

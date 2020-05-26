@@ -16,6 +16,9 @@ from modules.module import module;
 
 class matrix_utils_ext(object):
 
+    __MODULE_NAME__ = "Matrix Bot"
+    __VERSION__ = "v0.0.1a"
+
     __MAX_SERVICE__ = 32 ; # Number of services that can be simultaneously installed.
     room_tuple = namedtuple("room_tuple", "room_addr listener")
 
@@ -69,12 +72,14 @@ class matrix_utils_ext(object):
         return ret;
 
 # TODO ; eventuellement vérifier si une room avec une même adresse n'existe pas ?
-    def add_room(self, room_addr, message_on_start = False):
+    def add_room(self, room_addr, message_on_start = ""):
         room = self.client.join_room(room_addr) ;
         listener = room.add_listener(self.callback) ;
         self.room_dic[room] = matrix_utils_ext.room_tuple(room_addr, listener) # (room object address, room_name (room address), listener object)
         if message_on_start:
-            room.send_text(self.config["bot_start_txt"]) ;
+            room.send_text(message_on_start) ;
+        else:
+            room.send_text(self.__MODULE_NAME__+" "+self.__VERSION__) ;
         return room ;
 
     def remove_room(self, room):
@@ -152,6 +157,6 @@ class matrix_utils_ext(object):
             room.send_text(self.config["bot_stop_txt"]);
         sys.exit() ;
 
-    def error_handle(self):
-        print("Server is not {} responding {}. Restarting ...".format(bcolors.FAIL, bcolors.ENDC));
+    def error_handle(self, err):
+        print("Server is not {} responding {} ({}). Restarting ...".format(bcolors.FAIL, bcolors.ENDC, err));
         self.exit();
