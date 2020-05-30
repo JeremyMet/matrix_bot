@@ -164,6 +164,9 @@ class module(object):
             ## Process Active / Passive
             if tmp == "":
                 if len(raw_args) >= 2 and (raw_args[0] == module.config["bot_cmd"]) and (raw_args[1] in self.keywords):
+
+                    print(">>> {}".format(raw_args[1] in self.keywords))
+
                     if self.is_module_activated():
                         tmp = self.process_msg_active(instruction, sender, room) ;
                 else:
