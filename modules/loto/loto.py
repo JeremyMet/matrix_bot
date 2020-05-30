@@ -104,6 +104,9 @@ class loto(object):
         proposition = proposition[1:-1];
         proposition_array = proposition.split(",");
         if (len(proposition_array) != self.combination_length):
+            for i in proposition_array:
+                if not(i.isnumeric()):
+                    return "" # On ne traite pas ce cas
             return "La combinaison doit être de longueur {}.".format(self.combination_length);
         proposition_array = [(int(i) if (int(i) < self.nb_numbers) else 0) for i in proposition_array];
         if (0 in proposition_array):
@@ -112,7 +115,7 @@ class loto(object):
         if (len(proposition_set) != self.combination_length):
             return "Les propositions ne doivent pas contenir deux fois le même nombre."
         # proposition is well-formed,
-        self.dailybet[sender] = proposition_set;
+        self.dailybet[sender] = proposition_setg;
         return "La proposition {} de {} a bien été prise en compte.".format(self.dailybet[sender], sender);
 
     def get_dailybet(self):
