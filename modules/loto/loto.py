@@ -3,6 +3,7 @@ import random;
 import datetime;
 from collections import namedtuple;
 import os.path
+import pickle
 
 Draw_Time = namedtuple("Draw_Time", "hour minute");
 
@@ -17,7 +18,7 @@ class loto(object):
     pt_table[5] = 10000 ;
     pt_table[6] = 100000 ;
 
-    def __init__(self, scoreboard_file="./modules/loto/scoreboard_file.json", dailybet_file="./modules/loto/dailybet_file.json", log_file = "./modules/loto/log.json", nb_numbers=49, combination_length=6):
+    def __init__(self, scoreboard_file="./modules/loto/scoreboard_file.dic", dailybet_file="./modules/loto/dailybet_file.dic", log_file = "./modules/loto/log.dic", nb_numbers=49, combination_length=6):
         self.scoreboard_file = scoreboard_file;
         self.dailybet_file = dailybet_file;
         self.log_file = log_file;
@@ -50,23 +51,22 @@ class loto(object):
 
     def load_previous_state(self):
         if os.path.isfile(self.scoreboard_file):
-            with open(self.scoreboard_file, "r") as json_file:
-                self.scoreboard = json.load(json_file);
+            with open(self.scoreboard_file, "rb") as json_file:
+                self.scoreboard = pickle.load(json_file);
         if os.path.isfile(self.dailybet_file):
-            with open(self.dailybet_file, "r") as json_file:
-                self.scoreboard = json.load(json_file);
+            with open(self.dailybet_file, "rb") as json_file:
+                self.dailybet = pickle.load(json_file);
         if os.path.isfile(self.log_file):
-            print("prout ?")
-            with open(self.log_file, "r") as json_file:
-                self.log = json.load(json_file);
+            with open(self.log_file, "rb") as json_file:
+                self.log = pickle.load(json_file);
 
     def save_current_state(self):
-            with open(self.scoreboard_file, "w") as json_file:
-                json.dump(self.scoreboard, json_file);
-            with open(self.dailybet_file, "w") as json_file:
-                json.dump(self.dailybet, json_file);
-            with open(self.log_file, "w") as json_file:
-                json.dump(self.log, json_file);
+            with open(self.scoreboard_file, "wb") as json_file:
+                pickle.dump(self.scoreboard, json_file);
+            with open(self.dailybet_file, "wb") as json_file:
+                pickle.dump(self.dailybet, json_file);
+            with open(self.log_file, "wb") as json_file:
+                pickle.dump(self.log, json_file);
 
 
     def draw(self):
@@ -75,11 +75,11 @@ class loto(object):
             rd = random.randint(1, self.nb_numbers);
             self.current_result.add(rd);
         self.log["last_draw"] = datetime.datetime.now();
-        self.current_result = {1,2,3,8,33,2}; # todo remove!
+        #self.current_result = {1,2,3,8,33,2}; # todo remove!
 
     def check_result(self):
         self.draw(); # tirage
-        ret = "\U0001F3B2 Les vainqueurs du {}. \nBravo à".format(datetime.datetime.now());
+        ret = "\U0001F3B2 Les vainqueurs du {}. \nBravo à".format(datetime.datetime.today().strftime('%Y-%m-%d'));
         is_there_a_winner = False;
         for key, value in self.dailybet.items():
             tmp_nb_pt = len(self.current_result & value);
@@ -94,7 +94,7 @@ class loto(object):
         if is_there_a_winner:
             return ret;
         else:
-            return "";
+            return "Pas de vainqueurs aujourd'hui ({}) !".format(datetime.datetime.today().strftime('%Y-%m-%d'));
 
     def bet(self, sender, proposition):
         # check if proposition is well-formed
@@ -121,6 +121,6 @@ class loto(object):
 #todo mettre dans l'ordre croissant
     def get_scoreboard(self):
         ret = "\U0001F3B2 Tableau des Scores :";
-        for key, value in self.scoreboard.items():
-            ret = "\t- {}\n {}: ({}) ".format(ret, key, value);
+        for key_value in sorted(self.scoreboard.items(), key=lambda x: x[1], reverse=True):
+            ret = "{}\n\t - {}: {}".format(ret, key_value[0], key_value[1]);
         return ret;
