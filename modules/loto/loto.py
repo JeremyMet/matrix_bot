@@ -79,7 +79,7 @@ class loto(object):
 
     def check_result(self):
         self.draw(); # tirage
-        ret = "\U0001F3B2 Les vainqueurs du {}. \nBravo à".format(datetime.datetime.today().strftime('%Y-%m-%d'));
+        ret = "\U0001F3B2 Le tirage du {} est {}. \nBravo à".format(datetime.datetime.today().strftime('%Y-%m-%d'), self.current_result);
         is_there_a_winner = False;
         for key, value in self.dailybet.items():
             tmp_nb_pt = len(self.current_result & value);
@@ -94,7 +94,7 @@ class loto(object):
         if is_there_a_winner:
             return ret;
         else:
-            return "Pas de vainqueurs aujourd'hui ({}) !".format(datetime.datetime.today().strftime('%Y-%m-%d'));
+            return "\U0001F3B2 Pas de vainqueurs aujourd'hui ({}) ! Le tirage était le suivant : {}.".format(datetime.datetime.today().strftime('%Y-%m-%d'), self.current_result);
 
     def bet(self, sender, proposition):
         # check if proposition is well-formed
@@ -115,7 +115,7 @@ class loto(object):
         if (len(proposition_set) != self.combination_length):
             return "Les propositions ne doivent pas contenir deux fois le même nombre."
         # proposition is well-formed,
-        self.dailybet[sender] = proposition_setg;
+        self.dailybet[sender] = proposition_set;
         return "La proposition {} de {} a bien été prise en compte.".format(self.dailybet[sender], sender);
 
     def get_dailybet(self):

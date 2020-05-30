@@ -35,7 +35,6 @@ class loto_bot(module):
         now = datetime.datetime.now();
         # Nous avons changé de jour ...
         delta = now-last_draw;
-        print(delta)
         if delta.days > 0:
             if (draw_time.hour == now.hour and draw_time.minute == now.minute):
                 ret = self.loto_inst.check_result();
