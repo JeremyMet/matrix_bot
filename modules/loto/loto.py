@@ -108,8 +108,11 @@ class loto(object):
         proposition_array = [(int(i) if (int(i) < self.nb_numbers) else 0) for i in proposition_array];
         if (0 in proposition_array):
             return "Les valeurs doivent être inférieures ou égales à {}.".format(self.nb_numbers);
+        proposition_set = set(proposition_array);
+        if (len(proposition_set) != self.combination_length):
+            return "Les propositions ne doivent pas contenir deux fois le même nombre."
         # proposition is well-formed,
-        self.dailybet[sender] = set(proposition_array);
+        self.dailybet[sender] = proposition_set;
         return "La proposition {} de {} a bien été prise en compte.".format(self.dailybet[sender], sender);
 
     def get_dailybet(self):
