@@ -6,12 +6,8 @@ class greeting(module):
     greeting_array = ["salut", "coucou", "hello", "hola", "demat", "pouet", "pwet"] ;
     tbot_array = ["tbot", "tersabot", "tersa_bot", "bot"] ;
     tbot_random_sentences = \
-    ["Pfff je m'ennuie", \
-     "Ça va sinon ?", \
-     "Il fait beau chez vous ?", \
-     "Quelle puce m'a piqué ?", \
-     "Jpp ..." \
-     "Et un mouton, un ... !" \
+    ["Non non non et non ! La Shinra produit de l'énergie PROPRE !", \
+     "Bientôt des vaccins d'Umbrella !!", \
      "Un jour, j'ai reçu une flèche dans le genou ... !" \
      ]
 

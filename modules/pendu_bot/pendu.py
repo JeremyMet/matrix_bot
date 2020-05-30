@@ -93,7 +93,7 @@ class pendu(object):
             self.score["main"]+= len(self.current_word); # no overflow, python <3
             self.score["main"]+= self.life ;
             self.score["main"]+= len(set(self.current_word))-len(set(self.current_word).intersection(self.lt)) ;
-            x = "\U0001f973 Vous avez gagné \U0001f973 ! Le mot recherché était effectivement {} ! Woah, vous êtes vraiment trop bons !\n".format(self.current_word) ;
+            x = "\U0001f973 Vous avez gagné \U0001f973 ! Le mot recherché était effectivement \"{}\" ! Woah, vous êtes vraiment trop bons !\n".format(self.current_word) ;
             n = True ;
         if n:
             x += "  - Score du main : "+str(self.score["main"])+"\n" ;

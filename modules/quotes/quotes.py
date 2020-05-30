@@ -44,6 +44,7 @@ class quotes(module):
             self.current_quote = self.quotes[current_quote_index] ;
             while(not(self.current_quote["body"])):
                 current_quote_index += 1 ;
+                current_quote_index %= len(self.quotes) ;
                 self.current_quote = self.quotes[current_quote_index] ;
             self.last_time = current_time ;
             self.ret = "~~~ \U0001f921 Today's Joke (" +  current_time_str +") ~~~ \n" \
