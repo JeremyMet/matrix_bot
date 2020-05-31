@@ -82,7 +82,7 @@ class loto(object):
 
     def check_result(self):
         self.draw(); # tirage
-        ret = "\U0001F3B2 Le tirage du {} est {}. \nBravo à".format(datetime.datetime.today().strftime('%Y-%m-%d'), self.current_result);
+        ret = "\U0001F3B2 Le tirage du {} est {}. \nBravo à".format(datetime.datetime.today().strftime('%d-%m-%Y'), self.current_result);
         is_there_a_winner = False;
         for key, value in self.dailybet.items():
             tmp_nb_pt = len(self.current_result & value);
