@@ -23,7 +23,7 @@ if __name__ == "__main__":
     # Then Create the matrix object, add rooms, services and timers.
     matrix_obj = matrix_utils_ext() ;
     # gaming_room = matrix_obj.add_room("#botgaming:mandragot.org")
-    gaming_room = matrix_obj.add_room("#admin:mandragot.org")
+    gaming_room = matrix_obj.add_room("#botgaming:mandragot.org")
 
     matrix_obj.add_service_to_room(gaming_room, my_quotes) ;
     matrix_obj.add_service_to_room(gaming_room, my_pendu) ;
