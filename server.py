@@ -16,16 +16,15 @@ if __name__ == "__main__":
     # Instantiate modules
     my_pendu = pendu_bot("pendu", is_permanent = True) ;
     my_mastermind = mastermind_bot("mastermind", is_permanent = True)
-    my_greeting = greeting("greeting") ;
-    my_admin = admin("admin", is_permanent = True) ;
+    #my_greeting = greeting("greeting") ;
+    #my_admin = admin("admin", is_permanent = True) ;
     my_quotes = quotes("quotes") ;
-    my_loto = loto_bot("loto", hour=22, minute=00);
+    my_loto = loto_bot("loto", hour=20, minute=00);
     # Then Create the matrix object, add rooms, services and timers.
     matrix_obj = matrix_utils_ext() ;
     # gaming_room = matrix_obj.add_room("#botgaming:mandragot.org")
-    gaming_room = matrix_obj.add_room("#botgaming:mandragot.org")
+    gaming_room = matrix_obj.add_room("#admin:mandragot.org")
 
-    matrix_obj.add_service_to_room(gaming_room, my_greeting) ;
     matrix_obj.add_service_to_room(gaming_room, my_quotes) ;
     matrix_obj.add_service_to_room(gaming_room, my_pendu) ;
     matrix_obj.add_service_to_room(gaming_room, my_mastermind) ;

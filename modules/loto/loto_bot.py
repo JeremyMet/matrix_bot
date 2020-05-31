@@ -9,6 +9,7 @@ class loto_bot(module):
         super().__init__(keyword) ;
         self.help = "propose (1,2,3,4,5,6)" ; # <- will be printed out by the admin module
         self.whatis = "A loto hello module. "
+        self.module_name = "Loto Module"
         self.__version__ = "0.0.1"
         self.loto_inst = loto();
         self.loto_inst.set_draw_time(hour, minute);

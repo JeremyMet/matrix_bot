@@ -59,7 +59,7 @@ class mastermind(object):
         array_proposition = self.check_proposition_consistency(str_proposition);
         if array_proposition:
             (right_pos, right_col) = self.compare_proposition_with_solution(array_proposition);
-            self.str_game_state += str(self.current_nb_tries) +". " + mastermind_unicode.str_to_str(str_proposition) + " ==> " +right_pos*'\u2705'+right_col*'\u2611\uFE0F' + (self.combination_length-right_col-right_pos)*'\u274C'+'\n'
+            self.str_game_state += str(self.current_nb_tries) +". " + mastermind_unicode.str_to_str(str_proposition) + " \u2192 " +right_pos*'\u2705'+right_col*'\u2611\uFE0F' + (self.combination_length-right_col-right_pos)*'\u274C'+'\n'
             self.current_nb_tries += 1;
             if right_pos == self.combination_length:
                 ret = "Bravo \U0001f973 ! Vous avez gagné, il s'agissait effectivement de la combinaison {} !".format(mastermind_unicode.str_to_str(str_proposition));

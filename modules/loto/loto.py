@@ -28,7 +28,7 @@ class loto(object):
         self.dailybet = {} ;
         self.log = {} ;
         self.log["last_draw"] = datetime.datetime(1970, 1, 1);
-        self.hour, self.minute = 0, 0;
+        self.draw_time = Draw_Time(0, 0);
         self.load_previous_state();
 
     def set_scoreboard_file(self, scoreboard_file):
@@ -41,10 +41,10 @@ class loto(object):
         self.dailybet_file = dailybet_file;
 
     def set_draw_time(self, hour, minute):
-        self.hour, self.minute = hour, minute;
+        self.draw_time = Draw_Time(hour, minute);
 
     def get_draw_time(self):
-        return Draw_Time(self.hour, self.minute);
+        return self.draw_time;
 
     def get_log(self):
         return self.log;
@@ -74,7 +74,9 @@ class loto(object):
         while(len(self.current_result) < self.combination_length):
             rd = random.randint(1, self.nb_numbers);
             self.current_result.add(rd);
-        self.log["last_draw"] = datetime.datetime.now();
+        tmp_datetime = datetime.datetime.now();
+        self.log["last_draw"] = datetime.datetime(year=tmp_datetime.year, month = tmp_datetime.month, day = tmp_datetime.day, hour = self.draw_time.hour, minute = self.draw_time.minute) ;
+        self.dailybet = {} ; # réinitialisation des paris.
         #self.current_result = {1,2,3,8,33,2}; # todo remove!
 
     def check_result(self):
@@ -94,7 +96,7 @@ class loto(object):
         if is_there_a_winner:
             return ret;
         else:
-            return "\U0001F3B2 Pas de vainqueurs aujourd'hui ({}) ! Le tirage était le suivant : {}.".format(datetime.datetime.today().strftime('%Y-%m-%d'), self.current_result);
+            return "\U0001F3B2 Pas de vainqueurs aujourd'hui ({}) ! Le tirage était le suivant : {}.".format(datetime.datetime.today().strftime('%d-%m-%Y'), self.current_result);
 
     def bet(self, sender, proposition):
         # check if proposition is well-formed

@@ -12,6 +12,7 @@ class quotes(module):
         super().__init__(keyword, is_permanent) ;
         self.keywords = ["quotes"] ; # <- Name of your module
         self.help = "A quote module" ; # <- will be printed out by the admin module
+        self.module_name = "Quote Module"
         self.whatis = "A simple quote module !"
         self.__version__ = "0.0.1"
         self.last_time = datetime.date(1961, 1, 1) ;
