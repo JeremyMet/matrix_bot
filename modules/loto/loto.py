@@ -30,6 +30,8 @@ class loto(object):
         self.log["last_draw"] = datetime.datetime(1970, 1, 1);
         self.draw_time = Draw_Time(0, 0);
         self.load_previous_state();
+        random.seed(datetime.datetime.now()); # Seed initialisation
+
 
     def set_scoreboard_file(self, scoreboard_file):
         self.scoreboard_file = scoreboard_file;
@@ -76,7 +78,6 @@ class loto(object):
             self.current_result.add(rd);
         tmp_datetime = datetime.datetime.now();
         self.log["last_draw"] = datetime.datetime(year=tmp_datetime.year, month = tmp_datetime.month, day = tmp_datetime.day, hour = self.draw_time.hour, minute = self.draw_time.minute) ;
-        self.dailybet = {} ; # réinitialisation des paris.
         #self.current_result = {1,2,3,8,33,2}; # todo remove!
 
     def check_result(self):
@@ -85,14 +86,15 @@ class loto(object):
         is_there_a_winner = False;
         for key, value in self.dailybet.items():
             tmp_nb_pt = len(self.current_result & value);
-            if tmp_nb_pt > 0:
+            nb_pt = loto.pt_table[tmp_nb_pt];
+            if nb_pt > 0:
                 is_there_a_winner = True;
-                nb_pt = loto.pt_table[tmp_nb_pt];
                 ret += "\n {} avec {} points ({} nombres corrects)".format(key, nb_pt, tmp_nb_pt)
-                if key in self.scoreboard.keys():
-                    self.scoreboard[key] += nb_pt;
-                else:
-                    self.scoreboard[key] = nb_pt;
+            if key in self.scoreboard.keys(): # on ajoute quand même les participants avec zero point.
+                self.scoreboard[key] += nb_pt;
+            else:
+                self.scoreboard[key] = nb_pt;
+        self.dailybet = {} ; # réinitialisation des paris ;)
         if is_there_a_winner:
             return ret;
         else:

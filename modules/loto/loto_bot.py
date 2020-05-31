@@ -14,18 +14,24 @@ class loto_bot(module):
         self.loto_inst = loto();
         self.loto_inst.set_draw_time(hour, minute);
 
+
     @module.module_on_dec
-    def run(self, cmd, sender=None, room=None):
+    def process_msg_active(self, cmd, sender=None, room=None):
         raw_cmd = cmd.split(" ");
-        if (len(raw_cmd) == 3 and raw_cmd[2] == "get_dailybet"):
+        ret = "" ; 
+        if (len(raw_cmd) == 3 and raw_cmd[2] == "dailybet"):
             ret = self.loto_inst.get_dailybet();
-        elif (len(raw_cmd) == 3 and raw_cmd[2] == "get_scoreboard"):
+        elif (len(raw_cmd) == 3 and raw_cmd[2] == "scoreboard"):
             ret = self.loto_inst.get_scoreboard();
         elif (len(raw_cmd) == 3 and raw_cmd[2] == "draw"):
                 ret = self.loto_inst.check_result();
-        else:
-            ret = self.loto_inst.bet(sender, cmd);
         return ret ;
+
+    @module.module_on_dec
+    def process_msg_passive(self, cmd, sender=None, room=None):
+        ret = self.loto_inst.bet(sender, cmd);
+        return ret;
+
 
     @module.module_on_dec
     # @module.clock_dec
@@ -43,7 +49,7 @@ class loto_bot(module):
                 return ret;
 
     def exit(self):
-        print("Sauvegarde en cours ...")
+        print("\tSauvegarde en cours ...")
         self.loto_inst.save_current_state();
 
 
