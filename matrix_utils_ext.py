@@ -28,7 +28,7 @@ class matrix_utils_ext(object):
         self.is_timer_on = False
         self.is_on = False ;
         self.nb_current_service = 0 ;
-        self.service_list = [];
+        self.service_list = {};
         # self.logger.setLevel(logging.DEBUG) ;
         try:
             with open(config_path) as f:
@@ -48,9 +48,12 @@ class matrix_utils_ext(object):
     def add_service_to_room(self, room, service, message_on_start = None):
         ret = False;
         if self.nb_current_service < matrix_utils_ext.__MAX_SERVICE__:
-            service.add_room(room);
-            self.service_list.append(service);
-            ret = True;
+            if service.add_room(room): # if room has been added to the service correctly
+                if service in self.service_list:
+                    self.service_list[service] += 1;
+                else:
+                    self.service_list[service] = 1;
+                ret = True;
         else:
             #raise Exception("Maximum number of services ({}) reached".format(str(matrix_utils.__MAX_SERVICE__))) ;
             pass;
@@ -61,11 +64,10 @@ class matrix_utils_ext(object):
         if service.remove_room(room):
             ret = True;
             # if service is not linked to any room, remove from service_list
-            if not(service.get_room_list()):
-                if (service in self.service_list):
-                    room.send_text(service.exit());
-                    index = self.service_list.index(service);
-                    self.service_list.pop(index);
+            self.service_list[service] -= 1 ;
+            if self.service_list[service] == 0:
+                del self.service_list[service];
+
         else:
             #raise Exception("Service {} does not exist in room {}.".format(service, room)) ;
             pass;
@@ -85,7 +87,7 @@ class matrix_utils_ext(object):
     def remove_room(self, room):
         if not(room in self.room_dic):
             return False;
-        for service in service_list:
+        for service in service_list.keys():
             if (room in service.get_room_list()):
                 # there are still some services linked to room.
                 return False;
@@ -106,7 +108,7 @@ class matrix_utils_ext(object):
             if text == self.config["bot_down_cmd"]:
                 self.exit();
             ## Otherwise, run services
-            for service in self.service_list:
+            for service in self.service_list.keys():
                 if (room in service.get_room_list()):
                     ret = service.run(text, login, room) ;
                     if ret:
