@@ -1,15 +1,14 @@
 from modules.module import module ;
 import urllib.request
 import urllib.parse
-import html.parser;
+import html;
 import re ;
 
 def findTitleOther(url):
     title = "";
     try:
         webpage = urllib.request.urlopen(url, timeout=5).read()
-        parser = html.parser.HTMLParser();
-        webpage = parser.unescape(webpage.decode(encoding="utf8"))
+        webpage = html.unescape(webpage.decode(encoding="utf8"))
         title = webpage.split('<title>')[1].split('</title>')[0]
         title += '\n';
     except:
@@ -20,8 +19,7 @@ def findTitleYouTube(url):
     title = "";
     try:
         webpage = urllib.request.urlopen(url, timeout=5).read()
-        parser = html.parser.HTMLParser();
-        webpage = parser.unescape(webpage.decode(encoding="utf8"))
+        webpage = html.unescape(webpage.decode(encoding="utf8"))
         webpage = webpage.split("https://www.youtube.com/watch?v")[1];
         title = webpage.split("content=\"")[1].split('\"')[0]
         title += '\n';
