@@ -146,14 +146,14 @@ class module(object):
             raw_args = instruction.split() ;
             tmp = "" ;
             ## Activate Part
-            if len(raw_args) == 3 and raw_args[0] == self.config["bot_cmd"] and raw_args[1] in self.keywords and raw_args[2] == "activate":
+            if len(raw_args) == 3 and raw_args[0] == module.config["bot_cmd"] and raw_args[1] in self.keywords and raw_args[2] == "activate":
                 if self.is_module_activated():
                     tmp = "Module {} is already activated.".format(self.keywords[0]) ;
                 else:
                     self.set_module_on() ;
                     tmp = "Module {} is activated".format(self.keywords[0])
             ## Deactivate Part
-            if len(raw_args) == 3 and raw_args[0] == self.config["bot_cmd"] and raw_args[1] in self.keywords and raw_args[2] == "deactivate":
+            if len(raw_args) == 3 and raw_args[0] == module.config["bot_cmd"] and raw_args[1] in self.keywords and raw_args[2] == "deactivate":
                 if not(self.is_module_activated()):
                     tmp = "Module {} is already deactivated.".format(self.keywords[0]) ;
                 elif self.is_permanent:

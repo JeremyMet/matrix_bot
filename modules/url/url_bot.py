@@ -39,6 +39,7 @@ class url_bot(module):
         self.__version__ = "0.0.1"
         self.help = "None"
 
+    @module.login_check_dec
     def process_msg_passive(self, cmd, sender, room):
         reg_match = re.finditer(url_bot.url_regex, cmd);
         ret = "" ;
