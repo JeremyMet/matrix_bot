@@ -81,8 +81,6 @@ class matrix_utils_ext(object):
         self.room_dic[room] = matrix_utils_ext.room_tuple(room_addr, listener) # (room object address, room_name (room address), listener object)
         if message_on_start:
             room.send_text(message_on_start) ;
-        else:
-            room.send_text(self.__MODULE_NAME__+" "+self.__VERSION__) ;
         return room ;
 
     def remove_room(self, room):

@@ -24,17 +24,20 @@ if __name__ == "__main__":
     my_url = url_bot();
     # Then Create the matrix object, add rooms, services and timers.
     matrix_obj = matrix_utils_ext() ;
-    gaming_room = matrix_obj.add_room("#botgaming:mandragot.org")
-    science_room = matrix_obj.add_room("#sciences:mandragot.org")
 
+    gaming_room = matrix_obj.add_room("#botgaming:mandragot.org", "Tbot, ready for action !")
+    science_room = matrix_obj.add_room("#sciences:mandragot.org")
+    music_room = matrix_obj.add_room("#musiciensdimanche:mandragot.org")
 
     matrix_obj.add_service_to_room(gaming_room, my_quotes) ;
     matrix_obj.add_service_to_room(gaming_room, my_pendu) ;
     matrix_obj.add_service_to_room(gaming_room, my_mastermind) ;
     matrix_obj.add_service_to_room(gaming_room, my_loto) ;
-    matrix_obj.add_service_to_room(gaming_room, my_url) ;
 
+    matrix_obj.add_service_to_room(gaming_room, my_url) ;
     matrix_obj.add_service_to_room(science_room, my_url) ;
+    matrix_obj.add_service_to_room(music_room, my_url) ;
+
 
     matrix_obj.start_timer() ; # start clock thread (for clock sensitive processes/modules)
     matrix_obj.spawn() ;
