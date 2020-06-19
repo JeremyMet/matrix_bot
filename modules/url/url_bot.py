@@ -49,7 +49,7 @@ class url_bot(module):
         for match in reg_match: # si une url valide est trouvée ...
             url = match.group(0) ;
             print(">>> current url: {}".format(url))
-            if url.find("youtube.") > 0:
+            if url.find("youtu") > 0: # not perfect, should be modified with regex.
                 ret += findTitleYouTube(url);
             elif url.find("twitter.") > 0:
                 pass # do nothing for now ...
