@@ -54,7 +54,7 @@ tbot pendu event montre l'event en cours (s'il y en a)";
             return self.pendu.show_event() ;
         return "" ;
 
-
+    @module.login_check_dec
     def process_msg_passive(self, cmd, sender, room):
         match = re.findall('\!([a-zA-Z]+)', (unidecode.unidecode(cmd)))
         if match:
@@ -64,7 +64,7 @@ tbot pendu event montre l'event en cours (s'il y en a)";
 
     @module.module_on_dec
     def run_on_clock(self):
-        if self.get_timer() > 36000: # 10 hours. 
+        if self.get_timer() > 36000: # 10 hours.
             self.reset_clock() ;
             return "/!\ Rappel ! \n \n "+self.pendu.show_lt()+"\n"+str(self.pendu) ;
 

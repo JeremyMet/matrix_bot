@@ -13,7 +13,7 @@ def findTitleOther(url):
         webpage = urllib.request.urlopen(url, timeout=5).read()
         webpage = html.unescape(webpage.decode(encoding="utf8"))
         title = webpage.split('<title>')[1].split('</title>')[0]
-        title += '\n\t'+url+'\n';
+        title += '<br>'+url+'<br>';
     except:
         pass
     return title
@@ -25,7 +25,7 @@ def findTitleYouTube(url):
         webpage = html.unescape(webpage.decode(encoding="utf8"))
         webpage = webpage.split("https://www.youtube.com/watch?v")[1];
         title = webpage.split("content=\"")[1].split('\"')[0]
-        title += '\n\t'+url+'\n';
+        title += '<br>'+url+'<br>';
     except:
         pass
     return title

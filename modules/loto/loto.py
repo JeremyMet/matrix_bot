@@ -12,11 +12,11 @@ class loto(object):
     pt_table = {} ;
     pt_table[0] = 0 ;
     pt_table[1] = 1 ;
-    pt_table[2] = 10 ;
-    pt_table[3] = 150 ;
-    pt_table[4] = 2000 ;
-    pt_table[5] = 15000 ;
-    pt_table[6] = 300000 ;
+    pt_table[2] = 5 ;
+    pt_table[3] = 75 ;
+    pt_table[4] = 3400 ;
+    pt_table[5] = 800000 ;
+    pt_table[6] = 10000000 ;
 
     def __init__(self, hour=0, minute=0, scoreboard_file="./modules/loto/scoreboard_file.dic", \
     dailybet_file="./modules/loto/dailybet_file.dic", log_file = "./modules/loto/log.dic", nb_numbers=49, combination_length=6):
