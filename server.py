@@ -25,7 +25,7 @@ if __name__ == "__main__":
     # Then Create the matrix object, add rooms, services and timers.
     matrix_obj = matrix_utils_ext() ;
 
-    gaming_room = matrix_obj.add_room("#admin:mandragot.org", "Tbot, ready for action !")
+    gaming_room = matrix_obj.add_room("#botgaming:mandragot.org", "Tbot, ready for action !")
     science_room = matrix_obj.add_room("#sciences:mandragot.org")
     music_room = matrix_obj.add_room("#musiciensdimanche:mandragot.org")
     main_room = matrix_obj.add_room("#deuxsurdix:mandragot.org")
