@@ -124,7 +124,7 @@ class loto(object):
                 if not(i.isnumeric()):
                     return "" # On ne traite pas ce cas
             return "\U0001F3B2 La combinaison doit être de longueur {}.".format(self.combination_length);
-        proposition_array = [(int(i) if (int(i) < self.nb_numbers) else 0) for i in proposition_array];
+        proposition_array = [(int(i) if (int(i) <= self.nb_numbers) else 0) for i in proposition_array];
         if (0 in proposition_array):
             return "\U0001F3B2 Les valeurs doivent être inférieures ou égales à {}.".format(self.nb_numbers);
         proposition_set = set(proposition_array);
