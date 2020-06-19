@@ -11,6 +11,7 @@ import sys ;
 from collections import namedtuple ;
 from bcolors import bcolors ;
 from modules.module import module;
+from html_format import html_format;
 
 ## TODO When adding a timer, check it is instantiated somhere ... ;-)
 
@@ -112,7 +113,13 @@ class matrix_utils_ext(object):
                 if (room in service.get_room_list()):
                     ret = service.run(text, login, room) ;
                     if ret:
-                        room.send_text(ret) ;
+                        for msg in ret:
+                            if isinstance(msg, str):
+                                room.send_text(msg);
+                            elif isinstance(msg, html_format):
+                                cstr = msg.get_string();
+                                if cstr:
+                                    room.send_html(cstr);
 
     def spawn(self):
         self.client.start_listener_thread(exception_handler=self.error_handle);

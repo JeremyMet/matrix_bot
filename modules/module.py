@@ -141,7 +141,7 @@ class module(object):
 
     def run(self, cmd, sender=None, room=None):
         instruction_set = cmd.split("\n") ;
-        ret = "" ;
+        ret = [] ;
         for instruction in instruction_set:
             raw_args = instruction.split() ;
             tmp = "" ;
@@ -172,8 +172,9 @@ class module(object):
                             tmp = self.process_msg_passive(instruction, sender, room);
             ## End of Processing
             if tmp:
-                ret += tmp+'\n' ;
-        return ret[:-1] ;
+                ret.append(tmp);
+                # ret += tmp+'\n' ;
+        return ret;
 
 if __name__ == "__main__":
     mod = module() ;
