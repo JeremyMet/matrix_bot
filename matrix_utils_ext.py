@@ -160,8 +160,8 @@ class matrix_utils_ext(object):
                 if tmp_msg:
                     for room in service.get_room_list():
                         room.send_text(tmp_msg) ;
-        for room in self.room_dic:
-            room.send_text(self.config["bot_stop_txt"]);
+        # for room in self.room_dic:
+            # room.send_text(self.config["bot_stop_txt"]);
         sys.exit() ;
 
     def error_handle(self, err):

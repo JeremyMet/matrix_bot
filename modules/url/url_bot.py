@@ -50,17 +50,13 @@ class url_bot(module):
             url = match.group(0) ;
             print(">>> current url: {}".format(url))
             if url.find("youtube.") > 0:
-                if ret == "":
-                    ret = "<blockquote>";
                 ret += findTitleYouTube(url);
             elif url.find("twitter.") > 0:
                 pass # do nothing for now ...
             else:
-                if ret == "":
-                    ret = "> ";
                 ret+= findTitleOther(url);
         if ret != "":
-            ret+="</blockquote>"
+            ret= "<blockquote>"+ret+"</blockquote>"
         return html_format(ret);
 
 if __name__ == "__main__":
