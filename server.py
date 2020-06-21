@@ -29,18 +29,18 @@ if __name__ == "__main__":
     science_room = matrix_obj.add_room("#sciences:mandragot.org")
     music_room = matrix_obj.add_room("#musiciensdimanche:mandragot.org")
     main_room = matrix_obj.add_room("#deuxsurdix:mandragot.org")
+    ludo_room = matrix_obj.add_room("#gaming:mandragot.org")
 
     matrix_obj.add_service_to_room(gaming_room, my_quotes) ;
     matrix_obj.add_service_to_room(gaming_room, my_pendu) ;
     matrix_obj.add_service_to_room(gaming_room, my_mastermind) ;
     matrix_obj.add_service_to_room(gaming_room, my_loto) ;
-
+    #
     matrix_obj.add_service_to_room(gaming_room, my_url) ;
     matrix_obj.add_service_to_room(science_room, my_url) ;
     matrix_obj.add_service_to_room(music_room, my_url) ;
     matrix_obj.add_service_to_room(main_room, my_url) ;
-
-
+    matrix_obj.add_service_to_room(ludo_room, my_url) ;
 
     matrix_obj.start_timer() ; # start clock thread (for clock sensitive processes/modules)
     matrix_obj.spawn() ;
