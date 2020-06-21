@@ -14,7 +14,7 @@ class mastermind(object):
 
 
     def rst(self):
-        self.str_game_state = "*Mastermind* \n Nombre d'Essais: {} ; \n".format(self.max_tries);
+        self.str_game_state = "\u2699\uFE0F <b>Mastermind</b> \u2699\uFE0F \n Nombre d'Essais: {} ; \n".format(self.max_tries);
         self.combination = [random.choice(list(mastermind_unicode.emoticon_dico.keys())) for _ in range(self.combination_length)];
         self.current_nb_tries = 0;
 
