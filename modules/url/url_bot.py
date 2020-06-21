@@ -9,7 +9,8 @@ from bcolors import bcolors ;
 def findTitleOther(url):
     title = "";
     try:
-        webpage = urllib.request.urlopen(url, timeout=5).read()
+        req = urllib.request.Request(url, data=None, headers={'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3)'})
+        webpage = urllib.request.urlopen(req).read()
         webpage = html.unescape(webpage.decode(encoding="utf8"))
         title = webpage.split('<title>')[1].split('</title>')[0]
         title += '<br>'+url+'<br>';
@@ -32,7 +33,7 @@ def findTitleYouTube(url):
 
 class url_bot(module):
 
-    url_regex = re.compile("http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+", re.IGNORECASE)
+    url_regex = re.compile("http[s]?://(?:[a-zA-Z\u00C0-\u017F]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+", re.IGNORECASE)
 
     def __init__(self, keyword = "url_bot", is_permanent = False): # <- template ... Here goes your default module name
         super().__init__(keyword, is_permanent) ;
