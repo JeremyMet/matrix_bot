@@ -126,7 +126,7 @@ class loto(object):
             return "\U0001F3B2 La combinaison doit être de longueur {}.".format(self.combination_length);
         proposition_array = [(int(i) if (int(i) <= self.nb_numbers) else 0) for i in proposition_array];
         if (0 in proposition_array):
-            return "\U0001F3B2 Les valeurs doivent être inférieures ou égales à {}.".format(self.nb_numbers);
+            return "\U0001F3B2 Les valeurs doivent être comprises entre 1 et {}.".format(self.nb_numbers);
         proposition_set = set(proposition_array);
         if (len(proposition_set) != self.combination_length):
             return "\U0001F3B2 Les propositions ne doivent pas contenir deux fois le même nombre."
@@ -137,12 +137,12 @@ class loto(object):
     def get_dailybet(self):
         ret = "\U0001F3B2 Joueurs Participants - Grille";
         for key, value in self.dailybet.items():
-            ret = "{}\n\t- {}: {} ".format(ret, key, value);
+            ret = "{}\n\t- {}: {} ".format(ret, key.capitalize(), value);
         return ret;
 
 #todo mettre dans l'ordre croissant
     def get_scoreboard(self):
         ret = "\U0001F3B2 Tableau des Scores :";
         for key_value in sorted(self.scoreboard.items(), key=lambda x: x[1], reverse=True):
-            ret = "{}\n\t - {}: {}".format(ret, key_value[0], key_value[1]);
+            ret = "{}\n\t- {}: {}".format(ret, key_value[0].capitalize(), key_value[1]);
         return ret;
