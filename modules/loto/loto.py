@@ -101,7 +101,7 @@ class loto(object):
             nb_pt = loto.pt_table[tmp_nb_pt];
             if nb_pt > 0:
                 is_there_a_winner = True;
-                ret += "\n\t-{} avec {} point(s) ({} nombre(s) correct(s))".format(key, nb_pt, tmp_nb_pt)
+                ret += "\n\t- {} avec {} point(s) ({} nombre(s) correct(s))".format(key.capitalize(), nb_pt, tmp_nb_pt)
             if key in self.scoreboard.keys(): # on ajoute quand même les participants avec zero point.
                 self.scoreboard[key] += nb_pt;
             else:
@@ -132,7 +132,7 @@ class loto(object):
             return "\U0001F3B2 Les propositions ne doivent pas contenir deux fois le même nombre."
         # proposition is well-formed,
         self.dailybet[sender] = proposition_set;
-        return "\U0001F3B2 La proposition {} de {} a bien été prise en compte.".format(self.dailybet[sender], sender);
+        return "\U0001F3B2 La proposition {} de {} a bien été prise en compte.".format(self.dailybet[sender], sender.capitalize());
 
     def get_dailybet(self):
         ret = "\U0001F3B2 Joueurs Participants - Grille";
@@ -142,7 +142,12 @@ class loto(object):
 
 #todo mettre dans l'ordre croissant
     def get_scoreboard(self):
+        medals_array = ["\U0001F947", "\U0001f948", "\U0001f949"] ;
         ret = "\U0001F3B2 Tableau des Scores :";
+        cpt = 0 ;
         for key_value in sorted(self.scoreboard.items(), key=lambda x: x[1], reverse=True):
             ret = "{}\n\t- {}: {}".format(ret, key_value[0].capitalize(), key_value[1]);
+            if cpt < 3:
+                ret+= (" ({})".format(medals_array[cpt]));
+            cpt+=1;
         return ret;
