@@ -33,7 +33,7 @@ def findTitleYouTube(url):
 
 class url_bot(module):
 
-    url_regex = re.compile("http[s]?://(?:[a-zA-Z\u00C0-\u017F]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+", re.IGNORECASE)
+    url_regex = re.compile("(https?|ftp|ssh|mailto):\/\/[\u00C0-\u017Fa-z0-9\/:%_+.,#?!@&=-]+", re.IGNORECASE)
 
     def __init__(self, keyword = "url_bot", is_permanent = False): # <- template ... Here goes your default module name
         super().__init__(keyword, is_permanent) ;
