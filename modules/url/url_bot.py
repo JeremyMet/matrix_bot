@@ -3,8 +3,7 @@ import urllib.request
 import urllib.parse
 import html;
 import re ;
-from html_format import html_format;
-
+from bcolors import bcolors ;
 
 
 def findTitleOther(url):
@@ -48,7 +47,7 @@ class url_bot(module):
         ret = "" ;
         for match in reg_match: # si une url valide est trouvée ...
             url = match.group(0) ;
-            print(">>> current url: {}".format(url))
+            print("{}>>> current url: {}{}".format(bcolors.OKBLUE,url,bcolors.ENDC))
             if url.find("youtu") > 0: # not perfect, should be modified with regex.
                 ret += findTitleYouTube(url);
             elif url.find("twitter.") > 0:
@@ -57,7 +56,7 @@ class url_bot(module):
                 ret+= findTitleOther(url);
         if ret != "":
             ret= "<blockquote>"+ret+"</blockquote>"
-        return html_format(ret);
+        return ret;
 
 if __name__ == "__main__":
     url = "https://www.youtube.com/watch?v=KXatvzWAzLU";

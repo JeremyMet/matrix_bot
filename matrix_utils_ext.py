@@ -80,7 +80,10 @@ class matrix_utils_ext(object):
         listener = room.add_listener(self.callback) ;
         self.room_dic[room] = matrix_utils_ext.room_tuple(room_addr, listener) # (room object address, room_name (room address), listener object)
         if message_on_start:
-            room.send_text(message_on_start) ;
+            # Conversion to HTML format
+            message_on_start = message_on_start.replace("\n", "<br>");
+            message_on_start = message_on_start.replace("\t", "&emsp;");
+            room.send_html(message_on_start, msgtype="m.notice");
         return room ;
 
     def remove_room(self, room):
@@ -112,12 +115,10 @@ class matrix_utils_ext(object):
                     ret = service.run(text, login, room) ;
                     if ret:
                         for msg in ret:
-                            if isinstance(msg, str):
-                                room.send_text(msg);
-                            elif isinstance(msg, html_format):
-                                cstr = msg.get_string();
-                                if cstr:
-                                    room.send_html(cstr);
+                            # Conversion to HTML format
+                            msg = msg.replace("\n", "<br>");
+                            msg = msg.replace("\t", "&emsp;");
+                            room.send_html(msg, msgtype="m.notice");
 
     def spawn(self):
         self.client.start_listener_thread(exception_handler=self.error_handle);
@@ -138,8 +139,11 @@ class matrix_utils_ext(object):
                         service.clock_update() ;
                         ret = service.run_on_clock() ;
                         if ret:
+                            # Conversion to HTML format
+                            ret = ret.replace("\n", "<br>");
+                            ret = ret.replace("\t", "&emsp;");
                             for room in service.get_room_list():
-                                room.send_text(ret) ;
+                                room.send_html(ret, msgtype="m.notice");
             time.sleep(t)
 
     def start_timer(self, t = 1):
