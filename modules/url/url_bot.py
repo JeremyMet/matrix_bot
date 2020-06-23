@@ -47,7 +47,7 @@ class url_bot(module):
     @module.login_check_dec
     def process_msg_passive(self, cmd, sender, room):
         print(cmd)
-        if len(url)>0 and url[0] != ">": # Cette condition permet de ne pas traiter les citations (i.e. lien déjà posté).
+        if len(cmd)>0 and cmd[0] != ">": # Cette condition permet de ne pas traiter les citations (i.e. lien déjà posté).
             return "";
         reg_match = re.finditer(url_bot.url_regex, cmd);
         ret = "" ;
