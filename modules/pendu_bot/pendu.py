@@ -50,7 +50,7 @@ class pendu(object):
         if self.str_event != "" and not(self.event_show):
             x += self.str_event ;
             self.event_show = True ;
-        x += "Mot Courant : " ;
+        x += "\u270F\uFE0F Mot Courant : " ;
         if (self.mirror):
             iter = reversed(self.current_word) ;
         else:
@@ -58,7 +58,7 @@ class pendu(object):
         for c in iter:
             t = c+" " if c in self.lt else "_ " ;
             x+=t ;
-        life_str = "\nVie : "+"~"*(self.life_max-self.life)+"/)"+"~"*(self.life) + "\\o/~~\n";
+        life_str = "\n\u2764\uFE0F Vie : "+"~"*(self.life_max-self.life)+"/)"+"~"*(self.life) + "\\o/~~\n";
         x+=life_str ;
         return x ;
 
@@ -85,15 +85,15 @@ class pendu(object):
         n = False ;
         x = "" ;
         if self.life < 0:
-            self.score["bot"]+= len(self.current_word) ;
-            x = "\U0001f625 Vous avez perdu \U0001f625 ... Le Main est super mauvais :-( \n" ;
+            nb_points = len(self.current_word)*3;
+            self.score["bot"]+= nb_points  ;
+            x = "\U0001f625 Vous avez perdu \U0001f625 ... Le Main est super mauvais (le bot gagne {} point(s)) \U0001f625\n".format(nb_points) ;
             x+= "Le mot recherché était \""+self.current_word+"\".\n" ;
             n = True ;
         if (self.match == len(self.current_word)):
-            self.score["main"]+= len(self.current_word); # no overflow, python <3
-            self.score["main"]+= self.life ;
-            self.score["main"]+= len(set(self.current_word))-len(set(self.current_word).intersection(self.lt)) ;
-            x = "\U0001f973 Vous avez gagné \U0001f973 ! Le mot recherché était effectivement \"{}\" ! Woah, vous êtes vraiment trop bons !\n".format(self.current_word) ;
+            nb_points = len(self.current_word)+self.life+ len(set(self.current_word))-len(set(self.current_word).intersection(self.lt))
+            self.score["main"]+= nb_points; # no overflow, python <3
+            x = "\U0001f973 Vous avez gagné \U0001f973 ! Le mot recherché était effectivement \"{}\" ! Woah, vous êtes vraiment trop bons (+{} point(s)) !\n".format(self.current_word, nb_points) ;
             n = True ;
         if n:
             x += "  - Score du main : "+str(self.score["main"])+"\n" ;
