@@ -47,18 +47,19 @@ class url_bot(module):
     @module.login_check_dec
     def process_msg_passive(self, cmd, sender, room):
         print(cmd)
+        if len(url)>0 and url[0] != ">": # Cette condition permet de ne pas traiter les citations (i.e. lien déjà posté).
+            return "";
         reg_match = re.finditer(url_bot.url_regex, cmd);
         ret = "" ;
         for match in reg_match: # si une url valide est trouvée ...
             url = match.group(0) ;
-            if len(url)>0 and url[0] != ">": # Cette condition permet de ne pas traiter les citations (i.e. lien déjà posté).
-                print("{}>>> current url: {}{}".format(bcolors.OKBLUE,url,bcolors.ENDC))
-                if url.find("youtu") > 0: # not perfect, should be modified with regex.
-                    ret += findTitleYouTube(url);
-                elif url.find("twitter.") > 0:
-                    pass # do nothing for now ...
-                else:
-                    ret+= findTitleOther(url);
+            print("{}>>> current url: {}{}".format(bcolors.OKBLUE,url,bcolors.ENDC))
+            if url.find("youtu") > 0: # not perfect, should be modified with regex.
+                ret += findTitleYouTube(url);
+            elif url.find("twitter.") > 0:
+                pass # do nothing for now ...
+            else:
+                ret+= findTitleOther(url);
         if ret != "":
             ret= "<blockquote>"+ret+"</blockquote>"
         return ret;
