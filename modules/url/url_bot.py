@@ -6,6 +6,7 @@ import re ;
 from bcolors import bcolors ;
 import time;
 
+title_regex = re.compile("\\?\"author\\?\":\\?\"");
 
 def findTitleOther(url, delay=0):
     ret = "";
@@ -27,10 +28,11 @@ def findTitleYouTube(url, delay=0):
         req = urllib.request.Request(url, data=None, headers={'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3)'})
         webpage = urllib.request.urlopen(req, timeout=5).read()
         webpage = html.unescape(webpage.decode(encoding="utf8"))
+        webpage = webpage.replace("\\","") # pas très propre, à refaire avec regex plus tard (author = re.findall(title_regex, webpage)) ?
         title = webpage.split("https://www.youtube.com/watch?v")[1];
         title = title.split("content=\"")[1].split('\"')[0]
-        author = webpage.split("author\":\"")[1].split('\"')[0]
-        ret = '<b><font color=red>{}:</font></b> {}<br>{}<br>'.format(author.capitalize(), title.capitalize(), url);
+        author = webpage.split("\"author\":\"")[1].split("\"")[0];
+        ret = '<b>{}</b> \u2014 {}<br>{}<br>'.format(author.capitalize(), title.capitalize(), url);
     except:
         pass
     if ret:
