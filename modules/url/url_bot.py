@@ -22,7 +22,7 @@ def findTitleOther(url, delay=0):
         pass
     if ret:
         time.sleep(delay)
-    return title
+    return ret;
 
 def findTitleYouTube(url, delay=0):
     ret = "";
