@@ -19,16 +19,18 @@ def findTitleOther(url):
     return title
 
 def findTitleYouTube(url):
-    title = "";
+    ret = "";
     try:
-        webpage = urllib.request.urlopen(url, timeout=5).read()
+        req = urllib.request.Request(url, data=None, headers={'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3)'})
+        webpage = urllib.request.urlopen(req, timeout=5).read()
         webpage = html.unescape(webpage.decode(encoding="utf8"))
-        webpage = webpage.split("https://www.youtube.com/watch?v")[1];
-        title = webpage.split("content=\"")[1].split('\"')[0]
-        title += '<br>'+url+'<br>';
+        title = webpage.split("https://www.youtube.com/watch?v")[1];
+        title = title.split("content=\"")[1].split('\"')[0]
+        author = webpage.split("author\":\"")[1].split('\"')[0]
+        ret = '(<b><font color=red>{}</font></b>) {}<br>{}<br>'.format(author.capitalize(), title.capitalize(), url);
     except:
         pass
-    return title
+    return ret
 
 
 class url_bot(module):
@@ -44,17 +46,19 @@ class url_bot(module):
 
     @module.login_check_dec
     def process_msg_passive(self, cmd, sender, room):
+        print(cmd)
         reg_match = re.finditer(url_bot.url_regex, cmd);
         ret = "" ;
         for match in reg_match: # si une url valide est trouvée ...
             url = match.group(0) ;
-            print("{}>>> current url: {}{}".format(bcolors.OKBLUE,url,bcolors.ENDC))
-            if url.find("youtu") > 0: # not perfect, should be modified with regex.
-                ret += findTitleYouTube(url);
-            elif url.find("twitter.") > 0:
-                pass # do nothing for now ...
-            else:
-                ret+= findTitleOther(url);
+            if len(url)>0 and url[0] != ">": # Cette condition permet de ne pas traiter les citations (i.e. lien déjà posté).
+                print("{}>>> current url: {}{}".format(bcolors.OKBLUE,url,bcolors.ENDC))
+                if url.find("youtu") > 0: # not perfect, should be modified with regex.
+                    ret += findTitleYouTube(url);
+                elif url.find("twitter.") > 0:
+                    pass # do nothing for now ...
+                else:
+                    ret+= findTitleOther(url);
         if ret != "":
             ret= "<blockquote>"+ret+"</blockquote>"
         return ret;
