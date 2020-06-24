@@ -9,6 +9,7 @@ import time;
 # Some Constants
 title_regex = re.compile("\\?\"author\\?\":\\?\"");
 youtube_url = "https://www.youtube.com/watch?v="
+watch_regex = re.compile("watch\?v=([0-9aA-zZ])*");
 
 def findTitleOther(url, delay=0):
     ret = "";
@@ -27,10 +28,16 @@ def findTitleOther(url, delay=0):
 def findTitleYouTube(url, delay=0):
     ret = "";
     try:
-        video_id = url.split("watch?v=")[1]
-        video_id = video_id.split("&")[0];
+        if url[-1] == "/":
+            url = url[:-1]; # pour éventuellement corriger les urls mal formées.
+        video_id = url.split("/")[-1]
+        tmp_re_search = re.search(watch_regex, video_id)
+        if tmp_re_search:
+            video_id = tmp_re_search.group(0);
+            video_id = video_id.split("watch?v=")[1];
+        else:
+            video_id = video_id.split("?")[0];
         video_url = "\""+youtube_url+video_id+"\""
-        print(video_url)
         webpage = urllib.request.urlopen(url, timeout=5).read()
         webpage = html.unescape(webpage.decode(encoding="utf8"))
         webpage = webpage.replace("\\","") # pas très propre, à refaire avec regex plus tard (author = re.findall(title_regex, webpage)) ?
