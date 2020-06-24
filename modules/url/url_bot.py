@@ -17,7 +17,7 @@ def findTitleOther(url, delay=0):
         req = urllib.request.Request(url, data=None, headers={'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3)'})
         webpage = urllib.request.urlopen(req, timeout=5).read()
         webpage = html.unescape(webpage.decode(encoding="utf8"))
-        title = webpage.split('<title>')[1].split('</title>')[0]
+        ret = webpage.split('<title>')[1].split('</title>')[0]
         ret += '<br>'+url+'<br>';
     except:
         pass
@@ -39,7 +39,8 @@ def findTitleYouTube(url, delay=0):
             video_id = url.split("/")[-1]
             video_id = video_id.split("?")[0];
         video_url = "\""+youtube_url+video_id+"\""
-        webpage = urllib.request.urlopen(url, timeout=5).read()
+        req = urllib.request.Request(url, data=None, headers={'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3)'})
+        webpage = urllib.request.urlopen(req, timeout=5).read()
         webpage = html.unescape(webpage.decode(encoding="utf8"))
         webpage = webpage.replace("\\","") # pas très propre, à refaire avec regex plus tard (author = re.findall(title_regex, webpage)) ?
         ###############################################
