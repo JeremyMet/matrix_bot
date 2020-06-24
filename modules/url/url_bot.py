@@ -30,12 +30,13 @@ def findTitleYouTube(url, delay=0):
     try:
         if url[-1] == "/":
             url = url[:-1]; # pour éventuellement corriger les urls mal formées.
-        video_id = url.split("/")[-1]
+        video_id = url;
         tmp_re_search = re.search(watch_regex, video_id)
         if tmp_re_search:
             video_id = tmp_re_search.group(0);
             video_id = video_id.split("watch?v=")[1];
         else:
+            video_id = url.split("/")[-1]
             video_id = video_id.split("?")[0];
         video_url = "\""+youtube_url+video_id+"\""
         webpage = urllib.request.urlopen(url, timeout=5).read()
