@@ -14,7 +14,7 @@ class calendar(object):
     __STR_LIMIT__ = 255;
 
     # date_regex = re.compile("\[[0-9]+(-(1[0-2])|(0?[1-9]))?(-[0-3]?[0-9])?( (([0-1]?[0-9]|2[0-3]):[0-5][0-9]))?\]\&\".+\""); # not perfect but should be ok.
-    YMD_regex = re.compile("([0-9]+-(((1[0-2])))|(0?[1-9]))-((3[0-1])|(((1[0-2])|(0?[1-9]))-((3[0-1])|([0-2]?[0-9])))|([0-2]?[0-9]))");
+    YMD_regex = re.compile("([0-9]+-((1[0-2])|(0?[1-9]))-(3[0-1]|[0-2]?[0-9]))|((1[0-2])|(0?[1-9]))-((3[0-1])|([0-2]?[0-9]))|([0-2]?[0-9])");
     time_regex = re.compile("(([0-1]?[0-9])|(2[0-3])):[0-5][0-9]");
     event_name_regex = re.compile("[0-9aA-zZ]{1,30}")
 
@@ -38,32 +38,42 @@ class calendar(object):
 
     @classmethod
     def parse_YMDT(cls, datetime_str):
-        YMD = re.search(calendar.YMD_regex, datetime_str);
-        T = re.search(calendar.time_regex, datetime_str);
-        datetime_str = datetime_str.replace("T", "");
         lg_str = 0 ; # this allows to check there is no additional substrings.
-
+        ret = None;
         # Initialisation
-
         now = datetime.now();
         year, month, day = now.year, now.month, now.day;
         type = event_type.T;
-
+        datetime_split = datetime_str.split("T");
+        tmp_time, tmp_date = None, None;
+        if len(datetime_split) == 1:
+            T = re.fullmatch(calendar.time_regex, datetime_split[0]);
+            if T:
+                tmp_time = datetime_split[0];
+            else:
+                YMDT = re.fullmatch(calendar.YMD_regex, datetime_split[0]);
+                if YMDT:
+                    tmp_date = datetime_split[0];
+                else:
+                    ret = event_type.ERROR;
+        elif len(datetime_split) == 2:
+            YMDT = re.fullmatch(calendar.YMD_regex, datetime_split[0]);
+            T = re.fullmatch(calendar.time_regex, datetime_split[1]);
+            if YMDT and T:
+                tmp_date, tmp_time = datetime_split[0], datetime_split[1];
+            else:
+                ret = event_type.ERROR;
+        if ret: # no need to go further if parsing has failed.
+            return ret;
         # Gestion de l'heure
-        if T:
-            time = T.group(0);
-            lg_str += len(time);
-            time_split = time.split(":");
+        if tmp_time:
+            time_split = tmp_time.split(":");
             hour, minute = int(time_split[0]), int(time_split[1]);
         else:
             hour, minute = 0, 0;
-
         # Gestion de la date
-        if YMD and (lg_str != len(datetime_str)):
-            date = YMD.group(0);
-            print(">>>> {}".format(date))
-            lg_str += len(date);
-            date_split = date.split("-");
+        if tmp_date:
+            date_split = tmp_date.split("-");
             if len(date_split) == 3:
                 type = event_type.YMDT;
                 year, month, day = int(date_split[0]), int(date_split[1]), int(date_split[2])
@@ -73,13 +83,10 @@ class calendar(object):
             elif len(date_split) == 1:
                 day = int(date_split[0]);
                 type = event_type.DT;
-        print(year, month, day, hour, minute)
         try:
             datetime_obj = datetime(year, month, day, hour, minute);
             ret = calendar.datetime_type(type, datetime_obj);
         except:
-            ret = event_type.ERROR;
-        if (lg_str != len(datetime_str)):
             ret = event_type.ERROR;
         return ret;
 
