@@ -21,4 +21,5 @@ class event(object):
             ret += str(self.datetime.month)+"-"+str(self.datetime.day)+"T"+time;
         elif self.type == event_type.YMDT:
             ret += str(self.datetime.year)+"-"+str(self.datetime.month)+"-"+str(self.datetime.day)+"T"+time;
-        return ret;
+        # return ret;
+        return "\""+self.event_str+"\""+separator+str(self.datetime);

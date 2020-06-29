@@ -1,6 +1,6 @@
 from modules.module import module ;
 from .calendar import calendar;
-import datetime;
+from datetime import datetime;
 
 class calendar_bot(module):
 
@@ -23,6 +23,12 @@ class calendar_bot(module):
                 ret = self.calendar_inst.save_event_dic();
             if (len(raw_cmd) == 3 and raw_cmd[2] == "get_events"):
                 ret = self.calendar_inst.get_events();
+            if (len(raw_cmd) == 3 and raw_cmd[2] == "get_time"):
+                now = datetime.now()
+                if now.minute>10:
+                    ret = "\U0001f4c5 Il est {}:{}.".format(now.hour, now.minute);
+                else:
+                    ret = "\U0001f4c5 Il est {}:0{}.".format(now.hour, now.minute);
             return ret ;
 
         @module.module_on_dec
@@ -33,9 +39,10 @@ class calendar_bot(module):
         @module.module_on_dec
         # @module.clock_dec
         def run_on_clock(self):
-            pass
-            # log = self.calendar_inst.get_log();
+            ret = self.calendar_inst.get_event_str();
+            return ret;
+
 
         def exit(self):
             print("\tSauvegarde en cours ...")
-            # self.loto_inst.save_current_state();
+            ret = self.calendar_inst.save_event_dic();

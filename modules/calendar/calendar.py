@@ -1,11 +1,12 @@
 #-*- coding: utf8 -*-
-from datetime import datetime;
+from datetime import datetime, timedelta;
 from modules.calendar.event_type import event_type;
 from modules.calendar.event import event;
 import re;
 import pickle;
 import os;
 from collections import namedtuple;
+from copy import deepcopy;
 
 #TODO regarder re.match() ...
 
@@ -85,9 +86,12 @@ class calendar(object):
                 type = event_type.DT;
         try:
             datetime_obj = datetime(year, month, day, hour, minute);
+            if type == event_type.T:
+                datetime_obj -= timedelta(days=1)
             ret = calendar.datetime_type(type, datetime_obj);
         except:
             ret = event_type.ERROR;
+        print(">>> {}".format(ret));
         return ret;
 
     # [2018-5-2]&[ANNIV]&[Anniversaire de tbot]
@@ -100,7 +104,7 @@ class calendar(object):
         YMDT, event_name, event_string = cmd_split[0], cmd_split[1], cmd_split[2];
         ret = 0 ;
         # Parse YMDT
-        error_YMDT = "Erreur : Il y a un problème avec la date de l'événement (format ou date passée)." ;
+        error_YMDT = "\U0001f4c5 Erreur : Il y a un problème avec la date de l'événement (format ou date passée)." ;
         if brackets_check(YMDT):
             YMDT = remove_brackets(YMDT);
             YMDT = calendar.parse_YMDT(YMDT);
@@ -112,15 +116,15 @@ class calendar(object):
         else:
             return error_YMDT;
         # Parse event_name
-        error_event_name = "Erreur : Le nom de l'événement ne doit comporter que des lettres (non accentuées) / nombres. Sa taille doit être comprise entre 1 et 30 caractères.";
+        error_event_name = "\U0001f4c5 Erreur : Le nom de l'événement ne doit comporter que des lettres (non accentuées) / nombres. Sa taille doit être comprise entre 1 et 30 caractères.";
         if brackets_check(event_name):
             event_name = remove_brackets(event_name);
-            if not(re.search(calendar.event_name_regex, event_name)):
+            if not(re.fullmatch(calendar.event_name_regex, event_name)):
                 return error_event_name;
         else:
             return error_event_name;
         # Parse event_string
-        error_event_string = "Erreur : Il y a un problème avec le texte de l'événement (moins de {} caractères).".format(calendar.__STR_LIMIT__)
+        error_event_string = "\U0001f4c5 Erreur : Il y a un problème avec le texte de l'événement (moins de {} caractères).".format(calendar.__STR_LIMIT__)
         if brackets_check(event_string):
             event_string = remove_brackets(event_string);
             if (len(event_string) > calendar.__STR_LIMIT__):
@@ -128,41 +132,72 @@ class calendar(object):
         else:
             return error_event_string;
         ## Parsing is done ... Let's add the event !
-        error_dic = "Erreur : L'événement existe déjà."
+        error_dic = "\U0001f4c5 Erreur : L'événement existe déjà."
         if not(event_name in self.event_dic):
             self.event_dic[event_name] = event(YMDT.type, YMDT.datetime, event_string); # todo remove YMDT_str and make string from event_type.
         else:
             return error_dic;
-        return "L'événement \"{}\" a bien été ajouté.".format(event_name)
+        return "\U0001f4c5 L'événement \"{}\" a bien été ajouté.".format(event_name)
 
 
     def save_event_dic(self):
         try:
             with open(self.event_file_path, "wb") as pickle_file:
                 pickle.dump(self.event_dic, pickle_file);
-            return "Les événements ont été sauvegardés."
+            return "\U0001f4c5 Les événements ont été sauvegardés."
         except RuntimeError as e:
             print(e);
-            return "Une erreur s'est produite."
+            return "\U0001f4c5 Une erreur s'est produite."
 
     def remove_event(self, event_name):
         if (event_name in self.event_dic):
             del self.event_dic[event_name];
-            return "L'événement a bien été supprimé."
+            return "\U0001f4c5 L'événement a bien été supprimé."
         else:
-            return "Erreur : L'événement n'existe pas."
+            return "\U0001f4c5 Erreur : L'événement n'existe pas."
 
     def get_events(self):
         ret = "";
         for key, item in self.event_dic.items():
-            print("coucou")
             ret += "- <b>[{}]</b>: {}".format(key, item);
             ret += '\n';
         return ret[:-1];
 
+    def get_event_str(self):
+        ret = "";
+        for event_name, event in deepcopy(self.event_dic).items():
+            now = datetime.now();            
+            if event.type == event_type.T:
+                if (event.datetime.day != now.day and now.hour == event.datetime.hour and now.minute == event.datetime.minute):
+                    ret += event.event_str;
+                    ret += '\n';
+                    event.datetime = datetime(now.year, now.month, now.day, now.hour, now.minute);
+                    self.event_dic[event_name]=event;
+            elif event.type == event.type.DT:
+                if event.datetime.month != now.month:
+                    ret += event.event_str;
+                    ret += '\n';
+                    event.datetime = datetime(now.year, now.month, now.day, now.hour, now.minute);
+                    self.event_dic[event_name]=event;
+            elif event.type == event.type.MDT:
+                if event.datetime.year != now.year:
+                    ret += event.event_str;
+                    ret += '\n';
+                    event.datetime = datetime(now.year, now.month, now.day, now.hour, now.minute);
+                    self.event_dic[event_name]=event;
+            elif event.type == event.type.YMDT:
+                if now > event.datetime:
+                    ret += event.event_str;
+                    ret += '\n';
+                    del self.event_dic[event_name];
+            if ret:
+                self.save_event_dic(); # better to save I think.
+                ret = "\U0001f4c5 Calendar \U0001f4c5\n"+ret;
+        return ret;
+
 
 
 if __name__ == "__main__":
-    YMDT_str = "1961-03-30"
+    YMDT_str = "1961-02-01"
     a = calendar.parse_YMDT(YMDT_str);
     print(a)
