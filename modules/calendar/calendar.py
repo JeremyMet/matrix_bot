@@ -17,7 +17,7 @@ class calendar(object):
     # date_regex = re.compile("\[[0-9]+(-(1[0-2])|(0?[1-9]))?(-[0-3]?[0-9])?( (([0-1]?[0-9]|2[0-3]):[0-5][0-9]))?\]\&\".+\""); # not perfect but should be ok.
     YMD_regex = re.compile("([0-9]+-((1[0-2])|(0?[1-9]))-(3[0-1]|[0-2]?[0-9]))|((1[0-2])|(0?[1-9]))-((3[0-1])|([0-2]?[0-9]))|([0-2]?[0-9])");
     time_regex = re.compile("(([0-1]?[0-9])|(2[0-3])):[0-5][0-9]");
-    event_name_regex = re.compile("[0-9aA-zZ]{1,30}")
+    event_name_regex = re.compile("[0-9aA-zZ_]{1,30}")
 
     datetime_type = namedtuple("datetime_type", "type datetime");
     event_type_with_str = namedtuple("event_type_with_str", "datetime_type YMDT_str event_str");
@@ -88,6 +88,10 @@ class calendar(object):
             datetime_obj = datetime(year, month, day, hour, minute);
             if type == event_type.T:
                 datetime_obj -= timedelta(days=1)
+            elif type == event_type.DT:
+                datetime_obj -= timedelta(months=1)
+            elif type == event_type.MDT:
+                datetime_obj -= timedelta(years=1)
             ret = calendar.datetime_type(type, datetime_obj);
         except:
             ret = event_type.ERROR;
@@ -165,8 +169,9 @@ class calendar(object):
 
     def get_event_str(self):
         ret = "";
+        #TODO Il faut ajouter le temps dans les evenements de type DT, MDT, YMDT
         for event_name, event in deepcopy(self.event_dic).items():
-            now = datetime.now();            
+            now = datetime.now();
             if event.type == event_type.T:
                 if (event.datetime.day != now.day and now.hour == event.datetime.hour and now.minute == event.datetime.minute):
                     ret += event.event_str;
