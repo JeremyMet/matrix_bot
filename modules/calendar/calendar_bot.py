@@ -12,7 +12,7 @@ class calendar_bot(module):
             self.__version__ = "0.0.1"
             self.calendar_inst = calendar();
 
-
+#TODO regarder la format TIME pour éviter de devoir retraiter la chaine dans la fonction get_time
         @module.module_on_dec
         def process_msg_active(self, cmd, sender=None, room=None):
             raw_cmd = cmd.split(" ");
