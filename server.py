@@ -29,6 +29,7 @@ if __name__ == "__main__":
     matrix_obj = matrix_utils_ext() ;
 
     admin_room = matrix_obj.add_room("#admin:mandragot.org", "Tbot, ready for action !")
+    shared_admin_room = matrix_obj.add_room("#tbot_admin:mandragot.org", "Tbot, ready for action !")
     gaming_room = matrix_obj.add_room("#botgaming:mandragot.org", "Tbot, ready for action !")
     science_room = matrix_obj.add_room("#sciences:mandragot.org")
     music_room = matrix_obj.add_room("#musiciensdimanche:mandragot.org")
@@ -38,13 +39,15 @@ if __name__ == "__main__":
     matrix_obj.add_service_to_room(admin_room, my_mastermind_0) ;
     matrix_obj.add_service_to_room(admin_room, my_calendar_bot);
 
+    matrix_obj.add_service_to_room(shared_admin_room, my_calendar_bot);
+
     matrix_obj.add_service_to_room(gaming_room, my_quotes) ;
     matrix_obj.add_service_to_room(gaming_room, my_pendu) ;
     matrix_obj.add_service_to_room(gaming_room, my_mastermind_1) ;
     matrix_obj.add_service_to_room(gaming_room, my_loto) ;
+    matrix_obj.add_service_to_room(gaming_room, my_calendar_bot);
     #
     matrix_obj.add_service_to_room(gaming_room, my_url) ;
-    matrix_obj.add_service_to_room(gaming_room, my_calendar_bot);
     matrix_obj.add_service_to_room(science_room, my_url) ;
     matrix_obj.add_service_to_room(music_room, my_url) ;
     matrix_obj.add_service_to_room(main_room, my_url) ;

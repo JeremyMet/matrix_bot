@@ -190,7 +190,7 @@ class pendu(object):
         for event in self.events.values():
             range = event["proba_range"] ;
             if range[0] <= dice_event_choice < range[1]:
-                self.str_event = "/!\ EVENT : "+str(event["message"])+"\n \n" ;
+                self.str_event = "\u26A0\uFE0F EVENT : "+str(event["message"])+"\n \n" ;
                 self.life_max = constant_life_max+event["bonus_life"] ;
                 self.life = constant_life_max+event["bonus_life"] ;
                 self.mirror = True if event["mirror"] == "yes" else False ;
@@ -200,7 +200,7 @@ class pendu(object):
 
     def show_event(self):
         if (self.str_event == ""):
-            return "/!\ Aucun événement à afficher ... " ;
+            return "\u26A0\uFE0F Aucun événement à afficher ... " ;
         else:
             return self.str_event ;
 

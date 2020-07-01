@@ -14,6 +14,7 @@ class calendar_bot(module):
 
 #TODO regarder la format TIME pour éviter de devoir retraiter la chaine dans la fonction get_time
         @module.module_on_dec
+        @module.login_check_dec
         def process_msg_active(self, cmd, sender=None, room=None):
             raw_cmd = cmd.split(" ");
             ret = "" ;
@@ -32,12 +33,15 @@ class calendar_bot(module):
             return ret ;
 
         @module.module_on_dec
+        @module.login_check_dec
         def process_msg_passive(self, cmd, sender=None, room=None):
             ret = self.calendar_inst.parse(cmd);
             return ret;
 
+        # @module.login_check_dec
         @module.module_on_dec
-        # @module.clock_dec
+        @module.clock_dec
+        @module.lock_dec
         def run_on_clock(self):
             ret = self.calendar_inst.get_event_str();
             return ret;

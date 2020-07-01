@@ -14,6 +14,7 @@ from copy import deepcopy;
 class calendar(object):
 
     __STR_LIMIT__ = 255;
+    __MAX_EVENT__ = 255;
 
     # date_regex = re.compile("\[[0-9]+(-(1[0-2])|(0?[1-9]))?(-[0-3]?[0-9])?( (([0-1]?[0-9]|2[0-3]):[0-5][0-9]))?\]\&\".+\""); # not perfect but should be ok.
     YMD_regex = re.compile("([0-9]+-((1[0-2])|(0?[1-9]))-(3[0-1]|[0-2]?[0-9]))|((1[0-2])|(0?[1-9]))-((3[0-1])|([0-2]?[0-9]))|([0-2]?[0-9])");
@@ -107,6 +108,10 @@ class calendar(object):
         cmd_split = cmd.split('&');
         if len(cmd_split)!=3:
             return "";
+        # Before going any further ...
+        error_dic_full = "[\U0001f4c5] Erreur : Le module ne peut contenir que {} événements.".format(calendar.__MAX_EVENT__);
+        if len(self.event_dic) >= calendar.__MAX_EVENT__: # > should never happen by the way ;)
+            return error_dic_full;
         YMDT, event_name, event_string = cmd_split[0], cmd_split[1], cmd_split[2];
         ret = 0 ;
         # Parse YMDT
@@ -174,7 +179,7 @@ class calendar(object):
         tag = "[\U0001f4c5] ";
         #TODO Il faut ajouter le temps dans les evenements de type DT, MDT, YMDT
         check_time = lambda datetime_obj, now : (now.hour == datetime_obj.hour and now.minute == datetime_obj.minute)
-        for event_name, event in deepcopy(self.event_dic).items():
+        for event_name, event in self.event_dic.items():
             now = datetime.now();
             if event.type == event_type.T:
                 if (event.datetime.day != now.day and check_time(event.datetime, now)):

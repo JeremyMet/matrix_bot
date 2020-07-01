@@ -1,5 +1,5 @@
 import json ;
-
+import threading;
 
 #TODO CLOCK SENSITIVE
 
@@ -15,6 +15,16 @@ class module(object):
             else:
                 return None ;
         return wrapper ;
+
+
+
+    def lock_dec(function):
+        lock = threading.Lock();
+        def wrapper(*args, **kargs):
+            with lock:
+                return function(*args, **kargs) ;            
+        return wrapper ;
+
 
     def clock_dec(function):
         '''
