@@ -202,11 +202,12 @@ class calendar(object):
                     self.event_dic[event_name]=event;
             elif event.type == event.type.YMDT:
                 if now > event.datetime:
-                    ret += event.event_str;
+                    ret += tag+event.event_str;
                     ret += '\n';
                     event_to_del.append(event_name);
+        # deleting unique_event types
         for event_name in event_to_del:
-            del self.event_dic(event_name);
+            del self.event_dic[event_name];
         if ret:
             self.save_event_dic(); # better to save.
         return ret;
