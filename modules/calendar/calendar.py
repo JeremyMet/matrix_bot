@@ -179,6 +179,7 @@ class calendar(object):
         tag = "[\U0001f4c5] ";
         #TODO Il faut ajouter le temps dans les evenements de type DT, MDT, YMDT
         check_time = lambda datetime_obj, now : (now.hour == datetime_obj.hour and now.minute == datetime_obj.minute)
+        event_to_del = [];
         for event_name, event in self.event_dic.items():
             now = datetime.now();
             if event.type == event_type.T:
@@ -203,9 +204,11 @@ class calendar(object):
                 if now > event.datetime:
                     ret += event.event_str;
                     ret += '\n';
-                    del self.event_dic[event_name];
-            if ret:
-                self.save_event_dic(); # better to save.
+                    event_to_del.append(event_name);
+        for event_name in event_to_del:
+            del self.event_dic(event_name);
+        if ret:
+            self.save_event_dic(); # better to save.
         return ret;
 
 
