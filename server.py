@@ -41,7 +41,7 @@ if __name__ == "__main__":
     #
     matrix_obj.add_service_to_room(shared_admin_room, my_calendar_bot);
     #
-    matrix_obj.add_service_to_room(main_room, my_calendar_bot);
+    # matrix_obj.add_service_to_room(main_room, my_calendar_bot);
     #
     matrix_obj.add_service_to_room(gaming_room, my_quotes) ;
     matrix_obj.add_service_to_room(gaming_room, my_pendu) ;
