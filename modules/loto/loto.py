@@ -119,10 +119,10 @@ class loto(object):
             return "";
         proposition = proposition[1:-1];
         proposition_array = proposition.split(",");
+        for i in proposition_array:
+            if not(i.isnumeric()):
+                return "" # On ne traite pas ce cas
         if (len(proposition_array) != self.combination_length):
-            for i in proposition_array:
-                if not(i.isnumeric()):
-                    return "" # On ne traite pas ce cas
             return "\U0001F3B2 La combinaison doit être de longueur {}.".format(self.combination_length);
         proposition_array = [(int(i) if (int(i) <= self.nb_numbers) else 0) for i in proposition_array];
         if (0 in proposition_array):
