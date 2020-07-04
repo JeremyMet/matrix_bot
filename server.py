@@ -37,7 +37,7 @@ if __name__ == "__main__":
     ludo_room = matrix_obj.add_room("#gaming:mandragot.org")
 
     matrix_obj.add_service_to_room(admin_room, my_mastermind_0) ;
-    matrix_obj.add_service_to_room(admin_room, my_calendar_bot);
+    # matrix_obj.add_service_to_room(admin_room, my_calendar_bot);
     #
     matrix_obj.add_service_to_room(shared_admin_room, my_calendar_bot);
     #
