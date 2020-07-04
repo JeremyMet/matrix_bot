@@ -94,11 +94,9 @@ class calendar(object):
                 datetime_obj += relativedelta(months=-1)
             elif type == event_type.MDT:
                 datetime_obj += relativedelta(years=-1)
-                print("pirttt")
             ret = calendar.datetime_type(type, datetime_obj);
         except:
             ret = event_type.ERROR;
-        print(">>> {}".format(ret));
         return ret;
 
     # [2018-5-2]&[ANNIV]&[Anniversaire de tbot]
@@ -108,6 +106,9 @@ class calendar(object):
         cmd_split = cmd.split('&');
         if len(cmd_split)!=3:
             return "";
+        for cmd in cmd_split:
+            if not(brackets_check(cmd)):
+                return "";
         # Before going any further ...
         error_dic_full = "[\U0001f4c5] Erreur : Le module ne peut contenir que {} événements.".format(calendar.__MAX_EVENT__);
         if len(self.event_dic) >= calendar.__MAX_EVENT__: # > should never happen by the way ;)
@@ -116,31 +117,22 @@ class calendar(object):
         ret = 0 ;
         # Parse YMDT
         error_YMDT = "[\U0001f4c5] Erreur : Il y a un problème avec la date de l'événement (format ou date passée)." ;
-        if brackets_check(YMDT):
-            YMDT = remove_brackets(YMDT);
-            YMDT = calendar.parse_YMDT(YMDT);
-            if (YMDT == event_type.ERROR):
-                return error_YMDT;
-            now = datetime.now();
-            if (YMDT.type == event_type.YMDT) and (YMDT.datetime < now):
-                return error_YMDT;
-        else:
+        YMDT = remove_brackets(YMDT);
+        YMDT = calendar.parse_YMDT(YMDT);
+        if (YMDT == event_type.ERROR):
+            return error_YMDT;
+        now = datetime.now();
+        if (YMDT.type == event_type.YMDT) and (YMDT.datetime < now):
             return error_YMDT;
         # Parse event_name
         error_event_name = "[\U0001f4c5] Erreur : Le nom de l'événement ne doit comporter que des lettres (non accentuées) / nombres. Sa taille doit être comprise entre 1 et 30 caractères.";
-        if brackets_check(event_name):
-            event_name = remove_brackets(event_name);
-            if not(re.fullmatch(calendar.event_name_regex, event_name)):
-                return error_event_name;
-        else:
+        event_name = remove_brackets(event_name);
+        if not(re.fullmatch(calendar.event_name_regex, event_name)):
             return error_event_name;
         # Parse event_string
         error_event_string = "[\U0001f4c5] Erreur : Il y a un problème avec le texte de l'événement (moins de {} caractères).".format(calendar.__STR_LIMIT__)
-        if brackets_check(event_string):
-            event_string = remove_brackets(event_string);
-            if (len(event_string) > calendar.__STR_LIMIT__):
-                return error_event_string;
-        else:
+        event_string = remove_brackets(event_string);
+        if (len(event_string) > calendar.__STR_LIMIT__):
             return error_event_string;
         ## Parsing is done ... Let's add the event !
         error_dic = "[\U0001f4c5] Erreur : L'événement existe déjà."

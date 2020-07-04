@@ -1,5 +1,7 @@
 import subprocess
+import time;
 
 command = ['python', 'server.py']
 while True:
-	subprocess.call(command)
+	subprocess.call(command);
+	time.sleep(1);

@@ -1,4 +1,4 @@
-from matrix_utils_ext import matrix_utils_ext ;
+from matrix_utils_room import matrix_utils_room ;
 from modules.pendu_bot.pendu_bot import pendu_bot ;
 from modules.mastermind.mastermind_bot import mastermind_bot ;
 from modules.greeting.greeting import greeting ;
@@ -26,7 +26,7 @@ if __name__ == "__main__":
     my_url = url_bot();
     my_calendar_bot = calendar_bot() ;
     # Then Create the matrix object, add rooms, services and timers.
-    matrix_obj = matrix_utils_ext() ;
+    matrix_obj = matrix_utils_room() ;
 
     admin_room = matrix_obj.add_room("#admin:mandragot.org", "Tbot, ready for action !")
     shared_admin_room = matrix_obj.add_room("#tbot_admin:mandragot.org", "Tbot, ready for action !")
@@ -38,15 +38,17 @@ if __name__ == "__main__":
 
     matrix_obj.add_service_to_room(admin_room, my_mastermind_0) ;
     matrix_obj.add_service_to_room(admin_room, my_calendar_bot);
-
+    #
     matrix_obj.add_service_to_room(shared_admin_room, my_calendar_bot);
-
+    #
+    matrix_obj.add_service_to_room(main_room, my_calendar_bot);
+    #
     matrix_obj.add_service_to_room(gaming_room, my_quotes) ;
     matrix_obj.add_service_to_room(gaming_room, my_pendu) ;
     matrix_obj.add_service_to_room(gaming_room, my_mastermind_1) ;
     matrix_obj.add_service_to_room(gaming_room, my_loto) ;
     matrix_obj.add_service_to_room(gaming_room, my_calendar_bot);
-    #
+    # #
     matrix_obj.add_service_to_room(gaming_room, my_url) ;
     matrix_obj.add_service_to_room(science_room, my_url) ;
     matrix_obj.add_service_to_room(music_room, my_url) ;
