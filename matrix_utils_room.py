@@ -135,33 +135,38 @@ class matrix_utils_room(object):
         "---------------------------------------------------\n"+
         bcolors.ENDC)
         while(self.is_on):
-            time.sleep(0.5)
+            time.sleep(1)
 
     @lock_dec # ??
     def timer_callback(self, t):
         while(self.is_timer_on):
+            time.sleep(t)
+            service_ret_buffer = {};
             if self.is_on:
                 for room_id in self.room_dic:
                     room = self.room_dic[room_id].room_obj;
+                    # print(room.current_alias)
                     for service in self.room_dic[room_id].service_set:
                         if service.is_clock_sensitive():
-                            service.clock_update() ;
-                            ret = service.run_on_clock() ;
-                            if ret:
+                            if not(service in service_ret_buffer):
+                                service.clock_update() ;
+                                ret = service.run_on_clock() ;
                                 # Conversion to HTML format (+) filtering
-                                ret = ret.replace("\n", "<br>");
-                                ret = ret.replace("\t", "&emsp;");
-                                filter_header, ret = matrix_utils_room.get_filter_header(ret);
-                                if filter_header:
-                                    if filter_header == room.current_alias and ret:
-                                        room.send_html(ret, msgtype="m.notice");
-                                        print(">>> "+ret);
+                                if ret:
+                                    ret = ret.replace("\n", "<br>");
+                                    ret = ret.replace("\t", "&emsp;");
+                                    filter_list, ret = matrix_utils_room.get_filter_header(ret);
                                 else:
+                                    filter_list = [] ;
+                                service_ret_buffer[service] = (filter_list, ret);
+                            else: # service is in service_ret_buffer;
+                                filter_list, ret = service_ret_buffer[service][0], service_ret_buffer[service][1]
+                        if ret: # if ret is not empty.
+                            if filter_list:
+                                if room.current_alias in filter_list and ret:
                                     room.send_html(ret, msgtype="m.notice");
-
-
-
-            time.sleep(t)
+                            else:
+                                room.send_html(ret, msgtype="m.notice");
 
     def start_timer(self, t = 1):
         if not(self.is_timer_on):
@@ -189,13 +194,12 @@ class matrix_utils_room(object):
         print("Server is not {} responding {} ({}). Restarting ...".format(bcolors.FAIL, bcolors.ENDC, err));
         self.exit();
 
-
     @classmethod
     def get_filter_header(cls, msg):
-        ret = "";
-        mt = re.search(cls.filter_regex, msg);
-        if mt:
-            ret = mt.group(0);
-            msg = msg.replace(ret, "");
-            ret = ret[9:-1];
-        return ret, msg;
+        ret_filter_list = [];
+        mt_iter = re.finditer(cls.filter_regex, msg);
+        for mt in mt_iter:
+            current_filter = mt.group(0);
+            msg = msg.replace(current_filter, "");
+            ret_filter_list.append(current_filter[9:-1]);
+        return ret_filter_list, msg;
