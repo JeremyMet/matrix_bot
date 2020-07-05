@@ -108,10 +108,7 @@ class matrix_utils_room(object):
             room_id = room.room_id;
             tmp_log = "Event from " + bcolors.OKGREEN + room.current_alias + bcolors.ENDC + " at " + str(datetime.datetime.now())+ " by "+login ;
             print(tmp_log)
-            if "formatted_body" in event["content"]:
-                text = str(event["content"]["formatted_body"]) ;
-            else:
-                text = str(event["content"]["body"]) ;
+            text = str(event["content"]["body"]) ;
             ## Stop Service Management
             if text == self.config["bot_down_cmd"]:
                 self.exit();
