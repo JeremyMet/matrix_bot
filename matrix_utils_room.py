@@ -174,15 +174,22 @@ class matrix_utils_room(object):
     def stop_timer(self):
         self.is_timer_on = False ;
 
+    @lock_dec
     def exit(self):
         self.is_timer_on = False ;
         self.is_on = False ;
-        for service in self.service_list:
-                print("Module {} {} {} is shutting down.".format(bcolors.OKGREEN, service.module_name, bcolors.ENDC)) ;
-                tmp_msg = service.exit();
-                if tmp_msg:
-                    for room in service.get_room_list():
-                        room.send_text(tmp_msg) ;
+        service_ret_buffer = {}
+        for room_id in self.room_dic:
+            room = self.room_dic[room_id].room_obj;
+            service_set = self.room_dic[room_id].service_set;
+            for service in service_set:
+                if not(service in service_ret_buffer):
+                    print("Module {} {} {} is shutting down.".format(bcolors.OKGREEN, service.module_name, bcolors.ENDC)) ;
+                    ret = service.exit();
+                else:
+                    ret = service_ret_buffer[service];
+                if ret:
+                    room.send_html(ret, msgtype="m.notice");
         # for room in self.room_dic:
             # room.send_text(self.config["bot_stop_txt"]);
         sys.exit() ;
