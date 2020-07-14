@@ -22,7 +22,7 @@ class module(object):
         lock = threading.Lock();
         def wrapper(*args, **kargs):
             with lock:
-                return function(*args, **kargs) ;            
+                return function(*args, **kargs) ;
         return wrapper ;
 
 
@@ -109,7 +109,7 @@ class module(object):
         pass
 
     @module_on_dec
-    def run_on_clock(self):
+    def run_on_clock(self, room=None):
         pass
 
     def exit(self):

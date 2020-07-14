@@ -41,7 +41,7 @@ class quotes(module):
     def refresh(self):
         current_time = datetime.datetime.now();
         current_time_str = datetime.date(current_time.year, current_time.month, current_time.day).isoformat() ;
-        current_quote_index = (pow(current_time.day+current_time.month+current_time.year, 2)+current_time.day)%len(self.quotes) ;
+        current_quote_index = (current_time.day+current_time.month*30+current_time.year*365)%len(self.quotes) ;
         self.current_quote = self.quotes[current_quote_index] ;
         while(not(self.current_quote["body"])):
             current_quote_index += 1 ;
