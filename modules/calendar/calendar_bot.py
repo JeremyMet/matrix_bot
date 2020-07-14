@@ -24,6 +24,9 @@ class calendar_bot(module):
         self.module_name = "Calendar Module"
         self.__version__ = "0.0.1"
         self.calendar_inst = calendar();
+        self.ret_room_set = set();
+        self.ret_array = [];
+        self.last_draw = datetime(year=1961, month=2, day=1);
 
     @module.module_on_dec
     @module.login_check_dec
@@ -51,23 +54,32 @@ class calendar_bot(module):
         return ret;
 
     # @module.login_check_dec
+    # TODO pour éviter de reboucler plusieurs fois sur la liste des événements (self.ret_array), éventuellement faire un dictionnaire qui stocke par "salon" le message de retour ?
+    # Cons : ajout d'un dictionnaire, n'a un réel intérêt que pour les grosses structures.
     @module.module_on_dec
     @module.clock_dec
     @module.lock_dec
     def run_on_clock(self, room):
         ret = "";
-        ret_array = self.calendar_inst.get_event_array();
+        now = datetime.now();
+        delta = now-self.last_draw;
+        if delta.seconds >= 10: # state is updated 10 seconds.
+            self.last_draw = now;
+            self.ret_array = self.calendar_inst.get_event_array();
+            self.ret_room_set = set();
         current_alias = room.current_alias;
-        # let us filter out !
-        if ret_array:
-            for msg in ret_array:
-                msg_filter, clear_msg = calendar_bot.get_filters(msg) ;
-                print("msg_filter ", msg_filter)
-                if msg_filter: # if there is a filter, have to check if room belongs to it
-                    if current_alias in msg_filter:
-                        ret += clear_msg+'\n';
-                else: # there is no filter, then send the msg as a whole
-                    ret += msg+'\n'
+        if not(current_alias in self.ret_room_set):
+            self.ret_room_set.add(current_alias);
+            if self.ret_array:
+                for msg in self.ret_array:
+                    msg_filter, clear_msg = calendar_bot.get_filters(msg);
+                    if msg_filter: # if there is a filter, have to check if room belongs to it
+                        if current_alias in msg_filter:
+                            ret += clear_msg+'\n';
+                    else: # there is no filter, then send the msg as a whole
+                        ret += msg+'\n'
+        if ret:
+            ret = ret[:-1];
         return ret;
 
     def exit(self):
