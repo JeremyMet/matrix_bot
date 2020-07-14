@@ -38,7 +38,7 @@ class mastermind_bot(module):
 
 
     @module.module_on_dec
-    def run_on_clock(self):
+    def run_on_clock(self, room=None):
         # <- Your code goes here.
         pass
 

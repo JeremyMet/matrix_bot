@@ -166,8 +166,8 @@ class calendar(object):
             ret += '\n';
         return ret[:-1];
 
-    def get_event_str(self):
-        ret = "";
+    def get_event_array(self):
+        ret = [];
         tag = "[\U0001f4c5] ";
         #TODO Il faut ajouter le temps dans les evenements de type DT, MDT, YMDT
         check_time = lambda datetime_obj, now : (now.hour == datetime_obj.hour and now.minute == datetime_obj.minute)
@@ -176,26 +176,26 @@ class calendar(object):
             now = datetime.now();
             if event.type == event_type.T:
                 if (event.datetime.day != now.day and check_time(event.datetime, now)):
-                    ret += tag+event.event_str;
-                    ret += '\n';
+                    tmp_str = tag+event.event_str;
+                    ret.append(tmp_str);
                     event.datetime = datetime(now.year, now.month, now.day, now.hour, now.minute);
                     self.event_dic[event_name]=event;
             elif event.type == event.type.DT:
                 if (event.datetime.month != now.month and event.datetime.day == now.day and check_time(event.datetime, now)):
-                    ret += tag+event.event_str;
-                    ret += '\n';
+                    tmp_str = tag+event.event_str;
+                    ret.append(tmp_str);
                     event.datetime = datetime(now.year, now.month, now.day, now.hour, now.minute);
                     self.event_dic[event_name]=event;
             elif event.type == event.type.MDT:
                 if (event.datetime.year != now.year and event.datetime.day == now.day and event.datetime.month == now.month and check_time(event.datetime, now)):
-                    ret += tag+event.event_str;
-                    ret += '\n';
+                    tmp_str = tag+event.event_str;
+                    ret.append(tmp_str);
                     event.datetime = datetime(now.year, now.month, now.day, now.hour, now.minute);
                     self.event_dic[event_name]=event;
             elif event.type == event.type.YMDT:
                 if now > event.datetime:
-                    ret += tag+event.event_str;
-                    ret += '\n';
+                    tmp_str = tag+event.event_str;
+                    ret.append(tmp_str);
                     event_to_del.append(event_name);
         # deleting unique_event types
         for event_name in event_to_del:

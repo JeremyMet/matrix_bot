@@ -11,7 +11,7 @@ class loto_bot(module):
         self.whatis = "A loto hello module. "
         self.module_name = "Loto Module"
         self.__version__ = "0.0.1"
-        self.loto_inst = loto(hour=hour, minute=minute);        
+        self.loto_inst = loto(hour=hour, minute=minute);
 
 
     @module.module_on_dec
@@ -34,7 +34,7 @@ class loto_bot(module):
 
     @module.module_on_dec
     # @module.clock_dec
-    def run_on_clock(self):
+    def run_on_clock(self, room=None):
         log = self.loto_inst.get_log();
         last_draw = log["last_draw"];
         now = datetime.datetime.now();

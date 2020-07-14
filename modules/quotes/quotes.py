@@ -56,7 +56,7 @@ class quotes(module):
         return self.ret;
 
     @module.module_on_dec
-    def run_on_clock(self):
+    def run_on_clock(self, room=None):
         current_time = datetime.datetime.now() ;
         delta = current_time-self.log["last_draw"];
         if (delta.days > 0):
