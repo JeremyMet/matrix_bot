@@ -1,5 +1,6 @@
 from modules.module import module ;
 from .calendar import calendar;
+from .calendar_tag import calendar_tag;
 from datetime import datetime;
 import re;
 
@@ -75,9 +76,9 @@ class calendar_bot(module):
                     msg_filter, clear_msg = calendar_bot.get_filters(msg);
                     if msg_filter: # if there is a filter, have to check if room belongs to it
                         if current_alias in msg_filter:
-                            ret += clear_msg+'\n';
+                            ret += calendar_tag.apply_tag(clear_msg)+'\n';
                     else: # there is no filter, then send the msg as a whole
-                        ret += msg+'\n'
+                        ret += calendar_tag.apply_tag(msg)+'\n'
         if ret:
             ret = ret[:-1];
         return ret;
