@@ -12,21 +12,27 @@ constant_life_max = 7 ;
 class pendu(object):
 
     def __init__(self):
+        # --- Score
         self.score = {} ;
         self.score["bot"] = 0 ;
         self.score["main"] = 0 ;
+        # --- Event Management
         self.events = {} ;
         self.events_total_weight = 0 ;
         self.str_event = "" ;
+        # --- Pendu Configuration
         self.life_max = 0 ;
         self.life = 0 ;
         self.lg = 0 ;
+        self.mirror = False ;
+        self.proba_event = 100 ; # Probabilité de trigger un event en pourcent (only integer).
+        self.unauthorized_letters = [];
+        # --- Inner State
         self.match = 0 ;
         self.lt = [] ;
         self.event_show = False ;
-        self.mirror = False ;
-        self.proba_event = 50 ; # Probabilité de trigger un event en pourcent (only integer).
-        self.p = re.compile('[a-zA-Z]{1}') ;
+
+        self.regex_propose = re.compile('[a-zA-Z]{1}') ;
         self.min_lg = 5 ;
         self.max_lg = 30 ;
         self.conf = json.load(open("./modules/pendu_bot/config.json",'r')) ;
@@ -41,9 +47,6 @@ class pendu(object):
             self.dico[i] = unidecode.unidecode(self.dico[i]) ;
         self.load_events() ;
         self.rst() ;
-
-
-
 
     def __str__(self):
         x = "" ;
@@ -72,13 +75,12 @@ class pendu(object):
         self.life = self.life_max ;
         self.match = 0 ;
         self.mirror = False ;
+        self.unauthorized_letters = [];
         self.min_lg = 5 ;
         self.max_lg = 30 ;
         self.str_event = "" ;
         self.event_management() ;
         self.generate();
-
-
 
 
     def check(self):
@@ -105,14 +107,15 @@ class pendu(object):
 
 
     def propose(self, lt):
+
         x = "" ;
         lt = lt.lower() ;
         lt = unidecode.unidecode(lt) ;
-        if not(self.p.match(lt)):
-            return "Une lettre ou un mot sont demandés (en minuscules ou majuscules non accentuées) ! \n" ;
-        if len(lt)>1:
+        if not(self.regex_propose.match(lt)):
+            return "\u26A0\uFE0F Une lettre ou un mot sont demandés (en minuscules ou majuscules non accentuées) ! \n" ;
+        if len(lt)>1: # il s'agit d'un mot.
             if len(lt) != len(self.current_word):
-                return "/!\ La taille du mot proposé n'est pas égale à celle du mot recherché !" ;
+                return "\u26A0\uFE0F La taille du mot proposé n'est pas égale à celle du mot recherché !" ;
             if lt == self.current_word:
                 self.match = len(self.current_word)
                 x = self.check()
@@ -121,8 +124,15 @@ class pendu(object):
                 self.life -= 1
                 x = self.check()
                 return x
+
+        if self.unauthorized_letters:
+            if lt in self.unauthorized_letters:
+                x = "\u26A0\uFE0F Vous ne pouvez pas jouer la lettre \""+lt.capitalize()+"\" ...\n";
+                return x ;
+
         if lt in self.lt:
-            x = "La lettre "+lt+" a déjà été proposée ! ...\n" ;
+            x = "\u26A0\uFE0F La lettre "+lt+" a déjà été proposée ! ...\n" ;
+            return x ;
         else:
             self.lt.update(lt) ;
             if lt in self.current_word:
@@ -130,10 +140,10 @@ class pendu(object):
             else:
                 self.life-=1 ;
             x = self.check() ;
-        return x ;
+            return x ;
 
     def show_lt(self):
-        x = "Les lettres proposées ... \n" ;
+        x = "Les lettres proposées sont :\n" ;
         x_ok = "" ; x_nok = "" ;
         for i in sorted(self.lt):
             if i in self.current_word:
@@ -155,10 +165,10 @@ class pendu(object):
 
     def generate(self):
         current_word = "" ;
-        while(len(current_word) < self.min_lg or len(current_word) > self.max_lg):
+        while(not(current_word) and (len(current_word) < self.min_lg or len(current_word) > self.max_lg)):
             r = random.randint(0, self.lg-1) ;
             attempt_word = self.dico[r][:-1]
-            if re.match("^[a-zA-Z]+$", attempt_word):
+            if re.fullmatch("^[a-zA-Z]+$", attempt_word):
                 current_word = attempt_word;
         self.current_word = current_word ;
 
@@ -183,26 +193,27 @@ class pendu(object):
 
 
     def event_management(self):
-        dice_event_trigger = random.randint(1,100) ;
-        if dice_event_trigger > self.proba_event:
+        dice_event_trigger = random.randint(0,99) ;
+        if dice_event_trigger >= self.proba_event:
             return None ;
         dice_event_choice = random.randint(0, self.events_total_weight-1) ;
         for event in self.events.values():
             range = event["proba_range"] ;
             if range[0] <= dice_event_choice < range[1]:
-                self.str_event = "\u26A0\uFE0F EVENT : "+str(event["message"])+"\n \n" ;
+                self.str_event = "\u26A0\uFE0F EVENT : "+str(event["message"])+'\n' ;
                 self.life_max = constant_life_max+event["bonus_life"] ;
                 self.life = constant_life_max+event["bonus_life"] ;
                 self.mirror = True if event["mirror"] == "yes" else False ;
                 self.min_lg = event["min_lg"] ;
                 self.max_lg = event["max_lg"] ;
+                self.unauthorized_letters = event["unauthorized_letters"] ;
                 break ;
 
     def show_event(self):
         if (self.str_event == ""):
-            return "\u26A0\uFE0F Aucun événement à afficher ... " ;
+            return "\u26A0\uFE0F Aucun événement à afficher ... ";
         else:
-            return self.str_event ;
+            return self.str_event;
 
 if __name__ == "__main__":
     P = pendu() ;
