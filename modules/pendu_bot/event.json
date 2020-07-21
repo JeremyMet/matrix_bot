@@ -60,7 +60,7 @@
     "max_lg" : 10,
     "bonus_life" : 0,
     "mirror": "no",
-   "unauthorized_letters" : ["e"]
+    "unauthorized_letters" : ["e"]
   },
   "pas_de_voyelles": {
     "weight" : 4,
