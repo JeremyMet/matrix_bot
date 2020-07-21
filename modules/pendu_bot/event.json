@@ -33,7 +33,7 @@
     "max_lg" : 30,
     "bonus_life" : -1,
     "mirror": "no",
-   "authorized_letters" : []
+   "unauthorized_letters" : []
   },
   "petit_mot": {
     "weight" : 3,
