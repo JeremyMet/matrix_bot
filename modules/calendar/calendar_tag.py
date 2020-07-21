@@ -26,6 +26,7 @@ class calendar_tag(object):
     def loto_combination(current_str):
         if current_str.find("%loto") > 0:
             combination = calendar_tag.generate_combination();
+            current_str = current_str[4:]; #remove tag
             current_str = current_str.replace("%loto", combination);
         return current_str;
 
