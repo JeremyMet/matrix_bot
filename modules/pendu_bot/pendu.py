@@ -25,7 +25,7 @@ class pendu(object):
         self.life = 0 ;
         self.lg = 0 ;
         self.mirror = False ;
-        self.proba_event = 100 ; # Probabilité de trigger un event en pourcent (only integer).
+        self.proba_event = 80 ; # Probabilité de trigger un event en pourcent (only integer).
         self.unauthorized_letters = [];
         # --- Inner State
         self.match = 0 ;
