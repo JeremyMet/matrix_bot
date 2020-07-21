@@ -5,7 +5,8 @@
     "min_lg" : 5,
     "max_lg" : 30,
     "bonus_life" : 0,
-    "mirror" : "yes"
+    "mirror" : "yes",
+   "unauthorized_letters" : []
   },
   "extra_life": {
     "weight" : 2,
@@ -13,7 +14,8 @@
     "min_lg" : 5,
     "max_lg" : 30,
     "bonus_life" : 1,
-    "mirror" : "no"
+    "mirror" : "no",
+   "unauthorized_letters" : []
   },
  "mot_long": {
     "weight" : 4,
@@ -21,7 +23,8 @@
     "min_lg" : 15,
     "max_lg" : 30,
     "bonus_life" : 2,
-    "mirror" : "no"
+    "mirror" : "no",
+   "unauthorized_letters" : []
   },
   "pas_content": {
     "weight" : 2,
@@ -29,7 +32,8 @@
     "min_lg" : 5,
     "max_lg" : 30,
     "bonus_life" : -1,
-    "mirror": "no"
+    "mirror": "no",
+   "authorized_letters" : []
   },
   "petit_mot": {
     "weight" : 3,
@@ -37,7 +41,8 @@
     "min_lg" : 4,
     "max_lg" : 6,
     "bonus_life" : -3,
-    "mirror": "no"
+    "mirror": "no",
+   "unauthorized_letters" : []
   },
   "one_shot": {
     "weight" : 1,
@@ -45,6 +50,25 @@
     "min_lg" : 6,
     "max_lg" : 8,
     "bonus_life" : -5,
-    "mirror": "no"
+    "mirror": "no",
+   "unauthorized_letters" : []
+  },
+  "la_disparation": {
+    "weight" : 4,
+    "message" : "Disparition \uD83D\uDCD6 ... Disparition \uD83D\uDCD6 ... Tbot admir Gorgs Prc ... Il n vut plus d <b>\"E\"</b> ! Plus du tout ! (Vous ne pouvez pas jouer la lettre \"E\").",
+    "min_lg" : 6,
+    "max_lg" : 8,
+    "bonus_life" : -5,
+    "mirror": "no",
+   "unauthorized_letters" : ["e"]
+  },
+  "pas_de_voyelles": {
+    "weight" : 1000,
+    "message" : "Voyez-vous, pas de voyelles !  (Vous ne pouvez pas jouer de voyelles <b>A,E,I,O,U,Y</b> ... pdv +1).",
+    "min_lg" : 6,
+    "max_lg" : 12,
+    "bonus_life" : 1,
+    "mirror": "no",
+   "unauthorized_letters" : ["a", "e", "i", "o", "u", "y"]
   }
 }
