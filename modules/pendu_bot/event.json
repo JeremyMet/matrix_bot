@@ -6,7 +6,7 @@
     "max_lg" : 30,
     "bonus_life" : 0,
     "mirror" : "yes",
-   "unauthorized_letters" : []
+    "unauthorized_letters" : []
   },
   "extra_life": {
     "weight" : 2,
@@ -15,7 +15,7 @@
     "max_lg" : 30,
     "bonus_life" : 1,
     "mirror" : "no",
-   "unauthorized_letters" : []
+    "unauthorized_letters" : []
   },
  "mot_long": {
     "weight" : 4,
@@ -24,7 +24,7 @@
     "max_lg" : 30,
     "bonus_life" : 2,
     "mirror" : "no",
-   "unauthorized_letters" : []
+    "unauthorized_letters" : []
   },
   "pas_content": {
     "weight" : 2,
@@ -33,7 +33,7 @@
     "max_lg" : 30,
     "bonus_life" : -1,
     "mirror": "no",
-   "unauthorized_letters" : []
+    "unauthorized_letters" : []
   },
   "petit_mot": {
     "weight" : 3,
@@ -42,7 +42,7 @@
     "max_lg" : 6,
     "bonus_life" : -3,
     "mirror": "no",
-   "unauthorized_letters" : []
+    "unauthorized_letters" : []
   },
   "one_shot": {
     "weight" : 1,
@@ -51,7 +51,7 @@
     "max_lg" : 8,
     "bonus_life" : -5,
     "mirror": "no",
-   "unauthorized_letters" : []
+    "unauthorized_letters" : []
   },
   "la_disparation": {
     "weight" : 4,
@@ -69,6 +69,6 @@
     "max_lg" : 12,
     "bonus_life" : 1,
     "mirror": "no",
-   "unauthorized_letters" : ["a", "e", "i", "o", "u", "y"]
+    "unauthorized_letters" : ["a", "e", "i", "o", "u", "y"]
   }
 }
