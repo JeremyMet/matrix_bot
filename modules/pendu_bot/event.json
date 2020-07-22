@@ -55,7 +55,7 @@
   },
   "la_disparation": {
     "weight" : 4,
-    "message" : "Disparition \uD83D\uDCD6 ... Disparition \uD83D\uDCD6 ... Tbot admir Gorgs Prc ... Il n vut plus d <b>\"E\"</b> ! Plus du tout ! (Vous ne pouvez pas jouer la lettre \"E\").",
+    "message" : "Disparition \uD83D\uDCD6 ... Disparition \uD83D\uDCD6 ... Tbot admir_ G_org_s P_r_c ... Il n_ v_ut plus d_ <b>\"E\"</b> ! Plus du tout ! (Vous ne pouvez pas jouer la lettre \"E\").",
     "min_lg" : 6,
     "max_lg" : 10,
     "bonus_life" : 0,
@@ -70,5 +70,14 @@
     "bonus_life" : 1,
     "mirror": "no",
     "unauthorized_letters" : ["a", "e", "i", "o", "u", "y"]
+  },
+  "zozote": {
+    "weight" : 4,
+    "message" : "Le bot a un ceveu sur la langue \uD83D\uDC45 et ... zozote !  (Vous ne pouvez pas jouer les lettres <b>S, Z</b>).",
+    "min_lg" : 5,
+    "max_lg" : 15,
+    "bonus_life" : 0,
+    "mirror": "no",
+    "unauthorized_letters" : ["S", "Z"]
   }
 }

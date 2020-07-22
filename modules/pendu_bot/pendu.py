@@ -165,7 +165,7 @@ class pendu(object):
 
     def generate(self):
         current_word = "" ;
-        while(not(current_word) and (len(current_word) < self.min_lg or len(current_word) > self.max_lg)):
+        while(not(current_word) or (len(current_word) < self.min_lg or len(current_word) > self.max_lg)):
             r = random.randint(0, self.lg-1) ;
             attempt_word = self.dico[r][:-1]
             if re.fullmatch("^[a-zA-Z]+$", attempt_word):
