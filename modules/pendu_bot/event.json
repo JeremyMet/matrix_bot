@@ -1,7 +1,7 @@
 {
   "bar": {
     "weight" : 4,
-    "message" : "Le bot noie sa tristesse par une consommation excessive d'un chouchen local aux relents douteux ... Son ivresse altère sa vision ! (Mot affiché à l'envers)",
+    "message" : "Le bot noie sa tristesse par une consommation excessive d'un chouchen \uD83C\uDF7A local aux relents douteux ... Son ivresse altère sa vision (Mot affiché à l'envers) !",
     "min_lg" : 5,
     "max_lg" : 30,
     "bonus_life" : 0,
@@ -10,7 +10,7 @@
   },
   "extra_life": {
     "weight" : 2,
-    "message" : "Le soleil brille, l'air est vivifiant. Le bot est heureux et vous accorde 1 point de vie supplémentaires (pdv +1).",
+    "message" : "Le soleil brille \u2600\uFE0F, l'air est vivifiant. Le bot est heureux et vous accorde 1 point de vie supplémentaires (pdv +1).",
     "min_lg" : 5,
     "max_lg" : 30,
     "bonus_life" : 1,
@@ -28,7 +28,7 @@
   },
   "pas_content": {
     "weight" : 2,
-    "message" : "La pleine lune affecte l'humeur du bot ... :-( Grrr, des poils lui poussent ! Il n'a pas l'air content (pdv -1) !",
+    "message" : "La pleine lune \uD83C\uDF15 affecte l'humeur du bot ... :-( Grrr, des poils lui poussent ! Il n'a pas l'air content (pdv -1) !",
     "min_lg" : 5,
     "max_lg" : 30,
     "bonus_life" : -1,
@@ -37,7 +37,7 @@
   },
   "petit_mot": {
     "weight" : 3,
-    "message" : "Les petites choses sont tellement mignonnes (Mot de 6 lettres max, pdv -3) ! ",
+    "message" : "Les petites choses sont tellement mignonnes \uD83D\uDC08 (Mot de 6 lettres max, pdv -3) ! ",
     "min_lg" : 4,
     "max_lg" : 6,
     "bonus_life" : -3,
@@ -46,7 +46,7 @@
   },
   "one_shot": {
     "weight" : 1,
-    "message" : "Le bot est *furieux* ! Qu'avez-vous fait ?! Pas le droit à l'erreur cette fois ci ... (pdv -5) !",
+    "message" : "Le bot est <b>furieux</b> \uD83D\uDE21 ! Qu'avez-vous fait ?! Pas le droit à l'erreur cette fois ci ... (pdv -5) !",
     "min_lg" : 6,
     "max_lg" : 8,
     "bonus_life" : -5,
@@ -64,7 +64,7 @@
   },
   "pas_de_voyelles": {
     "weight" : 4,
-    "message" : "Voyez-vous donc, pas de voyelles !  (Vous ne pouvez pas jouer de voyelles <b>A, E, I, O, U, Y</b> ... pdv +1).",
+    "message" : "Voyez-vous donc, pas de voyelles \uD83D\uDCD6 !  (Vous ne pouvez pas jouer de voyelles <b>A, E, I, O, U, Y</b> ... pdv +1).",
     "min_lg" : 6,
     "max_lg" : 12,
     "bonus_life" : 1,
