@@ -78,6 +78,6 @@
     "max_lg" : 15,
     "bonus_life" : 0,
     "mirror": "no",
-    "unauthorized_letters" : ["S", "Z"]
+    "unauthorized_letters" : ["s", "z"]
   }
 }
