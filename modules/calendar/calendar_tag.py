@@ -33,7 +33,7 @@ class calendar_tag(object):
 
     def tag_management(current_str):
         tag = "[\U0001f4c5] ";
-        if current_str.find("%notag")>0:
+        if current_str.find("%notag")>=0:
             current_str = current_str.replace("%notag", "");
         else:
             current_str = tag+current_str;

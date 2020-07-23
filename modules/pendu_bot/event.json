@@ -28,7 +28,7 @@
   },
   "pas_content": {
     "weight" : 2,
-    "message" : "La pleine lune affecte l'humeur du bot ... :-( Grrr, des poils lui poussent ! Il n'a pas l'air content ! (pdv -1)",
+    "message" : "La pleine lune affecte l'humeur du bot ... :-( Grrr, des poils lui poussent ! Il n'a pas l'air content (pdv -1) !",
     "min_lg" : 5,
     "max_lg" : 30,
     "bonus_life" : -1,
@@ -64,7 +64,7 @@
   },
   "pas_de_voyelles": {
     "weight" : 4,
-    "message" : "Voyez-vous, pas de voyelles !  (Vous ne pouvez pas jouer de voyelles <b>A,E,I,O,U,Y</b> ... pdv +1).",
+    "message" : "Voyez-vous donc, pas de voyelles !  (Vous ne pouvez pas jouer de voyelles <b>A, E, I, O, U, Y</b> ... pdv +1).",
     "min_lg" : 6,
     "max_lg" : 12,
     "bonus_life" : 1,
