@@ -11,7 +11,7 @@ constant_life_max = 7 ;
 
 class pendu(object):
 
-    def __init__(self):
+    def __init__(self, default_dic="fr"):
         # --- Score
         self.score = {} ;
         self.score["bot"] = 0 ;
@@ -23,7 +23,6 @@ class pendu(object):
         # --- Pendu Configuration
         self.life_max = 0 ;
         self.life = 0 ;
-        self.lg = 0 ;
         self.mirror = False ;
         self.proba_event = 80 ; # Probabilité de trigger un event en pourcent (only integer).
         self.unauthorized_letters = [];
@@ -37,14 +36,20 @@ class pendu(object):
         self.max_lg = 30 ;
         self.conf = json.load(open("./modules/pendu_bot/config.json",'r')) ;
         #self.conf = json.load(open("sample_config.txt", 'r'));
-        self.dico = [] ;
-        with open(self.conf["dico_path"], 'r') as f:
-            self.dico = f.readlines() ;
+        self.dico = {} ;
+        self.default_dic = self.current_dic = default_dic;
+        for dic in self.conf["dico_path"]:
+            with open(dic["path"], 'r') as f:
+                dico_language = dic["language"];
+                self.dico[dico_language] = f.readlines() ;
+                for i in range(len(self.dico[dico_language])):
+                    self.dico[dico_language][i] = unidecode.unidecode(self.dico[dico_language][i]) ;
+
         if os.path.isfile(self.conf["score_path"]):
             with open(self.conf["score_path"], 'r') as f:
                 self.score = json.load(f);
-        for i in range(len(self.dico)):
-            self.dico[i] = unidecode.unidecode(self.dico[i]) ;
+
+
         self.load_events() ;
         self.rst() ;
 
@@ -69,7 +74,6 @@ class pendu(object):
     def rst(self):
         x = "" ;
         self.event_show = False ;
-        self.lg = len(self.dico) ;
         self.lt = set() ;
         self.life_max = constant_life_max ;
         self.life = self.life_max ;
@@ -79,6 +83,7 @@ class pendu(object):
         self.min_lg = 5 ;
         self.max_lg = 30 ;
         self.str_event = "" ;
+        self.current_dic = self.default_dic;
         self.event_management() ;
         self.generate();
 
@@ -90,12 +95,12 @@ class pendu(object):
             nb_points = len(self.current_word)*3;
             self.score["bot"]+= nb_points  ;
             x = "\U0001f625 Vous avez perdu \U0001f625 ... Le Main est super mauvais (le bot gagne {} point(s)) \U0001f625\n".format(nb_points) ;
-            x+= "Le mot recherché était \""+self.current_word+"\".\n" ;
+            x+= "Le mot recherché était \""+self.current_word+"\" [{}].\n".format(self.current_dic.upper()) ;
             n = True ;
         if (self.match == len(self.current_word)):
             nb_points = len(self.current_word)+self.life+ len(set(self.current_word))-len(set(self.current_word).intersection(self.lt))
             self.score["main"]+= nb_points; # no overflow, python <3
-            x = "\U0001f973 Vous avez gagné \U0001f973 ! Le mot recherché était effectivement \"{}\" ! Woah, vous êtes vraiment trop bons (+{} point(s)) !\n".format(self.current_word, nb_points) ;
+            x = "\U0001f973 Vous avez gagné \U0001f973 ! Le mot recherché était effectivement \"{}\" [{}] ! Woah, vous êtes vraiment trop bons (+{} point(s)) !\n".format(self.current_word, self.current_dic.upper(), nb_points) ;
             n = True ;
         if n:
             x += "  - Score du main : "+str(self.score["main"])+"\n" ;
@@ -107,7 +112,6 @@ class pendu(object):
 
 
     def propose(self, lt):
-
         x = "" ;
         lt = lt.lower() ;
         lt = unidecode.unidecode(lt) ;
@@ -165,9 +169,10 @@ class pendu(object):
 
     def generate(self):
         current_word = "" ;
+        current_dic = self.dico[self.current_dic];
         while(not(current_word) or (len(current_word) < self.min_lg or len(current_word) > self.max_lg)):
-            r = random.randint(0, self.lg-1) ;
-            attempt_word = self.dico[r][:-1]
+            r = random.randint(0, len(current_dic)-1) ;
+            attempt_word = current_dic[r][:-1]
             if re.fullmatch("^[a-zA-Z]+$", attempt_word):
                 current_word = attempt_word;
         self.current_word = current_word ;
@@ -207,6 +212,7 @@ class pendu(object):
                 self.min_lg = event["min_lg"] ;
                 self.max_lg = event["max_lg"] ;
                 self.unauthorized_letters = event["unauthorized_letters"] ;
+                self.current_dic = event["language"];
                 break ;
 
     def show_event(self):
