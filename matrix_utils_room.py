@@ -137,7 +137,7 @@ class matrix_utils_room(object):
     def timer_callback(self, t):
         format_to_html = lambda s : s.replace("\n", "<br>").replace("\t", "&emsp;");
         while(self.is_timer_on):
-            time.sleep(t)            
+            time.sleep(t)
             for room_id in self.room_dic:
                 room = self.room_dic[room_id].room_obj;
                 for service in self.room_dic[room_id].service_set:
@@ -170,6 +170,7 @@ class matrix_utils_room(object):
                 if not(service in service_ret_buffer):
                     print("Module {} {} {} is shutting down.".format(bcolors.OKGREEN, service.module_name, bcolors.ENDC)) ;
                     ret = service.exit();
+                    service_ret_buffer[service] = ret;
                 else:
                     ret = service_ret_buffer[service];
                 if ret:
