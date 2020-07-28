@@ -90,7 +90,7 @@
     "unauthorized_letters" : ["s", "z"]
   },
   "english_lord": {
-    "weight" : 1000,
+    "weight" : 8,
     "message" : "\uD83C\uDDEC\uD83C\uDDE7 God save our gracious Queen, Long live our noble Queen ! \uD83C\uDDEC\uD83C\uDDE7 (Sir, You are looking for an <b>English Word</b>!)",
     "min_lg" : 5,
     "max_lg" : 15,
