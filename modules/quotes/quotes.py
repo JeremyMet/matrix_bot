@@ -30,7 +30,7 @@ class quotes(module):
             day = tmp_datetime.day, hour = self.draw_time.hour, minute = self.draw_time.minute)-datetime.timedelta(days=1) ;
         # Load the quotes file
         try:
-            with open("modules/quotes/stupidstuff.json", "r") as f:
+            with open("modules/quotes/stupidstuff_clean.json", "r") as f:
                 self.quotes = json.loads(f.read()) ;
         except IOError:
             raise("Could not load the quotes file \"quote.json\"") ;
@@ -41,14 +41,12 @@ class quotes(module):
     def refresh(self):
         current_time = datetime.datetime.now();
         current_time_str = datetime.date(current_time.year, current_time.month, current_time.day).isoformat() ;
-        current_quote_index = (current_time.day+current_time.month*30+current_time.year*365)%len(self.quotes) ;
+        # current_quote_index = (current_time.day+current_time.month*30+current_time.year*365)%len(self.quotes) ;
+        current_quote_index_tmp = datetime.datetime.now()-datetime.datetime(1961, 2,1);        
+        current_quote_index = (current_quote_index_tmp.days)%len(self.quotes);
         self.current_quote = self.quotes[current_quote_index] ;
-        while(not(self.current_quote["body"])):
-            current_quote_index += 1 ;
-            current_quote_index %= len(self.quotes) ;
-            self.current_quote = self.quotes[current_quote_index] ;
-        self.ret = "~~~ \U0001f921 Today's Joke (" +  current_time_str +") ~~~ \n" \
-               +self.current_quote["body"] +'\n'+'\t'*10+ "Category "+self.current_quote["category"] ;
+        self.ret = "<b>~~~ \U0001f921 Today's Joke (" +  current_time_str +") ~~~</b>\n" \
+               +self.current_quote["body"] +'\n'+'\t'*10+ "Category: <i>"+self.current_quote["category"]+"</i>" ;
 
     @module.module_on_dec
     @module.login_check_dec
