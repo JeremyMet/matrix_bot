@@ -95,12 +95,12 @@ class pendu(object):
             nb_points = len(self.current_word)*3;
             self.score["bot"]+= nb_points  ;
             x = "\U0001f625 Vous avez perdu \U0001f625 ... Le Main est super mauvais (le bot gagne {} point(s)) \U0001f625\n".format(nb_points) ;
-            x+= "Le mot recherché était \""+self.current_word+"\" [{}].\n".format(self.current_dic.upper()) ;
+            x+= "Le mot recherché était \""+self.current_word.capitalize()+"\" [{}].\n".format(self.current_dic.upper()) ;
             n = True ;
         if (self.match == len(self.current_word)):
             nb_points = len(self.current_word)+self.life+ len(set(self.current_word))-len(set(self.current_word).intersection(self.lt))
             self.score["main"]+= nb_points; # no overflow, python <3
-            x = "\U0001f973 Vous avez gagné \U0001f973 ! Le mot recherché était effectivement \"{}\" [{}] ! Woah, vous êtes vraiment trop bons (+{} point(s)) !\n".format(self.current_word, self.current_dic.upper(), nb_points) ;
+            x = "\U0001f973 Vous avez gagné \U0001f973 ! Le mot recherché était effectivement \"{}\" [{}] ! Woah, vous êtes vraiment trop bons (+{} point(s)) !\n".format(self.current_word.capitalize(), self.current_dic.upper(), nb_points) ;
             n = True ;
         if n:
             x += "  - Score du main : "+str(self.score["main"])+"\n" ;
@@ -175,7 +175,7 @@ class pendu(object):
             attempt_word = current_dic[r][:-1]
             if re.fullmatch("^[a-zA-Z]+$", attempt_word):
                 current_word = attempt_word;
-        self.current_word = current_word ;
+        self.current_word = current_word.lower() ;
 
     def save_score(self):
         with open(self.conf["score_path"], 'w') as f:
