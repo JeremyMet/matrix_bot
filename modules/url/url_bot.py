@@ -31,8 +31,7 @@ def findTitleYouTube(url, delay=0):
     try:
         if url[-1] == "/":
             url = url[:-1]; # pour éventuellement corriger les urls mal formées.
-        video_id = url;
-        tmp_re_search = re.search(watch_regex, video_id)
+        tmp_re_search = re.search(watch_regex, url)
         if tmp_re_search:
             video_id = tmp_re_search.group(0);
             video_id = video_id.split("watch?v=")[1];
@@ -41,12 +40,11 @@ def findTitleYouTube(url, delay=0):
             video_id = video_id.split("?")[0];
         # found on Stackoverflow, looks very nice.
         params = {"format": "json", "url": "https://www.youtube.com/watch?v=%s" % video_id}
-        url = "https://www.youtube.com/oembed"
+        api_url = "https://www.youtube.com/oembed"
         query_string = urllib.parse.urlencode(params)
-        url = url + "?" + query_string
-        print(url)
-        with urllib.request.urlopen(url) as response:
-            response_text = response.read()            
+        api_url = api_url + "?" + query_string
+        with urllib.request.urlopen(api_url) as response:
+            response_text = response.read()
             data = json.loads(response_text.decode())
         author = data['author_name']
         title = data['title'];
