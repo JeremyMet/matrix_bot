@@ -101,7 +101,7 @@
   },
   "sherlock_holmes": {
     "weight" : 8,
-    "message" : "\uD83C\uDDEC\uD83C\uDDE7 Tbot is desperately asking for help \"Sherlock, this must be another code to break\". Holmes \uD83D\uDD75\uD83C\uDFFC suddenly turns back and says \"Elementary, my dear Tbot!\" (<b>English Word</b>, Word is <b>reversed</b>).",
+    "message" : "\uD83C\uDDEC\uD83C\uDDE7 Tbot is desperately asking for help \"Sherlock, this must be another code to break!\". Holmes \uD83D\uDD75\uD83C\uDFFC suddenly turns back and says \"Elementary, my dear Tbot!\" (<b>English Word</b>, Word is <b>reversed</b>).",
     "min_lg" : 5,
     "max_lg" : 18,
     "bonus_life" : 0,
