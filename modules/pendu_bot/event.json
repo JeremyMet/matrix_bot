@@ -93,9 +93,19 @@
     "weight" : 8,
     "message" : "\uD83C\uDDEC\uD83C\uDDE7 God save our gracious Queen, Long live our noble Queen ! \uD83C\uDDEC\uD83C\uDDE7 (Sir, You are looking for an <b>English Word</b>!)",
     "min_lg" : 5,
-    "max_lg" : 15,
+    "max_lg" : 20,
     "bonus_life" : 0,
     "mirror": "no",
+    "language" : "en",
+    "unauthorized_letters" : []
+  },
+  "sherlock_holmes": {
+    "weight" : 8,
+    "message" : "\uD83C\uDDEC\uD83C\uDDE7 Tbot is desperately asking for help \"Sherlock, this must be another code to break\". Holmes \uD83D\uDD75\uD83C\uDFFC suddenly turns back and says \"Elementary, my dear Tbot!\" (<b>English Word</b>, Word is <b>reversed</b>).",
+    "min_lg" : 5,
+    "max_lg" : 18,
+    "bonus_life" : 0,
+    "mirror": "yes",
     "language" : "en",
     "unauthorized_letters" : []
   }
