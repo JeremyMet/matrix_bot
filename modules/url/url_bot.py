@@ -66,7 +66,7 @@ class url_bot(module):
     # returns True if the URL is allowed
     def filter_out(cls, url):
         for current_url in cls.filter_list:
-            if url.find(current_url)>0:
+            if url.find(current_url)>=0:
                 return False;
         return True;
 
