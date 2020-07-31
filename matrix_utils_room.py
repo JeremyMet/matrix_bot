@@ -108,6 +108,9 @@ class matrix_utils_room(object):
             room_id = room.room_id;
             tmp_log = "Event from " + bcolors.OKGREEN + room.current_alias + bcolors.ENDC + " at " + str(datetime.datetime.now())+ " by "+login ;
             print(tmp_log)
+            if "m.relates_to" in event["content"]:
+                print("Current Event Ignored: "+bcolors.WARNING+"/!\\ Message Edit - Ignore"+bcolors.ENDC);
+                return None;
             text = str(event["content"]["body"]) ;
             ## Stop Service Management
             if text == self.config["bot_down_cmd"]:
