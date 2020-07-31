@@ -23,7 +23,7 @@ class pendu_bot(module):
     # 	return None
 
     def on_start(self):
-        ret = "\uD83E\uDDE0 ~~~ Jeu du Pendu ~~~ \uD83E\uDDE0 \n"+str(self.pendu);
+        ret = "<b>\uD83E\uDDE0 ~~~ Jeu du Pendu ~~~ \uD83E\uDDE0</b> \n"+str(self.pendu);
         return ret;
 
     # @module.module_on_dec
