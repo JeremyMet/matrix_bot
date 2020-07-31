@@ -55,9 +55,6 @@ class pendu(object):
 
     def __str__(self):
         x = "" ;
-        if self.str_event != "" and not(self.event_show):
-            x += self.str_event ;
-            self.event_show = True ;
         x += "[\u270F\uFE0F] Mot Courant : " ;
         if (self.mirror):
             iter = reversed(self.current_word) ;
@@ -68,6 +65,10 @@ class pendu(object):
             x+=t ;
         life_str = "\n[\u2764\uFE0F] Vie : "+"~"*(self.life_max-self.life)+"/)"+"~"*(self.life) + "\\o/~~";
         x+=life_str ;
+        if self.str_event != "" and not(self.event_show):
+            x += '\n'+self.str_event ;
+            self.event_show = True ;
+
         return x ;
 
 

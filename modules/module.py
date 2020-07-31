@@ -115,6 +115,9 @@ class module(object):
     def exit(self):
         pass
 
+    def on_start(self):
+        return None;
+
     @module_on_dec
     def clock_update(self):
         self.timer += 1 ;

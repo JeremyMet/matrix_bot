@@ -22,6 +22,10 @@ class pendu_bot(module):
     # 		return self.pendu.propose(match[1])
     # 	return None
 
+    def on_start(self):
+        ret = "\uD83E\uDDE0 ~~~ Jeu du Pendu ~~~ \uD83E\uDDE0 \n"+str(self.pendu);
+        return ret;
+
     # @module.module_on_dec
     @module.login_check_dec
     # @module.check_command_dec

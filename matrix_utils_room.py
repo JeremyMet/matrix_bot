@@ -49,12 +49,17 @@ class matrix_utils_room(object):
             print(e)
             sys.exit() ;
 
-    @lock_dec
+    # @lock_dec
     def add_service_to_room(self, room, service, message_on_start = None):
         ret = False;
         if self.nb_current_service < matrix_utils_room.__MAX_SERVICE__:
             room_id = room.room_id;
             self.room_dic[room_id].service_set.add(service);
+            on_start = service.on_start();
+            if on_start:
+                on_start = on_start.replace("\n", "<br>");
+                on_start = on_start.replace("\t", "&emsp;");
+                room.send_html(on_start, msgtype="m.notice");
             ret = True ;
         else:
             #raise Exception("Maximum number of services ({}) reached".format(str(matrix_utils.__MAX_SERVICE__))) ;
