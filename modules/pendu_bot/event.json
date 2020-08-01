@@ -30,7 +30,7 @@
     "unauthorized_letters" : []
   },
   "pas_content": {
-    "weight" : 2,
+    "weight" : 1,
     "message" : "La pleine lune \uD83C\uDF15 affecte l'humeur du bot ... :-( Grrr, des poils lui poussent ! Il n'a pas l'air content (pdv -1) !",
     "min_lg" : 5,
     "max_lg" : 30,
@@ -40,7 +40,7 @@
     "unauthorized_letters" : []
   },
   "petit_mot": {
-    "weight" : 3,
+    "weight" : 2,
     "message" : "Les petites choses sont tellement mignonnes \uD83D\uDC08 (Mot de 6 lettres max, pdv -3) ! ",
     "min_lg" : 4,
     "max_lg" : 6,
@@ -90,7 +90,7 @@
     "unauthorized_letters" : ["s", "z"]
   },
   "english_lord": {
-    "weight" : 7,
+    "weight" : 6,
     "message" : "\uD83C\uDDEC\uD83C\uDDE7 God save our gracious Queen, Long live our noble Queen ! \uD83C\uDDEC\uD83C\uDDE7 (Sir, You are looking for an <b>English Word</b>!)",
     "min_lg" : 5,
     "max_lg" : 20,
@@ -100,7 +100,7 @@
     "unauthorized_letters" : []
   },
   "sherlock_holmes": {
-    "weight" : 7,
+    "weight" : 6,
     "message" : "\uD83C\uDDEC\uD83C\uDDE7 Tbot is desperately asking for help \"Sherlock, this must be another code to break!\". Holmes \uD83D\uDD75\uD83C\uDFFC suddenly turns back and says \"Elementary, my dear Tbot!\" (<b>English Word</b>, Word is <b>reversed</b>).",
     "min_lg" : 5,
     "max_lg" : 18,
@@ -110,8 +110,8 @@
     "unauthorized_letters" : []
   },
   "french_man": {
-    "weight" : 7,
-    "message" : "\uD83C\uDDEC\uD83C\uDDE7 Tbot is trying to learn english! \uD83E\uDD16: \"<i>I am ZE best, ZIS is easy!</i>\". Well, he still needs to progress!  (<b>English Word</b>, Letters <b>T, H</b> are forbidden).",
+    "weight" : 6,
+    "message" : "\uD83C\uDDEC\uD83C\uDDE7 Tbot is trying to learn english! \uD83E\uDD16: \"<i>I am ZE best, ZIS is easy!</i>\". His french accent is so cuuute! \uD83E\uDD56 \uD83C\uDDEB\uD83C\uDDF7 (<b>English Word</b>, Letters <b>T, H</b> are forbidden).",
     "min_lg" : 5,
     "max_lg" : 18,
     "bonus_life" : 0,
