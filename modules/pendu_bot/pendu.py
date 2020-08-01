@@ -63,6 +63,8 @@ class pendu(object):
         for c in iter:
             t = c+" " if c in self.lt else "_ " ;
             x+=t ;
+        if (self.mirror):
+            x+=" (\U0001f37b)"
         life_str = "\n[\u2764\uFE0F] Vie : "+"~"*(self.life_max-self.life)+"/)"+"~"*(self.life) + "\\o/~~";
         x+=life_str ;
         if self.str_event != "" and not(self.event_show):
