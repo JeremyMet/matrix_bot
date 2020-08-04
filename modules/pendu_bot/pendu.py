@@ -69,6 +69,7 @@ class pendu(object):
         if (self.mirror):
             x+=" (\U0001f37b) "
         not_in_word_lt = [l.upper() for l in self.lt if not(l in self.current_word)];
+        not_in_word_lt = sorted(not_in_word_lt);
         if not_in_word_lt:
             not_in_word_lt_str = "";
             for letter in not_in_word_lt:

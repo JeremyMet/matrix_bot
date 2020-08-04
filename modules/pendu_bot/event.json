@@ -11,7 +11,7 @@
   },
   "extra_life": {
     "weight" : 2,
-    "message" : "Le soleil brille \u2600\uFE0F, l'air est vivifiant. Le bot est heureux et vous accorde 1 point de vie supplémentaires (pdv +1).",
+    "message" : "Le soleil brille \u2600\uFE0F, l'air est vivifiant. Le bot est heureux et vous accorde 1 point de vie supplémentaire (pdv +1).",
     "min_lg" : 5,
     "max_lg" : 30,
     "bonus_life" : 1,
@@ -21,7 +21,7 @@
   },
  "mot_long": {
     "weight" : 4,
-    "message" : "Le bot aime voir la vie en grand ! (Mot de 15 lettres ou plus, pdv +2) !",
+    "message" : "Le bot aime voir la vie en grand \uD83E\uDD29 ! (Mot de 15 lettres ou plus, pdv +2) !",
     "min_lg" : 15,
     "max_lg" : 30,
     "bonus_life" : 2,
