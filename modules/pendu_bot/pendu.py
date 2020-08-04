@@ -72,7 +72,7 @@ class pendu(object):
         if not_in_word_lt:
             not_in_word_lt_str = "";
             for letter in not_in_word_lt:
-                not_in_word_lt_str += "<b><font color=\"gray\">{}</font><b>, ".format(letter);
+                not_in_word_lt_str += "<b><font color=\"gray\">{}</font></b>, ".format(letter);
             x+= "["+not_in_word_lt_str[:-2]+"]"
         life_str = "\n[{}] Vie : ".format("\U0001f49f" if self.life>0 else "\u2620\uFE0F")+"~"*(self.life_max-self.life)+"/)"+"~"*(self.life) + "\\o/~~";
         x+=life_str ;
