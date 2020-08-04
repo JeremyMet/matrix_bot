@@ -67,7 +67,13 @@ class pendu(object):
             t = c+" " if c in self.lt else "_ " ;
             x+=t ;
         if (self.mirror):
-            x+=" (\U0001f37b)"
+            x+=" (\U0001f37b) "
+        not_in_word_lt = [l.upper() for l in self.lt if not(l in self.current_word)];
+        if not_in_word_lt:
+            not_in_word_lt_str = "";
+            for letter in not_in_word_lt:
+                not_in_word_lt_str += "<b><font color=\"gray\">{}</font><b>, ".format(letter);
+            x+= "["+not_in_word_lt_str[:-2]+"]"
         life_str = "\n[{}] Vie : ".format("\U0001f49f" if self.life>0 else "\u2620\uFE0F")+"~"*(self.life_max-self.life)+"/)"+"~"*(self.life) + "\\o/~~";
         x+=life_str ;
         if self.bonus_life > 0:
