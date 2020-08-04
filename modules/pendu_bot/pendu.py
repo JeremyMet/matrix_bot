@@ -68,12 +68,12 @@ class pendu(object):
             x+=t ;
         if (self.mirror):
             x+=" (\U0001f37b)"
-        life_str = "\n[\U0001f49f] Vie : "+"~"*(self.life_max-self.life)+"/)"+"~"*(self.life) + "\\o/~~";
+        life_str = "\n[{}] Vie : ".format("\U0001f49f" if self.life>0 else "\u2620\uFE0F")+"~"*(self.life_max-self.life)+"/)"+"~"*(self.life) + "\\o/~~";
         x+=life_str ;
         if self.bonus_life > 0:
-            x+="<font color=\"green\">(+{})</font>".format(self.bonus_life);
+            x+="<font color=\"green\"> (+{})</font>".format(self.bonus_life);
         if self.bonus_life < 0:
-            x+="<font color=\"red\">({})</font>".format(self.bonus_life);
+            x+="<font color=\"red\"> ({})</font>".format(self.bonus_life);
         if self.unauthorized_letters:
             unauthorized_letters = "";
             for letter in self.unauthorized_letters:
