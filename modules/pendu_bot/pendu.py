@@ -6,10 +6,13 @@ import re ;
 import json ;
 import unidecode ;
 import os ;
+from collections import namedtuple;
 
 constant_life_max = 7 ;
 
 class pendu(object):
+
+    dico_tuple = namedtuple("dico_tuple", "emoji words")
 
     def __init__(self, default_dic="fr"):
         # --- Score
@@ -24,13 +27,13 @@ class pendu(object):
         self.life_max = 0 ;
         self.life = 0 ;
         self.mirror = False ;
-        self.proba_event = 80 ; # Probabilité de trigger un event en pourcent (only integer).
+        self.proba_event = 90 ; # Probabilité de trigger un event en pourcent (only integer).
         self.unauthorized_letters = [];
         # --- Inner State
         self.match = 0 ;
         self.lt = [] ;
         self.event_show = False ;
-
+        self.bonus_life = 0;
         self.regex_propose = re.compile('[a-zA-Z]{1}') ;
         self.min_lg = 5 ;
         self.max_lg = 30 ;
@@ -39,12 +42,12 @@ class pendu(object):
         self.dico = {} ;
         self.default_dic = self.current_dic = default_dic;
         for dic in self.conf["dico_path"]:
+            dico_language = dic["language"];
             with open(dic["path"], 'r') as f:
-                dico_language = dic["language"];
-                self.dico[dico_language] = f.readlines() ;
-                for i in range(len(self.dico[dico_language])):
-                    self.dico[dico_language][i] = unidecode.unidecode(self.dico[dico_language][i]) ;
-
+                tmp_dic = f.readlines() ;
+                for i in range(len(tmp_dic)):
+                    tmp_dic[i] = unidecode.unidecode(tmp_dic[i]) ;
+            self.dico[dico_language] = pendu.dico_tuple(dic["emoji"], tmp_dic);
         if os.path.isfile(self.conf["score_path"]):
             with open(self.conf["score_path"], 'r') as f:
                 self.score = json.load(f);
@@ -55,7 +58,7 @@ class pendu(object):
 
     def __str__(self):
         x = "" ;
-        x += "[\u270F\uFE0F] Mot Courant : " ;
+        x += "[{}] Mot Courant : ".format(self.dico[self.current_dic].emoji) ;
         if (self.mirror):
             iter = reversed(self.current_word) ;
         else:
@@ -65,8 +68,18 @@ class pendu(object):
             x+=t ;
         if (self.mirror):
             x+=" (\U0001f37b)"
-        life_str = "\n[\u2764\uFE0F] Vie : "+"~"*(self.life_max-self.life)+"/)"+"~"*(self.life) + "\\o/~~";
+        life_str = "\n[\U0001f49f] Vie : "+"~"*(self.life_max-self.life)+"/)"+"~"*(self.life) + "\\o/~~";
         x+=life_str ;
+        if self.bonus_life > 0:
+            x+="<font color=\"green\">(+{})</font>".format(self.bonus_life);
+        if self.bonus_life < 0:
+            x+="<font color=\"red\">({})</font>".format(self.bonus_life);
+        if self.unauthorized_letters:
+            unauthorized_letters = "";
+            for letter in self.unauthorized_letters:
+                unauthorized_letters += "<b>{}</b>, ".format(letter.upper());
+            unauthorized_letters = unauthorized_letters[:-2];
+            x+="\n[\u26D4] Lettre(s) Interdite(s) : {}.".format(unauthorized_letters)
         if self.str_event != "" and not(self.event_show):
             x += '\n'+self.str_event ;
             self.event_show = True ;
@@ -86,6 +99,7 @@ class pendu(object):
         self.min_lg = 5 ;
         self.max_lg = 30 ;
         self.str_event = "" ;
+        self.bonus_life = 0;
         self.current_dic = self.default_dic;
         self.event_management() ;
         self.generate();
@@ -172,7 +186,7 @@ class pendu(object):
 
     def generate(self):
         current_word = "" ;
-        current_dic = self.dico[self.current_dic];
+        current_dic = self.dico[self.current_dic].words;
         while(not(current_word) or (len(current_word) < self.min_lg or len(current_word) > self.max_lg)):
             r = random.randint(0, len(current_dic)-1) ;
             attempt_word = current_dic[r][:-1]
@@ -208,7 +222,8 @@ class pendu(object):
         for event in self.events.values():
             range = event["proba_range"] ;
             if range[0] <= dice_event_choice < range[1]:
-                self.str_event = "\u26A0\uFE0F EVENT : "+str(event["message"])+'\n' ;
+                self.bonus_life = event["bonus_life"];
+                self.str_event = "\u26A0\uFE0F EVENT : "+str(event["message"]);
                 self.life_max = constant_life_max+event["bonus_life"] ;
                 self.life = constant_life_max+event["bonus_life"] ;
                 self.mirror = True if event["mirror"] == "yes" else False ;
