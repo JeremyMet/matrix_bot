@@ -153,10 +153,14 @@ class pendu(object):
                 x = self.check()
                 return x
             else:
-                self.life -= 1
-                self.word_list.append(lt);
-                x = self.check()
-                return x
+                if not(lt in self.word_list):
+                    self.life -= 1
+                    self.word_list.append(lt);
+                    x = self.check()
+                    return x;
+                else:
+                    return "Le mot {} a déjà été proposé.".format(lt.upper());
+
 
         if self.unauthorized_letters:
             if lt in self.unauthorized_letters:
