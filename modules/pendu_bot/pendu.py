@@ -217,7 +217,7 @@ class pendu(object):
     def get_word_list(self):
         ret = ""
         for word in self.word_list:
-            ret+="<li>{}</li>".format(word);
+            ret+="<li>{}</li>".format(word.capitalize());
         if ret:
             ret = "<ul>{}</ul>".format(ret);
         return ret;
