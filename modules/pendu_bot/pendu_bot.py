@@ -50,6 +50,8 @@ class pendu_bot(module):
             return self.pendu.show_lt() ;
         elif args[0] == "debug":
             return "debug \n" ;
+        elif args[0] == "words":
+            return self.pendu.get_word_list();
         elif args[0] == "help":
             return "tbot pendu propose A pour proposer la lettre A, \n \
 tbot pendu show montre l'état actuel du mot, \n \

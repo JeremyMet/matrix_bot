@@ -32,6 +32,7 @@ class pendu(object):
         # --- Inner State
         self.match = 0 ;
         self.lt = [] ;
+        self.word_list = [];
         self.event_show = False ;
         self.bonus_life = 0;
         self.regex_propose = re.compile('[a-zA-Z]{1}') ;
@@ -75,6 +76,8 @@ class pendu(object):
             for letter in not_in_word_lt:
                 not_in_word_lt_str += "<b><font color=\"gray\">{}</font></b>, ".format(letter);
             x+= "["+not_in_word_lt_str[:-2]+"]"
+        if self.word_list:
+            x+= " (\U0001f4d6)"
         life_str = "\n[{}] Vie : ".format("\U0001f49f" if self.life>0 else "\u2620\uFE0F")+"~"*(self.life_max-self.life)+"/)"+"~"*(self.life) + "\\o/~~";
         x+=life_str ;
         if self.bonus_life > 0:
@@ -98,6 +101,7 @@ class pendu(object):
         x = "" ;
         self.event_show = False ;
         self.lt = set() ;
+        self.word_list = [];
         self.life_max = constant_life_max ;
         self.life = self.life_max ;
         self.match = 0 ;
@@ -150,6 +154,7 @@ class pendu(object):
                 return x
             else:
                 self.life -= 1
+                self.word_list.append(lt);
                 x = self.check()
                 return x
 
@@ -204,6 +209,14 @@ class pendu(object):
     def save_score(self):
         with open(self.conf["score_path"], 'w') as f:
             json.dump(self.score, f);
+
+    def get_word_list(self):
+        ret = ""
+        for word in self.word_list:
+            ret+="<li>{}</li>".format(word);
+        if ret:
+            ret = "<ul>{}</ul>".format(ret);
+        return ret;
 
 
     ## Gestion des events
