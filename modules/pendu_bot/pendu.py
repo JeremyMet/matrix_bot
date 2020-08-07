@@ -159,7 +159,7 @@ class pendu(object):
                     x = self.check()
                     return x;
                 else:
-                    return "Le mot {} a déjà été proposé.".format(lt.upper());
+                    return "Le mot \"{}\" a déjà été proposé.".format(lt.capitalize());
 
 
         if self.unauthorized_letters:
