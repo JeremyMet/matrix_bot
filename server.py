@@ -9,6 +9,7 @@ from modules.regex.regex import regex ;
 from modules.loto.loto_bot import loto_bot;
 from modules.url.url_bot import url_bot;
 from modules.calendar.calendar_bot import calendar_bot;
+from modules.echo.echo_bot import echo_bot;
 import time ;
 
 
@@ -24,6 +25,7 @@ if __name__ == "__main__":
     my_quotes = quotes("quotes", hour=7, minute=0) ;
     my_loto = loto_bot("loto", hour=20, minute=30);
     my_url = url_bot();
+    my_echo = echo_bot();
     my_calendar_bot = calendar_bot() ;
     # Then Create the matrix object, add rooms, services and timers.
     matrix_obj = matrix_utils_room() ;
@@ -35,25 +37,35 @@ if __name__ == "__main__":
     music_room = matrix_obj.add_room("#musiciensdimanche:mandragot.org")
     main_room = matrix_obj.add_room("#deuxsurdix:mandragot.org")
     ludo_room = matrix_obj.add_room("#gaming:mandragot.org")
-
+    #
     matrix_obj.add_service_to_room(admin_room, my_mastermind_0) ;
-    # matrix_obj.add_service_to_room(admin_room, my_calendar_bot);
+    matrix_obj.add_service_to_room(admin_room, my_echo) ;
     #
     matrix_obj.add_service_to_room(shared_admin_room, my_calendar_bot);
+    matrix_obj.add_service_to_room(shared_admin_room, my_echo);
     #
     matrix_obj.add_service_to_room(main_room, my_calendar_bot);
+    matrix_obj.add_service_to_room(main_room, my_echo);
     #
     matrix_obj.add_service_to_room(gaming_room, my_quotes) ;
     matrix_obj.add_service_to_room(gaming_room, my_pendu) ;
     matrix_obj.add_service_to_room(gaming_room, my_mastermind_1) ;
     matrix_obj.add_service_to_room(gaming_room, my_loto) ;
     matrix_obj.add_service_to_room(gaming_room, my_calendar_bot);
-    # #
+    matrix_obj.add_service_to_room(gaming_room, my_echo);
     matrix_obj.add_service_to_room(gaming_room, my_url) ;
+    #
     matrix_obj.add_service_to_room(science_room, my_url) ;
+    matrix_obj.add_service_to_room(science_room, my_echo) ;
+    #
     matrix_obj.add_service_to_room(music_room, my_url) ;
+    matrix_obj.add_service_to_room(music_room, my_echo) ;
+    #
     matrix_obj.add_service_to_room(main_room, my_url) ;
+    matrix_obj.add_service_to_room(main_room, my_echo) ;
+    #
     matrix_obj.add_service_to_room(ludo_room, my_url) ;
-
+    matrix_obj.add_service_to_room(ludo_room, my_echo) ;
+    #
     matrix_obj.start_timer() ; # start clock thread (for clock sensitive processes/modules)
     matrix_obj.spawn() ;

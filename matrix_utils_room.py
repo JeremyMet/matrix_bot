@@ -55,6 +55,7 @@ class matrix_utils_room(object):
         if self.nb_current_service < matrix_utils_room.__MAX_SERVICE__:
             room_id = room.room_id;
             self.room_dic[room_id].service_set.add(service);
+            service.add_room(room);
             on_start = service.on_start();
             if on_start:
                 on_start = on_start.replace("\n", "<br>");
@@ -72,6 +73,7 @@ class matrix_utils_room(object):
         room_id = room.room_id;
         if service in self.room_dic[room_id]:
             self.room_dic[room_id].service_set.remove(service);
+            service.remove_room(room);
             ret = True;
         else:
             #raise Exception("Service {} does not exist in room {}.".format(service, room)) ;

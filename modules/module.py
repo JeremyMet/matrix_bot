@@ -71,7 +71,7 @@ class module(object):
 
     def __init__(self, keyword = None, is_permanent = False):
         self.module_name = "DEFAULT_MODULE_NAME"
-        self.room_list = [] ;
+        self.room_list = set() ;
         self.timer = 0 ;
         self.clock_sensitive = True ;
         self.is_module_on = True ;
@@ -87,19 +87,10 @@ class module(object):
 
 
     def add_room(self, room):
-        ret_val = False;
-        if not(room in self.room_list):
-            self.room_list.append(room); # TODO : maybe add warnings if room does already exist ?
-            ret_val = True ;
-        return ret_val;
+        self.room_list.add(room.current_alias);
 
     def remove_room(self, room):
-        ret_val = False;
-        if (room in self.room_list):
-            index = self.room_list.index(room);
-            self.room_list.pop(index); # TODO : raise error if room does not exist ?
-            ret_val = True;
-        return ret_val;
+        self.room_list.remove(room.current_alias)
 
     def get_room_list(self):
         return self.room_list;
