@@ -20,7 +20,7 @@
     "unauthorized_letters" : []
   },
  "mot_long": {
-    "weight" : 4,
+    "weight" : 5,
     "message" : "Le bot aime voir la vie en grand \uD83E\uDD29 ! (Mot de 15 lettres ou plus, pdv +2) !",
     "min_lg" : 15,
     "max_lg" : 30,
@@ -90,7 +90,7 @@
     "unauthorized_letters" : ["s", "z"]
   },
   "english_lord": {
-    "weight" : 6,
+    "weight" : 3,
     "message" : "\uD83C\uDDEC\uD83C\uDDE7 God save our gracious Queen, Long live our noble Queen ! \uD83C\uDDEC\uD83C\uDDE7 (Sir, You are looking for an <b>English Word</b>! Pdv +1!)",
     "min_lg" : 5,
     "max_lg" : 20,
@@ -100,7 +100,7 @@
     "unauthorized_letters" : []
   },
   "sherlock_holmes": {
-    "weight" : 6,
+    "weight" : 3,
     "message" : "\uD83C\uDDEC\uD83C\uDDE7 Tbot is desperately asking for help \"Sherlock, this must be another code to break!\". Holmes \uD83D\uDD75\uD83C\uDFFC suddenly turns back and says \"Elementary, my dear Tbot!\" (<b>English Word</b>, Word is <b>reversed</b>).",
     "min_lg" : 5,
     "max_lg" : 18,
@@ -110,7 +110,7 @@
     "unauthorized_letters" : []
   },
   "french_man": {
-    "weight" : 6,
+    "weight" : 3,
     "message" : "\uD83C\uDDEC\uD83C\uDDE7 Tbot is trying to learn english! \uD83E\uDD16: \"<i>I am ZE best, ZIS is easy!</i>\". His french accent is so cuuute! \uD83E\uDD56 \uD83C\uDDEB\uD83C\uDDF7 (<b>English Word</b>, Letters <b>T, H</b> are forbidden).",
     "min_lg" : 5,
     "max_lg" : 18,
