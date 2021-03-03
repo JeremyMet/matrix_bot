@@ -52,8 +52,6 @@ class pendu(object):
         if os.path.isfile(self.conf["score_path"]):
             with open(self.conf["score_path"], 'r') as f:
                 self.score = json.load(f);
-
-
         self.load_events() ;
         self.rst() ;
 
