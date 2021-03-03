@@ -78,7 +78,7 @@ tbot pendu event montre l'event en cours (s'il y en a)";
 
     def exit(self):
         self.pendu.save_score() ;
-        if pendu.lt:
+        if self.pendu.lt:
             return "\u26A0\uFE0F Oooh Non ! Vous avez été trop lent \U0001F606! Le mot cherché était \"{}\".".format(self.pendu.current_word);
         else:
             return None;
