@@ -12,13 +12,11 @@ MONTHS = ["de Janvier", "de Février", "de Mars", "d'Avril", "de Mai", "de Juin"
 def index():
 	f_normalize = lambda x : x.lower().capitalize();
 	score_dic = {};
-	# try:
-	with open(__SCOREBOARD_MONTH__, "rb") as picke_file:
-		score_dic = pickle.load(pickle_file);
-		print("ok ?")
-	# except:
-	# 	pass
-	# 	print("NOT OK")
+	try:
+		with open(__SCOREBOARD_MONTH__, "rb") as pickle_file:
+			score_dic = pickle.load(pickle_file);
+	except:
+		pass
 	score_array = [];
 	for key_value, value in sorted(score_dic.items(), key=lambda x: x[1], reverse=True):
 		score_array.append((f_normalize(key_value), value));
