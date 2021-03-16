@@ -16,8 +16,11 @@ class loto_bot(module):
         self.loto_inst = loto(hour=hour, minute=minute);
         self.flask_scoreboard = flask_scoreboard;
         self.flask_scoreboard_array = {}
-        with open(flask_scoreboard, "rb") as pickle_file:
-            self.flask_scoreboard_array = pickle.load(pickle_file);
+        try:
+            with open(flask_scoreboard, "rb") as pickle_file:
+                self.flask_scoreboard_array = pickle.load(pickle_file);
+        except:
+            pass 
 
     @module.module_on_dec
     def process_msg_active(self, cmd, sender=None, room=None):
