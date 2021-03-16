@@ -2,7 +2,8 @@ import random ;
 from modules.module import module ;
 from .loto import loto;
 import datetime;
-import pickle
+import pickle;
+import copy;
 
 class loto_bot(module):
 
@@ -13,6 +14,7 @@ class loto_bot(module):
         self.module_name = "Loto Module"
         self.__version__ = "0.0.1"
         self.loto_inst = loto(hour=hour, minute=minute);
+        self.flask_scoreboard = flask_scoreboard;
         self.flask_scoreboard_array = {}
         with open(flask_scoreboard, "rb") as pickle_file:
             self.flask_scoreboard_array = pickle.load(pickle_file);
@@ -41,6 +43,7 @@ class loto_bot(module):
         log = self.loto_inst.get_log();
         last_draw = log["last_draw"];
         last_draw_month = last_draw.month;
+        last_draw_year = last_draw.year;
         now = datetime.datetime.now();
         # Nous avons changé de jour ...
         delta = now-last_draw;
@@ -48,9 +51,20 @@ class loto_bot(module):
             ret = self.loto_inst.check_result();
             self.loto_inst.save_current_state();
             # Dans le cas où l'on change de mois,
+            # (pas très propre de gérer tout ça dans cette fonction mais bon ...)
             if (now.month != last_draw.month):
-                pass
-                #todo
+                key = (str(last_draw_month).zfill(2))+(str(last_draw_year).zfill(4));
+                winner = sorted(self.loto_inst.scoreboard, key=lambda x: x[1], reverse=True);
+                if winner:
+                    winner = winner[0][0];
+                    ret+="\n\U0001f389 \U0001f389 Le vainqueur du mois est ... {} \U0001f389 \U0001f389 !! Félicitations".format(winner.upper());
+                else:
+                    ret+="\nPas de vainqueur ce mois-ci !"
+                self.flask_scoreboard_array[key] = copy.deepcopy(self.loto_inst.scoreboard);
+                with open(self.flask_scoreboard, "wb") as pickle_file:
+                    pickle.dump(self.flask_scoreboard_array, pickle_file);
+                self.loto_inst.scoreboard = {};
+            self.loto_inst.save_current_state();
             return ret;
 
     def exit(self):
