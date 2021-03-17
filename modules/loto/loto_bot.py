@@ -20,7 +20,7 @@ class loto_bot(module):
             with open(flask_scoreboard, "rb") as pickle_file:
                 self.flask_scoreboard_array = pickle.load(pickle_file);
         except:
-            pass 
+            pass
 
     @module.module_on_dec
     def process_msg_active(self, cmd, sender=None, room=None):
@@ -45,9 +45,8 @@ class loto_bot(module):
     def run_on_clock(self, room=None):
         log = self.loto_inst.get_log();
         last_draw = log["last_draw"];
-        last_draw_month = last_draw.month;
-        last_draw_year = last_draw.year;
         now = datetime.datetime.now();
+        one_day = datetime.deltatime(days=1);
         # Nous avons changé de jour ...
         delta = now-last_draw;
         if delta.days > 0:
@@ -55,8 +54,8 @@ class loto_bot(module):
             self.loto_inst.save_current_state();
             # Dans le cas où l'on change de mois,
             # (pas très propre de gérer tout ça dans cette fonction mais bon ...)
-            if (now.month != last_draw.month):
-                key = (str(last_draw_month).zfill(2))+(str(last_draw_year).zfill(4));
+            if ((now+one_day).month != now.month):
+                key = (str(now.month).zfill(2))+(str(now.year).zfill(4));
                 winner = sorted(self.loto_inst.scoreboard, key=lambda x: x[1], reverse=True);
                 if winner:
                     winner = winner[0][0];
