@@ -46,7 +46,7 @@ class loto_bot(module):
         log = self.loto_inst.get_log();
         last_draw = log["last_draw"];
         now = datetime.datetime.now();
-        one_day = datetime.deltatime(days=1);
+        one_day = datetime.timedelta(days=1);
         # Nous avons changé de jour ...
         delta = now-last_draw;
         if delta.days > 0:
