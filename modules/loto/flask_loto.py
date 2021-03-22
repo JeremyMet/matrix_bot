@@ -21,7 +21,7 @@ def index():
 	for key_value, value in sorted(score_dic.items(), key=lambda x: x[1], reverse=True):
 		score_array.append((f_normalize(key_value), value));
 	current_month = MONTHS[datetime.datetime.now().month-1];
-	return render_template("index.html", length=len(score_array), score_array=score_array, current_month=current_month)
+	return render_template("index.html", length=len(score_array), score_array=score_array, current_date=(current_month, datetime.datetime.now().year));
 	print(score_array)
 
 if __name__ == '__main__':

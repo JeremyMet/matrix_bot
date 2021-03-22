@@ -1,9 +1,11 @@
 <html>
- <head>
- </head>
+  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/mainpage.css') }}">
+  <head>
+  </head>
  <body>
-  <h1>~~~ Tbot's Loto ~~~<h1>
-  <h2> Score du Mois {{current_month}} </h2>
+   <title>&#127920; Tbot's Loto</title>
+  <h1>~~~ &#127920; Tbot's Loto &#127920; ~~~<h1>
+  <h2>Score du Mois {{current_date[0]}} {{current_date[1]}}</h2>
     <table style="width:20%">
      {%for i in range(0, length)%}
          <tr>
@@ -12,6 +14,5 @@
        </tr>
      {%endfor%}
    </table>
-
  </body>
 </html>
