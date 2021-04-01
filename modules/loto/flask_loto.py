@@ -28,9 +28,9 @@ def index():
 
 	autre = "";
 	for k,v in full_score_dic.items():
-		current_month = int(k[0:2]);
-		current_year = k[2];
-		autre += "<h2>Score du mois {} {}</h2><br>".format(MONTHS[current_month], current_year);
+		_month = int(k[0:2]);
+		_year = k[2];
+		autre += "<h2>Score du mois {} {}</h2><br>".format(MONTHS[_month], _year);
 		autre += "<table style=\"width:20%\">";
 		for key_value, value in sorted(v.items(), key=lambda x: x[1], reverse=True):
 			autre += "<tr>"
