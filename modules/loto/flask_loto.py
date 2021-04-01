@@ -27,7 +27,7 @@ def index():
 	current_month = MONTHS[datetime.datetime.now().month-1];
 
 	autre = "";
-	for k,v in full_score_dic:
+	for k,v in full_score_dic.items():
 		current_month = int(key[0:2]);
 		current_year = key[2];
 		autre += "<h2>Score du mois {} {}</h2><br>".format(MONTHS[current_month], current_year);
