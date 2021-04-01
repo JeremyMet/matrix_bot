@@ -39,7 +39,7 @@ def index():
 			autre += "</tr>"
 		autre+= "</table>"
 
-	return render_template("index.html", length=len(score_array), score_array=score_array, current_date=(current_month, datetime.datetime.now().year), autre);
+	return render_template("index.html", length=len(score_array), score_array=score_array, current_date=(current_month, datetime.datetime.now().year), autre=autre);
 
 
 if __name__ == '__main__':
