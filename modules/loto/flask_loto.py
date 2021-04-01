@@ -29,8 +29,8 @@ def index():
 	autre = [];
 	for k,v in full_score_dic.items():
 		_month = int(k[0:2])-1;
-		_year = k[2];
-		content = [(k, v) for k, v in sorted(v.items(), key=lambda x: x[1], reverse=True)]
+		_year = k[2:];
+		content = [(k.capitalize(), v) for k, v in sorted(v.items(), key=lambda x: x[1], reverse=True)]
 		len_content = len(content)
 		quad = (MONTHS[_month], _year, len_content, content)
 		autre.append(quad)
