@@ -14,6 +14,19 @@
        </tr>
      {%endfor%}
    </table>
-   {{autre}}
+
+{%for i in range(0, len_autre)%}
+  <h2>Score du Mois {{autre[i][0]}} {{autre[i][1]}}</h2>
+  <table style="width:20%">
+    {%for j in range(0, autre[i][2])%}
+       <tr>
+         <td>{{autre[i][3][j]}}</td>
+         <td>{{score_array[i][3][j]}}</td>
+     </tr>
+    {%endfor%}
+{%endfor}
+
+
+
  </body>
 </html>
