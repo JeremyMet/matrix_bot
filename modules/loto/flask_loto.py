@@ -33,6 +33,7 @@ def index():
 		content = [(k, v) for k, v in sorted(v.items(), key=lambda x: x[1], reverse=True)]
 		len_content = len(content)
 		triplet = (MONTHS[_month-1], _year, len_content, content)
+		autre.append(triplet)
 		# autre.append()
 		# for key_value, value in sorted(v.items(), key=lambda x: x[1], reverse=True):
 		# 	autre += "<tr>"
