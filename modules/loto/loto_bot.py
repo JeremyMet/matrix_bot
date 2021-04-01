@@ -56,7 +56,7 @@ class loto_bot(module):
             # (pas très propre de gérer tout ça dans cette fonction mais bon ...)
             if ((now+one_day).month != now.month):
                 key = (str(now.month).zfill(2))+(str(now.year).zfill(4));
-                winner = sorted(self.loto_inst.scoreboard, key=lambda x: x[1], reverse=True);
+                winner = sorted(self.loto_inst.scoreboard.items(), key=lambda x: x[1], reverse=True);
                 if winner:
                     winner = winner[0][0];
                     ret+="\n\U0001f389 \U0001f389 Le vainqueur du mois est ... {} \U0001f389 \U0001f389 !! Félicitations".format(winner.upper());
