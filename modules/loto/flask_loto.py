@@ -32,7 +32,7 @@ def index():
 		_year = k[2];
 		content = [(k, v) for k, v in sorted(v.items(), key=lambda x: x[1], reverse=True)]
 		len_content = len(content)
-		quad = (MONTHS[_month-1], _year, len_content, content)
+		quad = (MONTHS[_month], _year, len_content, content)
 		autre.append(quad)
 		# autre.append()
 		# for key_value, value in sorted(v.items(), key=lambda x: x[1], reverse=True):
