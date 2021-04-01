@@ -26,20 +26,23 @@ def index():
 		score_array.append((f_normalize(key_value), value));
 	current_month = MONTHS[datetime.datetime.now().month-1];
 
-	autre = "";
+	autre = [];
 	for k,v in full_score_dic.items():
-		_month = int(k[0:2]);
+		_month = int(k[0:2])-1;
 		_year = k[2];
-		autre += "<h2>Score du mois {} {}</h2><br>".format(MONTHS[_month], _year);
-		autre += "<table style=\"width:20%\">";
-		for key_value, value in sorted(v.items(), key=lambda x: x[1], reverse=True):
-			autre += "<tr>"
-			autre += "<td>{}</td>".format(key_value);
-			autre += "<td>{}</td>".format(str(value));
-			autre += "</tr>"
-		autre+= "</table>"
+		content = [(k, v) for k, v in sorted(v.items(), key=lambda x: x[1], reverse=True)]
+		len_content = len(content)
+		triplet = (MONTHS[_month-1], _year, len_content, content)
+		# autre.append()
+		# for key_value, value in sorted(v.items(), key=lambda x: x[1], reverse=True):
+		# 	autre += "<tr>"
+		# 	autre += "<td>{}</td>".format(key_value);
+		# 	autre += "<td>{}</td>".format(str(value));
+		# 	autre += "</tr>"
+		# autre+= "</table>"
+	autre_len = len(autre);
 
-	return render_template("index.html", length=len(score_array), score_array=score_array, current_date=(current_month, datetime.datetime.now().year), autre=autre);
+	return render_template("index.html", length=len(score_array), score_array=score_array, current_date=(current_month, datetime.datetime.now().year), autre=autre, autre_len);
 
 
 if __name__ == '__main__':
