@@ -43,6 +43,7 @@ def index():
 		# autre+= "</table>"
 	autre_len = len(autre);
 	print(autre_len)
+	autre = list(reversed(autre));
 
 	return render_template("index.html", length=len(score_array), score_array=score_array, current_date=(current_month, datetime.datetime.now().year), autre=autre, autre_len=autre_len);
 
