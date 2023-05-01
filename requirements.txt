@@ -1,5 +1,5 @@
 matrix-client==0.3.2
 unidecode==1.0.22
 python-dateutil==2.8.1
-flask==1.1.2
+flask==2.3.2
 
